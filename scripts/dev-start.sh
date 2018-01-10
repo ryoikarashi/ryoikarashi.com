@@ -5,7 +5,7 @@ set -eux
 : "setup constant variables" && {
   ROOT_DIR=$(pwd)
   PROJECT_NAME=$(basename $ROOT_DIR)
-  CONTAINER_NAME="sakishiraz"
+  CONTAINER_NAME="ryoikarashi"
 }
 
 : "download latest docker image" && {
