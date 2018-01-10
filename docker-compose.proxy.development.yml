@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  ryoikarashi-proxy:
+    image: jwilder/nginx-proxy
+    privileged: true
+    container_name: ryoikarashi-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+    restart: always
+    logging:
+      options:
+        max-size: 5m
+        max-file: "10"
+
+networks:
+  default:
+    external:
+      name: ryoikarashi-proxy
