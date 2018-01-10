@@ -4,7 +4,7 @@ set -eux
 
 : "setup constant variables" && {
   ROOT_DIR=$(pwd)
-  PROJECT_NAME=$(basename $ROOT_DIR)
+  PROJECT_NAME="root-ryoikarashi"
   CONTAINER_NAME="ryoikarashi"
 }
 
