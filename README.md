@@ -1,18 +1,18 @@
-# sakishiraz
-Sakishiraz Official Website http://sakishiraz.com
+# ryoikarashi.com
+Ryo Ikarashi Personal Website http://ryoikarashi.com
 
 ## Setting up the devlopment environment
 
 The commands below creates docker containers, tmux session. It also starts `webpack-dev-server` opening a new browser tab.
-URL: https://sakishiraz.dev:8000
+URL: https://ryoikarashi.dev:8000
 
 ```
 make dev
 ```
 
-If you haven't created a docker network named `sakishiraz-proxy`, then create it. and run `make dev` again.
+If you haven't created a docker network named `ryoikarashi-proxy`, then create it. and run `make dev` again.
 ```
-docker create network sakishiraz-proxy
+docker create network ryoikarashi-proxy
 make dev
 ```
 
@@ -33,6 +33,3 @@ Then run the command below.
 ```
 yarn run build:prod
 ```
-
-Then open `Transmit` app, select `sakishiraz.com`.
-Replace all contents with the files and folders in `dist`.
