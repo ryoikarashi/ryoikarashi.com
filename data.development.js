@@ -11,7 +11,7 @@ const data = {
         image: '../assets/ryoikarashi-ogp.png',
         site_name: 'Ryo Ikarashi Personal Website',
         fb: {
-          app_id: '',
+          app_id: '561741473987172',
           page_url: 'https://www.facebook.com/ry0ikarash1',
         },
         twitter: {
