@@ -1,0 +1,32 @@
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+  font-feature-settings: 'palt';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--c-dark);
+}
+
+p,
+a,
+ul,
+li,
+blockquote, {
+  color: var(--c-gray--light);
+}
+
+small {
+  color: var(--c-gray);
+}

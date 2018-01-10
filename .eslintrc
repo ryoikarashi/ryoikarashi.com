@@ -1,0 +1,11 @@
+{
+  # Inherit from airbnb lint
+  "extends": "airbnb",
+  "env": {
+    "browser": true
+  },
+  # Your own rules
+  "rules": {
+    "no-underscore-dangle": 0
+  }
+}

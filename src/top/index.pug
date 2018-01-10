@@ -1,0 +1,56 @@
+extends ../shared/_layout
+
+block content
+  .hero.anim.relative.w-100
+    .hero__img.fixed.absolute--mid.origin--center.tc
+        img.fixed.absolute--mid.origin--center(src="" + data.content.hero.sm)
+    .hero__logo.fixed.absolute--mid.origin--center.tc
+      include ../shared/_logo.pug
+
+  main.main.mw610px.w-90.center.pb4-ns.pt55-ns.pt57
+    .content
+      .about.mt20px.mt55-ns.mt0
+        each paragraph, index in data.about.desc
+          p.di.db-ns.tl.f12px.f14px-ns.lh24px.mv1.c-gray.ff-nsjp !{paragraph}
+          if index === 2
+            br.db.dn-ns
+
+      .mt50px.mt70px-ns
+        .works.mt45-ns.mt4.mb4.tc
+          h2.f20px.f24px-ns.lh26px.ma0.mb3.ff-lato--bold #{data.works.title}
+          ul.ma0.pa0.f14px.f16px-ns
+            each site in data.works.sns
+              li.list.mb3.mb2-ns
+                a.c-gray--light.dbi.ff-lato.hover.i.no-underline(href='//' + site.link target="_blank" rel="noopener noreferrer") #{site.link}
+
+        .contact.mv4.tc
+          h2.f20px.f24px-ns.lh26px.ma0.mb3.ff-lato--bold #{data.contact.title}
+          p.ma0.f14px.f16px-ns
+            a.c-gray--light.dbi.ff-lato.hover.i.no-underline(href='mailto:' + data.contact.email) #{data.contact.email}
+
+        .exhibition.mv4.tc
+          h2.f19px.f23px-ns.lh26px.ma0.mb3.ff-lato--bold #{data.exhibition.title}
+          ul.ma0.pa0.f12px.f14px-ns
+            each place in data.exhibition.places
+              li.list.mb3.mb2-ns
+                a.c-gray--light.hover.i.no-underline(class="ff-" + place.title.ff href="" + place.hash) #{place.title.data}
+
+    .popups.fixed.absolute--fill.z-999.bg-cyan--transparent.pointer.tc
+      ul.ma0.pa0.f14px.f16px-ns
+        each place, index in data.exhibition.places
+          li.list.mb3.mb2-ns.popups__item
+            .popups__item__inner.w-100.absolute.absolute--mid.origin--center.overflow-scroll.h-100.pv5(id="popup-" + index)
+              .w-90.mw6.center.popups__item__content
+                a.db(href="http://" + place.link target="_blank" rel="noopener noreferrer")
+                  img.w-100.shadow-2.mw6.center(src="" + place.img.url.sm)
+                h3.mt4.mb3.f24px-ns.lh26px(class="ff-" + place.title.ff + "--bold ff-" + place.title.ff) #{place.title.data}
+                .mv3.mb4.tl
+                  each paragraph in place.desc
+                    p.f12px.f14px-ns.lh24px.c-gray.ma0.mv2.ff-nsjp #{paragraph}
+                if place.gallery.length > 0
+                  .gallery.ma0.pa0.mt5.cf.my-gallery(itemscope itemtype="http://schema.org/ImageGallery")
+                    each img in place.gallery
+                        figure.gallery__img.list.fl.w-50.w-33-ns.ma0.pa0.pa1
+                            a.db.link.dim(href="${require('" + img.src + "')}", data-effect="mfp-zoom-in" title=img.credit ? "Photo credit: " + img.credit : "")
+                                img(src="" + img.src, alt="" + img.title)
+                a.dib.mt20px.c-gray--light.mt5.dbi.ff-lato.hover.i.no-underline(href="http://" + place.link target="_blank" rel="noopener noreferrer") #{place.link}

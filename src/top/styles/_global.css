@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+html,
+body {
+  background: var(--c-main);
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+}
+
+a {
+  word-wrap: break-word;
+}

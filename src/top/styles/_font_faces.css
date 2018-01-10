@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400i,700');
+
+@font-face {
+  font-family: 'NotoSerifCJKjp-Regular';
+  src:
+    url('../assets/NotoSerifCJKjp-Regular.otf')  format('opentype'),
+    url('../assets/NotoSerifCJKjp-Regular.woff') format('woff'),
+    url('../assets/NotoSerifCJKjp-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../assets/fontello.eot?88209525');
+  src:
+    url('../assets/fontello.eot?88209525#iefix') format('embedded-opentype'),
+    url('../assets/fontello.woff2?88209525') format('woff2'),
+    url('../assets/fontello.woff?88209525') format('woff'),
+    url('../assets/fontello.ttf?88209525') format('truetype'),
+    url('../assets/fontello.svg?88209525#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'NotoSerifCJKjp-Regular';
+  src: url('../assets/NotoSerifCJKjp-Regular.eot') format('embedded-opentype');
+  src:
+    url('../assets/NotoSerifCJKjp-Regular.otf')  format('opentype'),
+    url('../assets/NotoSerifCJKjp-Regular.woff') format('woff'),
+    url('../assets/NotoSerifCJKjp-Regular.woff2') format('woff2'),
+    url('../assets/NotoSerifCJKjp-Regular.ttf')  format('truetype'),
+    url('../assets/NotoSerifCJKjp-Regular.svg#NotoSerifCJKjp-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+} */

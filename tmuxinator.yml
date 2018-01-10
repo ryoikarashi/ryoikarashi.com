@@ -1,0 +1,27 @@
+name: root-ryoikarashi
+root: .
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - edit1:
+          - vim
+        - edit2:
+          - vim
+
+  - commands:
+      layout: even-horizontal
+      panes:
+        - front:
+          - git fetch
+          - git fetch --tags
+          - git status -s
+        - back:
+
+  - webpack:
+      panes:
+        - yarn start
+
+  - 🌎 docker-log:
+    - docker-compose -f docker-compose.development.yml logs -f --tail=50

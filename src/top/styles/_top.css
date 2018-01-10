@@ -1,0 +1,58 @@
+.hero {
+  &.anim {
+    .hero__img {
+      animation-name: fadeInToFadeOut;
+      animation-duration: 7s;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      backface-visibility: hidden;
+      width: 150px;
+    }
+
+    .hero__logo {
+      animation-name: fadeInToTop;
+      animation-duration: 7s;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+
+      @media (--breakpoint-small) {
+        width: 150px;
+      }
+
+      @media (--breakpoint-not-small) {
+        width: 250px;
+      }
+    }
+  }
+}
+
+.content {
+  filter: blur(0);
+  transition: filter 0.4s linear;
+}
+
+.main,
+.footer {
+  animation: fadeIn 7.05s;
+  animation-fill-mode: forwards;
+}
+
+.popups {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s linear;
+
+  ul li {
+    transition: opacity 0.4s linear;
+  }
+}
+
+.gallery {
+  .gallery__sizer {
+    width: 50%;
+
+    @media (--breakpoint-not-small) {
+      width: 33.333%;
+    }
+  }
+}

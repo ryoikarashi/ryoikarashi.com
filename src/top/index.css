@@ -1,0 +1,13 @@
+@import 'tachyons';
+@import 'magnific-popup';
+@import './styles/_font_faces';
+@import './styles/_tachyons_custom';
+@import './styles/_my_tachyons';
+@import './styles/_variables';
+@import './styles/_global';
+@import './styles/_typography';
+@import './styles/_icons';
+@import './styles/_animations';
+@import './styles/_zoom';
+@import './styles/_transition';
+@import './styles/_top';
