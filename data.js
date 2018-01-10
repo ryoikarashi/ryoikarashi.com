@@ -32,7 +32,7 @@ const data = {
           classname: 'facebook'
         },
         {
-          url: 'https://instagra.com/ryo_ikarashi',
+          url: 'https://instagrm.com/ryo_ikarashi',
           classname: 'instagram'
         },
       ],
