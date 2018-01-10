@@ -35,7 +35,7 @@ module.exports = {
 
   devServer: {
     port: 8000,
-    host: 'sakishiraz.dev',
+    host: 'ryoikarashi.dev',
     historyApiFallback: true,
     noInfo: false,
     stats: 'minimal',
@@ -45,8 +45,8 @@ module.exports = {
     inline: true,
     https: true,
     open: true,
-    cert: fs.readFileSync(path.resolve(__dirname, 'certs', 'sakishiraz.dev.crt')),
-    key: fs.readFileSync(path.resolve(__dirname, 'certs', 'sakishiraz.dev.key')),
+    cert: fs.readFileSync(path.resolve(__dirname, 'certs', 'ryoikarashi.dev.crt')),
+    key: fs.readFileSync(path.resolve(__dirname, 'certs', 'ryoikarashi.dev.key')),
   },
 
   module: {
