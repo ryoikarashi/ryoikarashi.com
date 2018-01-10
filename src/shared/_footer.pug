@@ -1,3 +1,12 @@
-footer.footer.copy.tc.absolute.right-0.bottom-0.left-0.pa1.pa3-ns
-  small.db.pb1.f6px.f8px-ns.c-dark--light #{data.footer.edition}
-  small.db.f6px.f8px-ns.c-dark--light #{data.footer.copy}
+footer.absolute.bottom-0.right-0
+  ul.ma0.pa0.cf.mr3.mb3
+    each site in data.footer.sns
+      li.list.fl.mr2
+        a.sns-btn(href=site.url target="_blank" rel="noopener noreferrer")
+          case site.classname
+            when 'twitter'
+              include ../icons/_twitter
+            when 'facebook'
+              include ../icons/_facebook
+            when 'instagram'
+              include ../icons/_instagram

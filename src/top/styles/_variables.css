@@ -1,12 +1,6 @@
 :root {
-  --f-main: 'Lato', sans-serif;
-  --f-lato: 'Lato', sans-serif;
-  --f-nsjp: 'NotoSerifCJKjp-Regular';
-  --c-main: #fbfeff;
+  --f-main: 'Avenir Next', 'Avenir', 'YuGothic', 'Yu-Gothic', '遊ゴシック', sans-serif;
   --c-dark: #333537;
-  --c-dark--light: #3e4143;
-  --c-gray: #5e6063;
-  --c-gray--light: #85888a;
-  --c-cyan: #1ec6fe;
-  --c-cyan--transparent: rgba(251, 254, 255, 0.7);
+  --c-white: #fff;
+  --c-purple--grad: linear-gradient(-228deg, #bab0ff 21%, #e69eff 100%);
 }

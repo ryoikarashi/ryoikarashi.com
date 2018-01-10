@@ -1,13 +1,19 @@
 import 'babel-polyfill';
-import $ from 'jquery';
 import './index.css';
-import Popup from './popup';
 
-$(() => {
-  document.body.scrollTop = 0;
-  const exhibitionPopup = new Popup();
-  exhibitionPopup.init();
-});
+const getBrowserLanguage = () => {
+  try {
+    return (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0, 2);
+  } catch (e) {
+    return undefined;
+  }
+};
+
+if (getBrowserLanguage === 'ja') {
+  document.body.classList.add('ja');
+} else {
+  document.body.classList.add('en');
+}
 
 // Accept HMR
 if (module.hot) {

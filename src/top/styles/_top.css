@@ -1,58 +1,44 @@
-.hero {
-  &.anim {
-    .hero__img {
-      animation-name: fadeInToFadeOut;
-      animation-duration: 7s;
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-      backface-visibility: hidden;
-      width: 150px;
-    }
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-    .hero__logo {
-      animation-name: fadeInToTop;
-      animation-duration: 7s;
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+.en .desc--ja { display: none; }
+.ja .desc--en { display: none; }
 
-      @media (--breakpoint-small) {
-        width: 150px;
-      }
+.email-btn {
+  background: transparent;
+  transition: all 0.15s linear;
 
-      @media (--breakpoint-not-small) {
-        width: 250px;
-      }
-    }
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
 }
 
-.content {
-  filter: blur(0);
-  transition: filter 0.4s linear;
-}
+.email-icon,
+.logo {
+  transform: scale(0.8);
 
-.main,
-.footer {
-  animation: fadeIn 7.05s;
-  animation-fill-mode: forwards;
-}
-
-.popups {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s linear;
-
-  ul li {
-    transition: opacity 0.4s linear;
+  @media (--breakpoint-not-small) {
+    transform: scale(1);
   }
 }
 
-.gallery {
-  .gallery__sizer {
-    width: 50%;
+.email-icon-wrapper {
+  vertical-align: text-top;
 
-    @media (--breakpoint-not-small) {
-      width: 33.333%;
-    }
+  @media ($--breakpoint-not-small) {
+    vertical-align: middle;
+  }
+}
+
+.sns-btn {
+  opacity: 1;
+  transition: all 0.15s linear;
+
+  &:hover {
+    opacity: 0.5;
   }
 }

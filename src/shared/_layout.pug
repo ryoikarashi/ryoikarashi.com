@@ -22,7 +22,7 @@ html(prefix="og: http://ogp.me/ns#")
     meta(name="twitter:image" content=data.meta.og.url + "${require('" + data.meta.og.twitter.image + "')}")
     title=data.meta.title
 
-  body.pb4.pb5-ns
+  body
     block content
     include _footer
 
