@@ -24,6 +24,10 @@
   @media (--breakpoint-not-small) {
     transform: scale(1);
   }
+
+  svg {
+    height: 100%;
+  }
 }
 
 .email-icon-wrapper {
