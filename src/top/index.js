@@ -1,10 +1,12 @@
 import 'babel-polyfill';
 import './index.css';
 
-const loadingEffect = () => {
-  setTimeout(() => {
-    document.body.classList.add('loaded');
-  }, 300);
+const ready = (fn) => {
+  if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
 };
 
 const getBrowserLanguage = () => {
@@ -15,13 +17,14 @@ const getBrowserLanguage = () => {
   }
 };
 
-loadingEffect();
-
-if (getBrowserLanguage === 'ja') {
-  document.body.classList.add('ja');
-} else {
-  document.body.classList.add('en');
-}
+ready(() => {
+  // set browser language
+  if (getBrowserLanguage === 'ja') {
+    document.body.classList.add('ja');
+  } else {
+    document.body.classList.add('en');
+  }
+});
 
 // Accept HMR
 if (module.hot) {

@@ -1,12 +1,21 @@
-body {
-  opacity: 0;
-  visibility: hidden;
-  transition: all 1.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
 
-  &.loaded {
+  100% {
     opacity: 1;
     visibility: visible;
   }
+}
+
+body {
+  animation-name: fadeIn;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  backface-visibility: hidden;
 }
 
 .wrapper {
