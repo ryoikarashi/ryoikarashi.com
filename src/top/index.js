@@ -1,6 +1,12 @@
 import 'babel-polyfill';
 import './index.css';
 
+const loadingEffect = () => {
+  setTimeout(() => {
+    document.body.classList.add('loaded');
+  }, 300);
+};
+
 const getBrowserLanguage = () => {
   try {
     return (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0, 2);
@@ -8,6 +14,8 @@ const getBrowserLanguage = () => {
     return undefined;
   }
 };
+
+loadingEffect();
 
 if (getBrowserLanguage === 'ja') {
   document.body.classList.add('ja');

@@ -1,3 +1,14 @@
+body {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 1.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+
+  &.loaded {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .wrapper {
   position: absolute;
   top: 50%;
@@ -23,10 +34,6 @@
 
   @media (--breakpoint-not-small) {
     transform: scale(1);
-  }
-
-  svg {
-    height: 100%;
   }
 }
 
