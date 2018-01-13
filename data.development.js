@@ -2,10 +2,10 @@ const data = {
   data: {
     meta: {
       title: 'Ryo Ikarashi | WEB Design & Development',
-      desc: '京都を拠点にウェブサイト/WEBアプリケーションのデザイン・開発を行うフリーランスのエンジニア兼デザイナー',
+      desc: '五十嵐諒 / 京都を拠点にウェブサイト/WEBアプリケーションのデザイン・開発を行うフリーランスのエンジニア兼デザイナー',
       og: {
         title: 'Ryo Ikarashi | WEB Design & Development',
-        desc: '京都を拠点にウェブサイト/WEBアプリケーションのデザイン・開発を行うフリーランスのエンジニア兼デザイナー',
+        desc: '五十嵐諒 / 京都を拠点にウェブサイト/WEBアプリケーションのデザイン・開発を行うフリーランスのエンジニア兼デザイナー',
         type: 'website',
         url: 'https://ryoikarashi.com',
         image: '../assets/ryoikarashi-ogp.png',
