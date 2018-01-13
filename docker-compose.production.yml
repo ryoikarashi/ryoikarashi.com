@@ -8,8 +8,8 @@ services:
       - 80
       - 443
     environment:
-      VIRTUAL_HOST: ryoikarashi.com
-      LETSENCRYPT_HOST: ryoikarashi.com
+      VIRTUAL_HOST: www.ryoikarashi.com,ryoikarashi.com
+      LETSENCRYPT_HOST: www.ryoikarashi.com,ryoikarashi.com
       LETSENCRYPT_EMAIL: me@ryoikarashi.com
     volumes:
       - ./dist:/usr/share/nginx/html:ro
