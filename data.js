@@ -22,20 +22,20 @@ const data = {
       },
     },
     footer: {
-      sns: [
-        {
-          url: 'https://twitter.com/ryo_ikarashi',
-          classname: 'twitter'
-        },
-        {
-          url: 'https://facebook.com/ry0ikarash1',
-          classname: 'facebook'
-        },
-        {
-          url: 'https://instagram.com/ryo_ikarashi',
-          classname: 'instagram'
-        },
-      ],
+      // sns: [
+      //   {
+      //     url: 'https://twitter.com/ryo_ikarashi',
+      //     classname: 'twitter'
+      //   },
+      //   {
+      //     url: 'https://facebook.com/ry0ikarash1',
+      //     classname: 'facebook'
+      //   },
+      //   {
+      //     url: 'https://instagram.com/ryo_ikarashi',
+      //     classname: 'instagram'
+      //   },
+      // ],
       copy: 'Copyright©2018 Ryo Ikarashi. All Rights Reserved.',
     },
     pages: {
