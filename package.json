@@ -8,7 +8,7 @@
     "build": "yarn run clean; NODE_ENV=development webpack --config webpack.config.babel.js",
     "clean": "rm -rf ./dist/*",
     "build:staging": "yarn run clean; NODE_ENV=staging webpack --config webpack.config.staging.babel.js",
-    "build:prod": "yarn run clean; NODE_ENV=production webpack --config webpack.config.production.babel.js"
+    "build:prod": "yarn run clean; NODE_ENV=production webpack --config webpack.config.production.babel.js; cp _redirects ./dist"
   },
   "repository": {},
   "author": "Ryo Ikarashi",
