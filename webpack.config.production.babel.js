@@ -7,9 +7,9 @@ import WebpackMd5Hash from 'webpack-md5-hash';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import InlineChunkWebpackPlugin from 'html-webpack-inline-chunk-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+import RobotstxtPlugin from 'robotstxt-webpack-plugin';
 import { getVendorsFromEntries /* ,getExcludedChunkName */ } from './webpackUtils';
-import data from './data';
+import data from './data.development';
 
 const entries = {
   top: ['babel-polyfill', './src/top/index.js'],
@@ -200,9 +200,14 @@ module.exports = {
 
     new WebpackMd5Hash(),
 
-    new CopyWebpackPlugin([
-      { from: './.htaccess' },
-    ]),
+    new RobotstxtPlugin(
+      {
+        policy: [{
+          userAgent: '*',
+          disallow: '/',
+        }],
+      },
+    ),
 
   ]),
 };
