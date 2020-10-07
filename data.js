@@ -1,10 +1,10 @@
 const data = {
   data: {
     meta: {
-      title: 'Ryo Ikarashi | A freelance software developer.',
+      title: 'RYO IKARASHI | A freelance software developer.',
       desc: 'Hi, I\'m a freelance software developer based in Kyoto Japan.',
       og: {
-        title: 'Ryo Ikarashi | A freelance software developer.',
+        title: 'RYO IKARASHI | A freelance software developer.',
         desc: 'Hi, I\'m a freelance software developer based in Kyoto Japan.',
         type: 'website',
         url: 'https://ryoikarashi.com',
@@ -23,7 +23,7 @@ const data = {
     },
     pages: {
       global: {
-        title: 'Ryo Ikarashi',
+        title: 'RYO IKARASHI',
         sub_title: 'A freelance software developer.',
         email: 'me@ryoikarashi.com',
       },
