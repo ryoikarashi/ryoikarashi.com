@@ -9,22 +9,7 @@ const ready = (fn) => {
   }
 };
 
-const getBrowserLanguage = () => {
-  try {
-    return (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0, 2);
-  } catch (e) {
-    return undefined;
-  }
-};
-
-ready(() => {
-  // set browser language
-  if (getBrowserLanguage === 'ja') {
-    document.body.classList.add('ja');
-  } else {
-    document.body.classList.add('en');
-  }
-});
+ready(() => {});
 
 // Accept HMR
 if (module.hot) {

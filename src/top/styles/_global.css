@@ -6,11 +6,6 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  background-image: var(--c-purple--grad);
-}
-
 html {
   height: 100%;
 }
