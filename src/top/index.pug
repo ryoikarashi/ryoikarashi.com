@@ -2,23 +2,25 @@ extends ../shared/_layout
 
 block content
   div.wrapper.w-90.center
-    header.flex-ns.justify-center-ns.mb4.mb5-ns
-      div.tc.tl-ns.logo.flex-ns.flex-column-ns
-        include ../shared/_logo
-      div.tc.tl-ns.flex-ns.flex-column-ns.ml4-ns.mt3.mt0-ns
-        h1.lh-copy.lh-solid-ns.normal.ma0.flex-auto.f3.f2-ns #{data.pages.global.title}
-        h2.lh-copy.lh-solid-ns.normal.i.f5.ma0 #{data.pages.global.sub_title}
-
-    main
-      div
-        div.tc.f5.f4-ns.mb3.mb4-ns.desc--ja
-          each paragraph, index in data.pages.top.desc_ja
-            p.ma0 !{paragraph}
-        div.tc.f5.f4-ns.desc--en
-          each paragraph, index in data.pages.top.desc_en
-            p.ma0 !{paragraph}
-        div.tc.f5.mv4.mv5-ns
-          a.pa3.ph4.ba.bw1.br-pill.email-btn.dib(href='mailto:' + data.pages.global.email)
-            span.email-icon-wrapper
-              include ../icons/_email
-            span.ml3.f5.f4-ns(style="vertical-align: text-bottom;") #{data.pages.global.email}
+    div.bg
+    div.absolute.bottom-0.left-0.w-100
+      div.pa3
+        p.ma0.mb2
+          small Hi, I'm a freelance software developer
+          br
+          small based in Kyoto, Japan.
+        ul.ma0.mb2.pa0.list
+          li.lh-copy
+            small
+              a(href='//github.com/RyoIkarashi' target='_blank') ＊ Code
+          li.lh-copy
+            small
+              a(href='//soundcloud.com/ryo_ikarashi' target='_blank') ＊ Music
+          li.lh-copy
+            small
+              a(href='//photos.app.goo.gl/E1ReiRfaKaBrfQCw8' target='_blank') ＊ Photos
+        p.ma0.mb1
+          small
+            a(href="mailto:me@ryoikarashi.com" target='_blank') Email: me@ryoikarashi.com
+        p.ma0.mb1
+          small Feel free to drop me a line :)

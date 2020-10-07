@@ -12,53 +12,22 @@
 
 body {
   animation-name: fadeIn;
-  animation-duration: 2.5s;
+  animation-duration: 1.3s;
   animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
   backface-visibility: hidden;
 }
 
-.wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.en .desc--ja { display: none; }
-.ja .desc--en { display: none; }
-
-.email-btn {
-  background: transparent;
-  transition: all 0.15s linear;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-}
-
-.email-icon,
-.logo {
-  transform: scale(0.8);
-
-  @media (--breakpoint-not-small) {
-    transform: scale(1);
-  }
-}
-
-.email-icon-wrapper {
-  vertical-align: text-top;
-
-  @media ($--breakpoint-not-small) {
-    vertical-align: middle;
-  }
-}
-
-.sns-btn {
-  opacity: 1;
-  transition: all 0.15s linear;
-
-  &:hover {
-    opacity: 0.5;
-  }
+.bg {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../assets/bg.jpeg");
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
