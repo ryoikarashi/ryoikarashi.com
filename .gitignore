@@ -69,5 +69,4 @@ src/**/*.map
 dist/
 node_modules/
 package.json
-tsconfig.json
 yarn.lock
