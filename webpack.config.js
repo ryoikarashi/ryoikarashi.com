@@ -3,6 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
+const publicPath = process.env.NODE_ENV === 'production' ? 'https://ryoikarashi.com' : '/';
+
 module.exports = {
   mode: 'production',
 
@@ -10,9 +12,9 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-    filename: 'assets/[name].[chunkhash].js',
-    chunkFilename: 'assets/[name].[chunkhash].js',
+    publicPath,
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].js',
   },
 
   devtool: 'inline-source-map',
@@ -46,17 +48,8 @@ module.exports = {
                     tag: 'meta',
                     attribute: 'content',
                     type: 'src',
-                    /**
-                     * @docs https://github.com/webpack-contrib/html-loader#list
-                     */
                     filter: (_tag, _attribute, attributes, _resourcePath) => {
-                      if (
-                        attributes.property === 'og:image' ||
-                        attributes.name === 'twitter:image'
-                      ) {
-                        return true
-                      }
-                      return false
+                      return attributes.property === 'og:image' || attributes.name === 'twitter:image';
                     },
                   },
                 ],
@@ -82,7 +75,9 @@ module.exports = {
             options: {
               name: '[name].[hash].[ext]',
               limit: '10000',
-              publicPath: '/assets/images',
+              publicPath: process.env.NODE_ENV === 'production'
+                ? 'https://ryoikarashi.com/assets/images'
+                : '/assets/images',
               outputPath: '/assets/images',
             },
           },
@@ -96,7 +91,9 @@ module.exports = {
             options: {
               name: '[name].[hash].[ext]',
               limit: '10000',
-              publicPath: '/assets/fonts',
+              publicPath: process.env.NODE_ENV === 'production'
+                ? 'https://ryoikarashi.com/assets/images'
+                : '/assets/fonts',
               outputPath: '/assets/fonts',
             },
           },
