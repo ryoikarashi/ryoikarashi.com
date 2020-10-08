@@ -5,10 +5,9 @@
   "author": "Ryo Ikarashi",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "clean": "rm -rf ./dist/*",
-    "build-webpack": "webpack --config webpack.config.js",
     "build-functions": "netlify-lambda build src/functions/",
     "build": "yarn run clean && NODE_ENV=development webpack --config webpack.config.js --mode development && yarn run build-functions",
     "build:prod": "yarn run clean && NODE_ENV=production webpack --config webpack.config.js --mode production && yarn run build-functions",
