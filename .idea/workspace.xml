@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3bfa5af1-7a7e-4221-8090-5e47a63ed096" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/top/index.pug" beforeDir="false" afterPath="$PROJECT_DIR$/src/top/index.pug" afterDir="false" />
+    <list default="true" id="71f69feb-7283-45d1-a48b-9b9b88da76a1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.browserslistrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.prettierrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.stylelintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_redirects" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/netlify.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/ogp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/twitter-ogp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/functions/currently-playing.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/_global.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/_top.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/_typography.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/_variables.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.eslint.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,11 +35,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MacroExpansionManager">
-    <option name="directoryName" value="aesUBmzn" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
-  <component name="ProjectId" id="1XntzKMA9VxLPE9saSbo1SfSlpU" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="012ozh9e" />
+  </component>
+  <component name="ProjectId" id="1ibIBq38GiWyDhMf6KGY1SuCUVt" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -25,49 +56,89 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.stylelint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.stylelint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.stylelint" value="$PROJECT_DIR$/node_modules/stylelint" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration">
-    <configuration />
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/functions" />
+      <recent name="$PROJECT_DIR$/" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3bfa5af1-7a7e-4221-8090-5e47a63ed096" name="Default Changelist" comment="" />
-      <created>1581693947190</created>
+      <changelist id="71f69feb-7283-45d1-a48b-9b9b88da76a1" name="Default Changelist" comment="" />
+      <created>1602169734791</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1581693947190</updated>
-      <workItem from="1581693952425" duration="419000" />
-      <workItem from="1581695361920" duration="136000" />
-      <workItem from="1581696605164" duration="760000" />
-      <workItem from="1602065671870" duration="3421000" />
-      <workItem from="1602074495123" duration="903000" />
+      <updated>1602169734791</updated>
+      <workItem from="1602169735887" duration="17647000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="645" y="297" width="630" height="508" key="find.popup" timestamp="1602074506476">
+    <state x="1086" y="352" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602173958356">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="645" y="297" width="630" height="508" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602074506476" />
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1602075621757">
+    <state x="1086" y="352" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1057@0.23.1920.1057" timestamp="1602173958356" />
+    <state width="852" height="297" key="GridCell.Tab.0.bottom" timestamp="1602180298887">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602075621757" />
+    <state width="852" height="297" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1602180298887" />
+    <state width="852" height="297" key="GridCell.Tab.0.center" timestamp="1602180298885">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="852" height="297" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1602180298885" />
+    <state width="852" height="297" key="GridCell.Tab.0.left" timestamp="1602180298884">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="852" height="297" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1602180298884" />
+    <state width="852" height="297" key="GridCell.Tab.0.right" timestamp="1602180298886">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="852" height="297" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1602180298886" />
+    <state x="889" y="190" key="SettingsEditor" timestamp="1602180005756">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="889" y="190" key="SettingsEditor/0.23.1920.1057@0.23.1920.1057" timestamp="1602180005756" />
+    <state x="645" y="297" width="630" height="508" key="find.popup" timestamp="1602183791923">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="645" y="297" width="630" height="508" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602183791923" />
+    <state x="1015" y="256" key="run.anything.popup" timestamp="1602186903117">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1015" y="256" key="run.anything.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602186903117" />
+    <state x="1105" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1602190219616">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1105" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602190219616" />
   </component>
 </project>

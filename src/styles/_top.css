@@ -11,7 +11,7 @@
 }
 
 body,
-.wrapper
+.wrapper,
 .bg {
   animation-name: fadeIn;
   animation-duration: 1.3s;
@@ -27,9 +27,15 @@ body,
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("../assets/bg.jpeg");
+  background-image: url("./assets/bg.jpeg");
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+small {
+  padding-right: .25rem;
+  padding-left: .25rem;
+  background-color: rgba(0,0,0,.7);
 }

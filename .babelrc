@@ -1,12 +1,17 @@
 {
   "presets": [
-    "es2015",
+    "@babel/preset-typescript",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "14"
+        }
+      }
+    ]
   ],
   "plugins": [
-    "syntax-async-functions",
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "transform-flow-strip-types",
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }
