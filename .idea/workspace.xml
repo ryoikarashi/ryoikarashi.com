@@ -2,30 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71f69feb-7283-45d1-a48b-9b9b88da76a1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.browserslistrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.stylelintrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_redirects" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/netlify.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/bg.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/ogp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/twitter-ogp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/functions/currently-playing.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/styles/_global.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/styles/_top.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/styles/_typography.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/styles/_variables.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.eslint.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/ogp.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/ogp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/twitter-ogp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,10 +109,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="889" y="190" key="SettingsEditor/0.23.1920.1057@0.23.1920.1057" timestamp="1602180005756" />
-    <state x="645" y="297" width="630" height="508" key="find.popup" timestamp="1602183791923">
+    <state x="645" y="297" width="630" height="508" key="find.popup" timestamp="1602191441017">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="645" y="297" width="630" height="508" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602183791923" />
+    <state x="645" y="297" width="630" height="508" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1602191441017" />
     <state x="1015" y="256" key="run.anything.popup" timestamp="1602186903117">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
