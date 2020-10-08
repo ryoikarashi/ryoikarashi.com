@@ -62,11 +62,12 @@ src/**/*.map
 /doc/
 
 # IDE #
-.idea/
+/.idea/
 *.swp
 *.iml
 .gitignore
-dist/
+/dist/
 node_modules/
 package.json
 yarn.lock
+.idea/workspace.xml
