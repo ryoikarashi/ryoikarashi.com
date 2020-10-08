@@ -3,8 +3,10 @@ import './index.css';
 
 import axios, {AxiosResponse} from 'axios';
 
+const ENDPOINT = process.env.NODE_ENV === 'development' ? 'localhost:9000' : '';
+
 const getCurrentlyPlaying = (): Promise<AxiosResponse> =>
-    axios.get('//localhost:9000/currently-playing');
+    axios.get(`${ENDPOINT}/.netlify/functions/currently-playing`);
 
 document.addEventListener('DOMContentLoaded', async () => {
     const { data } = await getCurrentlyPlaying();
