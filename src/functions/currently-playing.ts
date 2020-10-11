@@ -4,7 +4,7 @@ import axios from "axios";
 import { stringify as QsStringify } from "query-string";
 import { writeFileSync, readFileSync } from "fs";
 
-const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials.json`;
+const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials1.json`;
 
 // load environment variables from .env
 config();
