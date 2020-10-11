@@ -21,28 +21,26 @@ class Spotify implements ISpotify {
   }
 
   async getAccessTokenAndRefreshToken(): Promise<string> {
-    const { access_token: existingAccessToken } = JSON.parse(await readFileSync(CREDENTIAL_FILE, 'utf-8'));
+    try {
+      const { access_token } = JSON.parse(await readFileSync(CREDENTIAL_FILE, 'utf-8'));
+      return access_token;
+    } catch {
+      const headers = {
+        "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
+        "Content-Type": 'application/x-www-form-urlencoded',
+      };
+      const params = {
+        "grant_type": "authorization_code",
+        "code": process.env.SPOTIFY_AUTHORIZATION_CODE,
+        "redirect_uri": "https://example.com/callback"
+      };
 
-    if (existingAccessToken) {
-      return existingAccessToken;
+      const { data: { access_token, refresh_token } } =
+          await axios.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
+
+      await writeFileSync(CREDENTIAL_FILE, JSON.stringify({ access_token, refresh_token }));
+      return access_token;
     }
-
-    const headers = {
-      "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
-      "Content-Type": 'application/x-www-form-urlencoded',
-    };
-    const params = {
-      "grant_type": "authorization_code",
-      "code": process.env.SPOTIFY_AUTHORIZATION_CODE,
-      "redirect_uri": "https://example.com/callback"
-    };
-
-    const { data: { access_token, refresh_token } } =
-        await axios.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
-
-    await writeFileSync(CREDENTIAL_FILE, JSON.stringify({ access_token, refresh_token }));
-
-    return access_token;
   }
 
   async getCurrentlyListeningTrack(accessToken: string|null): Promise<any> {
