@@ -4,7 +4,7 @@ import axios from "axios";
 import { stringify as QsStringify } from "query-string";
 import { writeFileSync, readFileSync } from "fs";
 
-const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials1.json`;
+const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials.json`;
 const LAST_TRACK = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/last_track.json`;
 
 // load environment variables from .env
@@ -107,7 +107,7 @@ export const handler = async function (
   const accessToken = await Client.getAccessTokenAndRefreshToken();
   const data = await Client.getCurrentlyListeningTrack(accessToken);
 
-  callback(null, {
+  return callback(null, {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
