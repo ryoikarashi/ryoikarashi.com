@@ -6,8 +6,6 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const publicPath = process.env.NODE_ENV === 'production' ? 'https://ryoikarashi.com' : '/';
 
 module.exports = {
-  mode: 'production',
-
   entry: './src/index.ts',
 
   output: {

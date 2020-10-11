@@ -3,7 +3,7 @@ import './index.css';
 
 import axios, {AxiosResponse} from 'axios';
 
-const ENDPOINT = process.env.NODE_ENV === 'development' ? 'localhost:9000' : '';
+const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
 const getCurrentlyPlaying = (): Promise<AxiosResponse> =>
     axios.get(`${ENDPOINT}/.netlify/functions/currently-playing`);
