@@ -5,6 +5,7 @@ import { stringify as QsStringify } from "query-string";
 import { writeFileSync, readFileSync } from "fs";
 
 const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials1.json`;
+const LAST_TRACK = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/last_track.json`;
 
 // load environment variables from .env
 config();
@@ -52,10 +53,17 @@ class Spotify implements ISpotify {
 
     switch (status) {
       case 200: // when listening to a track on spotify
+        await writeFileSync(LAST_TRACK, JSON.stringify(data));
         return data;
       case 401: // when having an expired access token (unauthorized request)
         return await this.getCurrentlyListeningTrack(await this.refreshAccessToken());
       case 204: // when nothing's playing
+        try {
+          const lastTrack = JSON.parse(readFileSync(LAST_TRACK, 'utf-8'));
+          return Object.assign({}, lastTrack, { is_playing: false });
+        } catch {
+          return null;
+        }
       default:
         return null;
     }
