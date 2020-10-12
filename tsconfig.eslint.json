@@ -1,11 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "functions/**/*.js",
-    "src/**/*.ts",
-    ".eslintrc.js"
+    "functions/**/*.{js,ts}",
+    "src/**/*.{js,ts}"
   ],
   "exclude": [
+    "*.js",
     "node_modules",
     "dist"
   ]

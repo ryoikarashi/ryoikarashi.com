@@ -2,13 +2,36 @@ import { APIGatewayProxyEvent, APIGatewayProxyCallback } from "aws-lambda";
 import { config } from 'dotenv';
 import axios from "axios";
 import { stringify as QsStringify } from "query-string";
-import { writeFileSync, readFileSync } from "fs";
+import { isProduction } from "../utils";
 
-const CREDENTIAL_FILE = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/credentials.json`;
-const LAST_TRACK = `${process.env.NODE_ENV === 'production' ? '/tmp' : '.'}/last_track.json`;
+import * as admin from 'firebase-admin';
+import serviceAccount from './serviceAccountKey.json';
+import { ServiceAccount } from "firebase-admin";
 
 // load environment variables from .env
 config();
+
+// Initialise the admin with the credentials when no firebase app
+if (!admin.apps.length) {
+  const adminAppConfig = {
+    databaseURL: process.env.FIRESTORE_DB_URL,
+    credential: admin.credential.cert(serviceAccount as ServiceAccount),
+  };
+  admin.initializeApp(adminAppConfig);
+}
+
+// create a firestore db instance
+const db = admin.firestore();
+
+if (!isProduction && !admin.apps.length) {
+  db.settings({
+    host: process.env.FIRESTORE_DB_URL,
+    ssl: false
+  });
+}
+
+const tokenRef = db.collection('spotify_tokens').doc('ryoikarashi-com');
+const lastTrackRef = db.collection('spotify_last_listening_track').doc('ryoikarashi-com');
 
 interface ISpotify {
   refreshAccessToken(): Promise<string>;
@@ -18,29 +41,41 @@ interface ISpotify {
 
 class Spotify implements ISpotify {
   private static encodeAuthorizationCode(): string {
-    return new Buffer(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64');
+    return Buffer
+        .from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`, 'utf-8')
+        .toString('base64');
   }
 
   async getAccessTokenAndRefreshToken(): Promise<string> {
-    try {
-      const { access_token } = JSON.parse(await readFileSync(CREDENTIAL_FILE, 'utf-8'));
-      return access_token;
-    } catch {
-      const headers = {
-        "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
-        "Content-Type": 'application/x-www-form-urlencoded',
-      };
-      const params = {
-        "grant_type": "authorization_code",
-        "code": process.env.SPOTIFY_AUTHORIZATION_CODE,
-        "redirect_uri": "https://example.com/callback"
-      };
+    const doc = await tokenRef.get();
+    if (doc.exists && doc.data()?.access_token) {
+      return doc.data()?.access_token;
+    }
 
+    const headers = {
+      "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
+      "Content-Type": 'application/x-www-form-urlencoded',
+    };
+    const params = {
+      "grant_type": "authorization_code",
+      "code": process.env.SPOTIFY_AUTHORIZATION_CODE,
+      "redirect_uri": "https://example.com/callback"
+    };
+
+    try {
       const { data: { access_token, refresh_token } } =
           await axios.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
 
-      await writeFileSync(CREDENTIAL_FILE, JSON.stringify({ access_token, refresh_token }));
+      if (doc.exists) {
+        await tokenRef.update({ access_token, refresh_token });
+      } else {
+        await tokenRef.create({ access_token, refresh_token })
+      }
+
       return access_token;
+    } catch(e) {
+      console.log(e.message);
+      return '';
     }
   }
 
@@ -49,28 +84,35 @@ class Spotify implements ISpotify {
       "headers": { "Authorization": `Bearer  ${accessToken}` },
       "muteHttpExceptions": true,
     };
-    const { status, data } = await axios.get("https://api.spotify.com/v1/me/player/currently-playing", options);
 
-    switch (status) {
-      case 200: // when listening to a track on spotify
-        await writeFileSync(LAST_TRACK, JSON.stringify(data));
-        return data;
-      case 401: // when having an expired access token (unauthorized request)
-        return await this.getCurrentlyListeningTrack(await this.refreshAccessToken());
-      case 204: // when nothing's playing
-        try {
-          const lastTrack = JSON.parse(readFileSync(LAST_TRACK, 'utf-8'));
-          return Object.assign({}, lastTrack, { is_playing: false });
-        } catch {
-          return null;
-        }
-      default:
-        return null;
+    try {
+      const { status, data } = await axios.get("https://api.spotify.com/v1/me/player/currently-playing", options);
+
+      switch (status) {
+        case 200: // when listening to a track on spotify
+          if ((await lastTrackRef.get()).exists) {
+            await lastTrackRef.update(data);
+          } else {
+            await lastTrackRef.create(data);
+          }
+          return data;
+        case 401: // when having an expired access token (unauthorized request)
+          return await this.getCurrentlyListeningTrack(await this.refreshAccessToken());
+        case 204: // when nothing's playing
+        default:
+          if (!(await lastTrackRef.get()).exists) {
+            return null;
+          }
+
+          return (await lastTrackRef.get()).data();
+      }
+    } catch {
+      return {};
     }
   }
 
   async refreshAccessToken(): Promise<string> {
-    const { refreshToken } = JSON.parse(await readFileSync(CREDENTIAL_FILE, 'utf-8'));
+    const { refreshToken } = (await tokenRef.get()).data() as admin.firestore.DocumentData;
 
     const headers = {
       "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
@@ -89,10 +131,9 @@ class Spotify implements ISpotify {
 
     const { data: { access_token, refresh_token } } = await axios.get("https://accounts.spotify.com/api/token", options);
 
-    const data = refresh_token
-      ? { access_token, refresh_token }
-      : { access_token };
-    await writeFileSync(CREDENTIAL_FILE, JSON.stringify(data));
+    const data = refresh_token ? { access_token, refresh_token } : { access_token };
+
+    await tokenRef.update(data);
 
     return access_token;
   }
@@ -102,23 +143,22 @@ export const handler = async function (
     event: APIGatewayProxyEvent,
     context: any,
     callback: APIGatewayProxyCallback
-): Promise<void> {
+): Promise<any> {
   const Client = new Spotify();
   const accessToken = await Client.getAccessTokenAndRefreshToken();
+  console.log(accessToken);
   const data = await Client.getCurrentlyListeningTrack(accessToken);
 
-  return callback(null, {
+  return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
     },
     body: JSON.stringify(data),
-  });
+  };
 };
 
 process.on('uncaughtException', function (err) {
-  console.error(err);
+  // console.error(err);
 });
-
-// https://accounts.spotify.com/authorize?response_type=code&scope=user-read-currently-playing&redirect_uri=https://example.com/callback&client_id=6d7477c13aae4568a54db0332dd1ec48
