@@ -15,6 +15,7 @@ if (!admin.apps.length) {
     credential: admin.credential.cert({
       privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY,
       clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+      projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
     }),
   };
   admin.initializeApp(adminAppConfig);
