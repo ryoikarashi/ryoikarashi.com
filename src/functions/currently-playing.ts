@@ -96,12 +96,8 @@ class Spotify implements ISpotify {
             await lastTrackRef.create(data);
           }
           return data;
-        case 401: { // when having an expired access token (unauthorized request)
-          const refreshToken = await this.refreshAccessToken();
-          return await this.getCurrentlyListeningTrack(refreshToken);
-        }
-        case 204: // when nothing's playing
-        default:
+
+        default: // when nothing's playing
           if (!(await lastTrackRef.get()).exists) {
             return null;
           }
@@ -109,6 +105,7 @@ class Spotify implements ISpotify {
           return (await lastTrackRef.get()).data();
       }
     } catch(e) {
+      // when having an expired access token (unauthorized request)
       const refreshToken = await this.refreshAccessToken();
       return await this.getCurrentlyListeningTrack(refreshToken);
     }
