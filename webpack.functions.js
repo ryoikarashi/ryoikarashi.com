@@ -7,8 +7,6 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'serviceAccountKey.json', to: `${__dirname}/functions/serviceAccountKey.json` },
-        { from: 'package.json', to: `${__dirname}/functions/package.json` },
-        { from: 'yarn.lock', to: `${__dirname}/functions/yarn.lock` },
       ],
     }),
   ]
