@@ -21,6 +21,12 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8000,
+    proxy: {
+      "/.netlify": {
+        target: "http://localhost:9000",
+        pathRewrite: { "^/.netlify/functions": "" },
+      },
+    },
   },
 
   module: {
