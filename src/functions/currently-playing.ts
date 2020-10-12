@@ -2,11 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyCallback } from "aws-lambda";
 import { config } from 'dotenv';
 import axios from "axios";
 import { stringify as QsStringify } from "query-string";
-import { isProduction } from "../utils";
-
 import * as admin from 'firebase-admin';
-import * as serviceAccount from './serviceAccountKey.json';
-import { ServiceAccount } from "firebase-admin";
+import { isProduction } from "../utils";
 
 // load environment variables from .env
 config();
@@ -15,7 +12,10 @@ config();
 if (!admin.apps.length) {
   const adminAppConfig = {
     databaseURL: process.env.FIRESTORE_DB_URL,
-    credential: admin.credential.cert(serviceAccount as ServiceAccount),
+    credential: admin.credential.cert({
+      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY,
+      clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+    }),
   };
   admin.initializeApp(adminAppConfig);
 }
