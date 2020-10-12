@@ -1,8 +1,5 @@
-# Local Netlify folder
-.netlify
-/functions
+# Environment variables
 .env
-src/functions/serviceAccountKey.json
 
 # Logs
 logs
@@ -76,3 +73,10 @@ yarn.lock
 # Firebase
 firebase-debug.log
 firestore-debug.log
+
+# Local Netlify folder
+.netlify
+/functions
+src/functions/serviceAccountKey.json
+!src/functions/package.json
+!src/functions/yarn.lock
