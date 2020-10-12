@@ -6,7 +6,12 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: 'serviceAccountKey.json', to: `${__dirname}/functions/serviceAccountKey.json` },
+        {
+          from: 'serviceAccountKey.json', to: `${__dirname}/functions/serviceAccountKey.json`,
+        },
+        {
+          from: `${__dirname}/node_modules`, to: `${__dirname}/functions/node_modules`,
+        },
       ],
     }),
   ]
