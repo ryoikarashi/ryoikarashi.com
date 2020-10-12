@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const isPlaying = data?.is_playing;
     if ($spotifyElement) {
         $spotifyElement.innerHTML = track && artist && trackUrl
-            ? `<a href="${trackUrl}" target="_blank">♫${isPlaying ? 'Currently' : 'Last'} playing: ${data.item.name} - ${artist}</a>`
+            ? `<a href="${trackUrl}" target="_blank">♫ ${isPlaying ? 'Currently playing' : 'Recently played'}: ${data.item.name} - ${artist}</a>`
             : `♫ Nothing's playing right now. Check back later. :)`;
     }
 });
