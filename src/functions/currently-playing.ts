@@ -102,7 +102,7 @@ class Spotify implements ISpotify {
             return null;
           }
 
-          return (await lastTrackRef.get()).data();
+          return Object.assign({}, (await lastTrackRef.get()).data(), { is_playing: false });
       }
     } catch(e) {
       // when having an expired access token (unauthorized request)
