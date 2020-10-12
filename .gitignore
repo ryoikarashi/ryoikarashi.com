@@ -2,6 +2,7 @@
 .netlify
 /functions
 .env
+src/functions/serviceAccountKey.json
 
 # Logs
 logs
@@ -72,5 +73,6 @@ package.json
 yarn.lock
 .idea/workspace.xml
 
-credentials.json
-last_track.json
+# Firebase
+firebase-debug.log
+firestore-debug.log
