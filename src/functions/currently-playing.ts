@@ -75,7 +75,6 @@ class Spotify implements ISpotify {
 
       return access_token;
     } catch(e) {
-      console.log(e.message);
       return '';
     }
   }
@@ -97,8 +96,10 @@ class Spotify implements ISpotify {
             await lastTrackRef.create(data);
           }
           return data;
-        case 401: // when having an expired access token (unauthorized request)
-          return await this.getCurrentlyListeningTrack(await this.refreshAccessToken());
+        case 401: { // when having an expired access token (unauthorized request)
+          const refreshToken = await this.refreshAccessToken();
+          return await this.getCurrentlyListeningTrack(refreshToken);
+        }
         case 204: // when nothing's playing
         default:
           if (!(await lastTrackRef.get()).exists) {
@@ -107,13 +108,15 @@ class Spotify implements ISpotify {
 
           return (await lastTrackRef.get()).data();
       }
-    } catch {
-      return {};
+    } catch(e) {
+      const refreshToken = await this.refreshAccessToken();
+      return await this.getCurrentlyListeningTrack(refreshToken);
     }
   }
 
   async refreshAccessToken(): Promise<string> {
-    const { refreshToken } = (await tokenRef.get()).data() as admin.firestore.DocumentData;
+    const doc = await tokenRef.get();
+    const refreshToken = doc.data()?.refresh_token;
 
     const headers = {
       "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
@@ -125,12 +128,8 @@ class Spotify implements ISpotify {
       "refresh_token": refreshToken
     };
 
-    const options = {
-      "payload": payload,
-      "headers": headers,
-    };
-
-    const { data: { access_token, refresh_token } } = await axios.get("https://accounts.spotify.com/api/token", options);
+    const { data: { access_token, refresh_token } } =
+        await axios.post("https://accounts.spotify.com/api/token", QsStringify(payload), { headers });
 
     const data = refresh_token ? { access_token, refresh_token } : { access_token };
 
@@ -147,7 +146,6 @@ export const handler = async function (
 ): Promise<any> {
   const Client = new Spotify();
   const accessToken = await Client.getAccessTokenAndRefreshToken();
-  console.log(accessToken);
   const data = await Client.getCurrentlyListeningTrack(accessToken);
 
   return {
