@@ -13,9 +13,9 @@ if (!admin.apps.length) {
   const adminAppConfig = {
     databaseURL: process.env.FIRESTORE_DB_URL,
     credential: admin.credential.cert({
-      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY,
+      privateKey: (process.env.FIREBASE_ADMIN_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
       clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-      projectId: (process.env.FIREBASE_ADMIN_PROJECT_ID || '').replace(/\\n/g, '\n'),
+      projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
     }),
   };
   admin.initializeApp(adminAppConfig);
