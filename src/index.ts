@@ -32,6 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const channel = pusher.subscribe('spotify');
     channel.bind('fetch-currently-listening-track', function(data: any) {
-        alert(JSON.stringify(data));
+        updateDOM(data);
     });
 });
