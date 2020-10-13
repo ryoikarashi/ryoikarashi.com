@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     channel.bind('fetch-currently-listening-track', function(data: any) {
         if (isEqual(currentlyListening, data)) {
             updateDOM(data);
+            currentlyListening = data;
         }
     });
 });
