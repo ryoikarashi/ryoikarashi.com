@@ -3,10 +3,20 @@ import { config } from 'dotenv';
 import axios from "axios";
 import { stringify as QsStringify } from "query-string";
 import * as admin from 'firebase-admin';
+import Pusher from 'pusher';
 import { isProduction } from "../utils";
 
 // load environment variables from .env
 config();
+
+// Pusher
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID || '',
+  key: process.env.PUSHER_KEY || '',
+  secret: process.env.PUSHER_SECRET || '',
+  cluster: process.env.PUSHER_CLUSTER || '',
+  encrypted: process.env.PUSHER_ENCRYPTED === 'true',
+});
 
 // Initialise the admin with the credentials when no firebase app
 if (!admin.apps.length) {
@@ -144,6 +154,8 @@ export const handler = async function (
   const Client = new Spotify();
   const accessToken = await Client.getAccessTokenAndRefreshToken();
   const data = await Client.getCurrentlyListeningTrack(accessToken);
+
+  pusher.trigger('my-channel', 'fetch-currently-listening-track', data);
 
   return {
     statusCode: 200,
