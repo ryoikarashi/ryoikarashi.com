@@ -155,7 +155,7 @@ export const handler = async function (
   const accessToken = await Client.getAccessTokenAndRefreshToken();
   const data = await Client.getCurrentlyListeningTrack(accessToken);
 
-  pusher.trigger('my-channel', 'fetch-currently-listening-track', data);
+  pusher.trigger('spotify', 'fetch-currently-listening-track', data);
 
   return {
     statusCode: 200,
