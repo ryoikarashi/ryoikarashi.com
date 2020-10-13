@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const channel = pusher.subscribe('spotify');
     channel.bind('fetch-currently-listening-track', function(data: any) {
-        if (isEqual(currentlyListening, data)) {
+        if (!isEqual(currentlyListening, data)) {
             updateDOM(data);
             currentlyListening = data;
         }
