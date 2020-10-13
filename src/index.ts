@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         cluster: 'ap3'
     });
 
-    const channel = pusher.subscribe('fetch-currently-listening-track');
-    channel.bind('my-event', function(data: any) {
+    const channel = pusher.subscribe('spotify');
+    channel.bind('fetch-currently-listening-track', function(data: any) {
         alert(JSON.stringify(data));
     });
 });
