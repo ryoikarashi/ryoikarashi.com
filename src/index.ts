@@ -4,6 +4,7 @@ import './index.css';
 import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
 
+let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
 const getCurrentlyPlaying = (): Promise<AxiosResponse> =>
@@ -24,6 +25,7 @@ const updateDOM = (data: any) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const { data } = await getCurrentlyPlaying();
+    currentlyListening = data;
     updateDOM(data);
 
     const pusher = new Pusher('f3f5751318b2c7958521', {
@@ -32,6 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const channel = pusher.subscribe('spotify');
     channel.bind('fetch-currently-listening-track', function(data: any) {
-        updateDOM(data);
+        if (currentlyListening !== data) {
+            updateDOM(data);
+        }
     });
 });
