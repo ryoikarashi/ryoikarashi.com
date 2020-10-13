@@ -3,6 +3,7 @@ import './index.css';
 
 import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
+import isEqual from 'lodash.isequal';
 
 let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const channel = pusher.subscribe('spotify');
     channel.bind('fetch-currently-listening-track', function(data: any) {
-        if (currentlyListening !== data) {
+        if (isEqual(currentlyListening, data)) {
             updateDOM(data);
         }
     });
