@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
 import {config} from 'dotenv';
-import {isProduction} from "../../utils";
-import {TokenRepository} from "./Repositories/TokenRepository/TokenRepository";
-import {TrackRepository} from "./Repositories/TrackRepository/TrackRepository";
-import {SpotifyService} from "./Services/Spotify/SpotifyService";
-import {PusherService} from "./Services/Pusher/PusherService";
-import {FirebaseService} from "./Services/Firebase/FirebaseService";
+import {isProduction} from "../utils";
+import {TokenRepository} from "../functions-src/Repositories/TokenRepository/TokenRepository";
+import {TrackRepository} from "../functions-src/Repositories/TrackRepository/TrackRepository";
+import {SpotifyService} from "../functions-src/Services/Spotify/SpotifyService";
+import {PusherService} from "../functions-src/Services/Pusher/PusherService";
+import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
 
 // load environment variables from .env
 config();
