@@ -2,10 +2,10 @@ import axios, {AxiosStatic} from 'axios';
 import {ISpotifyService} from "./ISpotifyService";
 import {ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
 import {ITrackRepository} from "../../Repositories/TrackRepository/ITtrackRepository";
-import {ISpotifyCurrentlyListeningTrackData} from "./ISpotifyCurrentlyListeningTrackData";
 import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
+import {Track} from "../../Domains/Track/Track";
 
 export interface SpotifyConfig {
     clientId: string;
@@ -42,15 +42,15 @@ export class SpotifyService implements ISpotifyService {
                 return currentToken;
             }
 
-            const tokenIssuedWithAuthorizationCode =
-                await Token.firstlyGetTokenWithAuthorizationCode(
+            const tokenIssuedByAuthorizationCode =
+                await this.tokenRepo.getTokenByAuthorizationCode(
                     axios,
                     this.encodeAuthorizationCode(),
                     this.config.authorizationCode
                 );
 
-            await this.tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedWithAuthorizationCode);
-            return Promise.resolve(tokenIssuedWithAuthorizationCode);
+            await this.tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
+            return Promise.resolve(tokenIssuedByAuthorizationCode);
         } catch(e) {
             const token = new Token(
                 new AccessToken(null),
@@ -61,41 +61,17 @@ export class SpotifyService implements ISpotifyService {
     }
 
     // get a currently listening track
-    async getCurrentlyListeningTrack(accessToken: AccessToken): Promise<ISpotifyCurrentlyListeningTrackData> {
-        try {
-            const options = {
-                "headers": { "Authorization": `Bearer  ${accessToken.value()}` },
-            };
-            const { status, data } = await this.http.get("https://api.spotify.com/v1/me/player/currently-playing", options);
-
-            switch (status) {
-                // when listening to a track on spotify
-                case 200: {
-                    await this.trackRepo.storeLastPlayedTrack(data);
-                    return data;
-                }
-
-                // when nothing's playing
-                default: {
-                    const lastPlayedTrack = await this.trackRepo.getLastPlayedTrack();
-                    if (lastPlayedTrack === null) {
-                        return null;
-                    }
-                    return Object.assign({}, lastPlayedTrack, {is_playing: false});
-                }
-            }
-        } catch(e) {
-            // when having an expired access token (unauthorized request)
-            const accessToken = await this.refreshAccessToken();
-            return await this.getCurrentlyListeningTrack(AccessToken.of(accessToken));
-        }
+    async getCurrentlyListeningTrack(accessToken: AccessToken): Promise<Track | null> {
+        return await this.trackRepo.getCurrentlyListeningTrack(accessToken, async () => {
+            return await this.refreshAccessToken();
+        });
     }
 
     // refresh access token with refresh token (access token expires within 1 hour)
-    async refreshAccessToken(): Promise<string> {
+    async refreshAccessToken(): Promise<AccessToken> {
         const token = await this.tokenRepo.getFirstToken();
-        const refreshedToken = await token.refresh(axios, this.encodeAuthorizationCode(), token);
+        const refreshedToken = await this.tokenRepo.refreshAccessToken(axios, token, this.encodeAuthorizationCode());
         await this.tokenRepo.storeAccessTokenAndMaybeRefreshToken(refreshedToken);
-        return refreshedToken.accessToken().value();
+        return refreshedToken.accessToken();
     }
 }

@@ -37,9 +37,9 @@ export const handler = async function (
     callback: APIGatewayProxyCallback
 ): Promise<any> {
     // composition root with pure DI
-    const SpotifyServiceClient = new SpotifyService(
+    const spotify = new SpotifyService(
         new TokenRepository(db),
-        new TrackRepository(db),
+        new TrackRepository(db, axios),
         axios,
         {
             authorizationCode: process.env.SPOTIFY_AUTHORIZATION_CODE || '',
@@ -49,8 +49,8 @@ export const handler = async function (
     );
 
     // get a currently playing track with an access token
-    const token = await SpotifyServiceClient.getToken();
-    const data = await SpotifyServiceClient.getCurrentlyListeningTrack(token.accessToken());
+    const token = await spotify.getToken();
+    const data = await spotify.getCurrentlyListeningTrack(token.accessToken());
 
     // send a currently listening track data to the client
     pusher.trigger('spotify', 'fetch-currently-listening-track', data);

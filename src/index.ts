@@ -4,6 +4,7 @@ import './index.css';
 import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
 import isEqual from 'lodash.isequal';
+import {Track} from "./functions-src/Domains/Track/Track";
 
 let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
@@ -11,15 +12,11 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:
 const getCurrentlyPlaying = (): Promise<AxiosResponse> =>
     axios.get(`${ENDPOINT}/.netlify/functions/currently-playing`);
 
-const updateDOM = (data: any) => {
+const updateDOM = (track: Track) => {
     const $spotifyElement = document.getElementById('spotify');
-    const track = data?.item?.name;
-    const artist = data?.item?.artists[0]?.name;
-    const trackUrl = data?.item?.external_urls?.spotify;
-    const isPlaying = data?.is_playing;
     if ($spotifyElement) {
-        $spotifyElement.innerHTML = track && artist && trackUrl
-            ? `<a href="${trackUrl}" target="_blank">♫ ${isPlaying ? 'Currently playing' : 'Recently played'}: ${data.item.name} - ${artist}</a>`
+        $spotifyElement.innerHTML = track && track?.artist && track?.link
+            ? `<a href="${track.link}" target="_blank">♫ ${track.isPlaying ? 'Currently playing' : 'Recently played'}: ${track.name} - ${track.artist}</a>`
             : `♫ Nothing's playing right now. Check back later. :)`;
     }
 };
