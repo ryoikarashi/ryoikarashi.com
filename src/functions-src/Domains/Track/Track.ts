@@ -2,11 +2,12 @@ import {Name} from "./Name";
 import {Artist} from "./Artist";
 import {Link} from "./Link";
 import {IsPlaying} from "./IsPlaying";
+import {IDomain} from "../IDomain";
 
-export class Track {
+export class Track implements IDomain {
     private readonly _name;
     private readonly _artist;
-    private readonly _isPlaying;
+    private _isPlaying;
     private readonly _link;
 
     constructor(name: Name, artist: Artist, isPlaying: IsPlaying, link: Link) {
@@ -24,11 +25,28 @@ export class Track {
         return this._artist;
     }
 
-    public isPlaying(): IsPlaying {
+    public get isPlaying(): IsPlaying {
         return this._isPlaying;
+    }
+
+    public set isPlaying(isPlaying: IsPlaying) {
+        this._isPlaying = isPlaying;
     }
 
     public link(): Link {
         return this._link;
+    }
+
+    isValid(): boolean {
+        return this._name.value() !== null && !!this._name.value().length;
+    }
+
+    toJson(): { [p: string]: unknown } {
+        return {
+            name: this._name.value(),
+            artist: this._artist.value(),
+            isPlaying: this._isPlaying.value(),
+            link: this._link.value(),
+        };
     }
 }
