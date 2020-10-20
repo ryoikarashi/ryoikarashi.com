@@ -17,15 +17,15 @@ export class TokenRepository implements ITokenRepository {
             .doc('ryoikarashi-com');
     }
 
-    async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
+    public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
         const doc = await this._ref.get();
-        const data = token.refreshToken().isValid()
-            ? { access_token: token.accessToken().value(), refresh_token: token.refreshToken().value() }
-            : { access_token: token.accessToken().value() };
+        const data = token.refreshToken.isValid()
+            ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
+            : { access_token: token.accessToken.value() };
         doc.exists && (await this._ref.update(data)) || (await this._ref.create(data));
     }
 
-    async getFirstToken(): Promise<Token> {
+    public async getFirstToken(): Promise<Token> {
         const doc = await this._ref.get();
         return new Token(
             AccessToken.of(doc?.exists && doc?.data()?.access_token || null),
@@ -53,7 +53,7 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 
-    async refreshAccessToken(http: AxiosStatic, currentToken: Token, encodedAuthorizationCode: string): Promise<Token> {
+    public async refreshToken(http: AxiosStatic, currentToken: Token, encodedAuthorizationCode: string): Promise<Token> {
         const headers = {
             "Authorization": `Basic ${encodedAuthorizationCode}`,
             "Content-Type": "application/x-www-form-urlencoded"
@@ -61,7 +61,7 @@ export class TokenRepository implements ITokenRepository {
 
         const payload = {
             "grant_type": "refresh_token",
-            "refresh_token": currentToken.refreshToken().value(),
+            "refresh_token": currentToken.refreshToken.value(),
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
@@ -75,4 +75,3 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 }
-

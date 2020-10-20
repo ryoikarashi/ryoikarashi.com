@@ -16,6 +16,6 @@ export class RefreshToken implements ValueObject<string | null> {
     }
 
     public isValid(): boolean {
-        return this._value !== null && !!this._value.length;
+        return this._value !== null && !!this._value?.length;
     }
 }

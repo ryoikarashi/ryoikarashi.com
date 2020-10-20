@@ -22,17 +22,12 @@ export class TrackRepository implements ITrackRepository {
         this._http = http;
     }
 
-    async storeLastPlayedTrack(data: ISpotifyCurrentlyListeningTrackData): Promise<void> {
+    public async storeLastPlayedTrack(data: ISpotifyCurrentlyListeningTrackData): Promise<void> {
         const doc = await this._ref.get();
         doc.exists && (await this._ref.update(data)) || (await this._ref.create(data));
     }
 
-    async exists(): Promise<boolean> {
-        const doc = await this._ref.get();
-        return doc.exists;
-    }
-
-    async getLastPlayedTrack(): Promise<Track> {
+    public async getLastPlayedTrack(): Promise<Track> {
         const doc = await this._ref.get();
         if (!doc.exists) {
             return new Track(
@@ -54,7 +49,7 @@ export class TrackRepository implements ITrackRepository {
         return Promise.resolve(track);
     }
 
-    async getCurrentlyListeningTrack(accessToken: AccessToken, callback: () => Promise<AccessToken>): Promise<Track | null> {
+    public async getCurrentlyListeningTrack(accessToken: AccessToken, callback: () => Promise<AccessToken>): Promise<Track> {
         try {
             const options = {
                 "headers": { "Authorization": `Bearer  ${accessToken.value()}` },
@@ -66,14 +61,24 @@ export class TrackRepository implements ITrackRepository {
                 // when listening to a track on spotify
                 case 200: {
                     await this.storeLastPlayedTrack(data);
-                    return data;
+                    return new Track(
+                        Name.of(data?.item?.name),
+                        Artist.of(data?.item?.artists[0]?.name),
+                        IsPlaying.of(data?.is_playing),
+                        Link.of(data?.item?.external_urls?.spotify),
+                    );
                 }
 
                 // when nothing's playing
                 default: {
                     const lastPlayedTrack = await this.getLastPlayedTrack();
                     if (!lastPlayedTrack.isValid()) {
-                        return null;
+                        return new Track(
+                            Name.of(null),
+                            Artist.of(null),
+                            IsPlaying.of(null),
+                            Link.of(null),
+                        );
                     }
                     lastPlayedTrack.isPlaying = IsPlaying.of(false);
                     return lastPlayedTrack;

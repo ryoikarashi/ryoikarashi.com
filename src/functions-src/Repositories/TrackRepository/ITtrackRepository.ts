@@ -4,9 +4,8 @@ import {AccessToken} from "../../Domains/Token/AccessToken";
 
 export interface ITrackRepository {
     // queries
-    exists(): Promise<boolean>;
     getLastPlayedTrack(): Promise<Track>;
-    getCurrentlyListeningTrack(accessToken: AccessToken, callback: () => Promise<AccessToken>): Promise<Track | null>;
+    getCurrentlyListeningTrack(accessToken: AccessToken, callback: () => Promise<AccessToken>): Promise<Track>;
     //commands
     storeLastPlayedTrack(data: ISpotifyCurrentlyListeningTrackData): Promise<void>;
 }

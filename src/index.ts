@@ -21,10 +21,27 @@ const updateDOM = (track: Track) => {
     }
 };
 
+const playClickSound = () => {
+    const clickSound = document.getElementById('clickSound') as HTMLMediaElement;
+    clickSound.muted = false;
+    clickSound.volume = 0.05;
+    Array.from(document.querySelectorAll('a')).map(item => {
+        item.addEventListener('mouseenter', async () => {
+            await clickSound.play();
+        }, false);
+
+        item.addEventListener('mouseleave', async () => {
+            await clickSound.pause();
+            clickSound.currentTime = 0;
+        }, false);
+    });
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const { data } = await getCurrentlyPlaying();
     currentlyListening = data;
     updateDOM(data);
+    playClickSound();
 
     const pusher = new Pusher('f3f5751318b2c7958521', {
         cluster: 'ap3'
