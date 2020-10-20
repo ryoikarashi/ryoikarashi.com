@@ -53,7 +53,7 @@ export const handler = async function (
     const data = await spotify.getCurrentlyListeningTrack(token.accessToken);
 
     // send a currently listening track data to the client
-    pusher.trigger('spotify', 'fetch-currently-listening-track', data);
+    pusher.trigger('spotify', 'fetch-currently-listening-track', data.toPlainObj());
 
     // return response
     return {
