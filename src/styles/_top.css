@@ -33,9 +33,3 @@ body,
   background-size: cover;
   background-repeat: no-repeat;
 }
-
-small {
-  padding-right: .25rem;
-  padding-left: .25rem;
-  background-color: rgba(0,0,0,.7);
-}

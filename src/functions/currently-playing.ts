@@ -1,172 +1,72 @@
-import { APIGatewayProxyEvent, APIGatewayProxyCallback } from "aws-lambda";
-import { config } from 'dotenv';
-import axios from "axios";
-import { stringify as QsStringify } from "query-string";
-import * as admin from 'firebase-admin';
-import Pusher from 'pusher';
-import { isProduction } from "../utils";
+import axios from 'axios';
+import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
+import {config} from 'dotenv';
+import {isProduction} from "../utils";
+import {TokenRepository} from "../functions-src/Repositories/TokenRepository/TokenRepository";
+import {TrackRepository} from "../functions-src/Repositories/TrackRepository/TrackRepository";
+import {SpotifyService} from "../functions-src/Services/Spotify/SpotifyService";
+import {PusherService} from "../functions-src/Services/Pusher/PusherService";
+import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
 
 // load environment variables from .env
 config();
 
-// Pusher
-const pusher = new Pusher({
-  appId: process.env.PUSHER_APP_ID || '',
-  key: process.env.PUSHER_KEY || '',
-  secret: process.env.PUSHER_SECRET || '',
-  cluster: process.env.PUSHER_CLUSTER || '',
-  encrypted: process.env.PUSHER_ENCRYPTED === 'true',
-});
+// initialize firebase
+const db = new FirebaseService({
+    databaseURL: process.env.FIRESTORE_DB_URL || '',
+    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY || '',
+    clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || '',
+    projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || '',
+}).init();
 
-// Initialise the admin with the credentials when no firebase app
-if (!admin.apps.length) {
-  const adminAppConfig = {
-    databaseURL: process.env.FIRESTORE_DB_URL,
-    credential: admin.credential.cert({
-      privateKey: (process.env.FIREBASE_ADMIN_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
-      clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-      projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-    }),
-  };
-  admin.initializeApp(adminAppConfig);
-}
-
-// create a firestore db instance
-const db = admin.firestore();
-
-if (!isProduction && !admin.apps.length) {
-  db.settings({
-    host: process.env.FIRESTORE_DB_URL,
-    ssl: false
-  });
-}
-
-const tokenRef = db.collection('spotify_tokens').doc('ryoikarashi-com');
-const lastTrackRef = db.collection('spotify_last_listening_track').doc('ryoikarashi-com');
-
-interface ISpotify {
-  refreshAccessToken(): Promise<string>;
-  getCurrentlyListeningTrack(accessToken: string|null): Promise<any>;
-  getAccessTokenAndRefreshToken(): Promise<string>;
-}
-
-class Spotify implements ISpotify {
-  private static encodeAuthorizationCode(): string {
-    return Buffer
-        .from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`, 'utf-8')
-        .toString('base64');
-  }
-
-  async getAccessTokenAndRefreshToken(): Promise<string> {
-    const doc = await tokenRef.get();
-    if (doc.exists && doc.data()?.access_token) {
-      return doc.data()?.access_token;
-    }
-
-    const headers = {
-      "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
-      "Content-Type": 'application/x-www-form-urlencoded',
-    };
-    const params = {
-      "grant_type": "authorization_code",
-      "code": process.env.SPOTIFY_AUTHORIZATION_CODE,
-      "redirect_uri": "https://example.com/callback"
-    };
-
-    try {
-      const { data: { access_token, refresh_token } } =
-          await axios.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
-
-      if (doc.exists) {
-        await tokenRef.update({ access_token, refresh_token });
-      } else {
-        await tokenRef.create({ access_token, refresh_token })
-      }
-
-      return access_token;
-    } catch(e) {
-      return '';
-    }
-  }
-
-  async getCurrentlyListeningTrack(accessToken: string|null): Promise<any> {
-    const options = {
-      "headers": { "Authorization": `Bearer  ${accessToken}` },
-      "muteHttpExceptions": true,
-    };
-
-    try {
-      const { status, data } = await axios.get("https://api.spotify.com/v1/me/player/currently-playing", options);
-
-      switch (status) {
-        case 200: // when listening to a track on spotify
-          if ((await lastTrackRef.get()).exists) {
-            await lastTrackRef.update(data);
-          } else {
-            await lastTrackRef.create(data);
-          }
-          return data;
-
-        default: // when nothing's playing
-          if (!(await lastTrackRef.get()).exists) {
-            return null;
-          }
-
-          return Object.assign({}, (await lastTrackRef.get()).data(), { is_playing: false });
-      }
-    } catch(e) {
-      // when having an expired access token (unauthorized request)
-      const refreshToken = await this.refreshAccessToken();
-      return await this.getCurrentlyListeningTrack(refreshToken);
-    }
-  }
-
-  async refreshAccessToken(): Promise<string> {
-    const doc = await tokenRef.get();
-    const refreshToken = doc.data()?.refresh_token;
-
-    const headers = {
-      "Authorization": `Basic ${Spotify.encodeAuthorizationCode()}`,
-      "Content-Type": "application/x-www-form-urlencoded"
-    };
-
-    const payload = {
-      "grant_type": "refresh_token",
-      "refresh_token": refreshToken
-    };
-
-    const { data: { access_token, refresh_token } } =
-        await axios.post("https://accounts.spotify.com/api/token", QsStringify(payload), { headers });
-
-    const data = refresh_token ? { access_token, refresh_token } : { access_token };
-
-    await tokenRef.update(data);
-
-    return access_token;
-  }
-}
+// initialize pusher
+const pusher = new PusherService({
+    appId: process.env.PUSHER_APP_ID || '',
+    key: process.env.PUSHER_KEY || '',
+    secret: process.env.PUSHER_SECRET || '',
+    cluster: process.env.PUSHER_CLUSTER || '',
+    encrypted: process.env.PUSHER_ENCRYPTED === 'true',
+}).init();
 
 export const handler = async function (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     event: APIGatewayProxyEvent,
-    context: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    context: never,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     callback: APIGatewayProxyCallback
 ): Promise<any> {
-  const Client = new Spotify();
-  const accessToken = await Client.getAccessTokenAndRefreshToken();
-  const data = await Client.getCurrentlyListeningTrack(accessToken);
+    // composition root with pure DI
+    const spotify = new SpotifyService(
+        new TokenRepository(db),
+        new TrackRepository(db, axios),
+        axios,
+        {
+            authorizationCode: process.env.SPOTIFY_AUTHORIZATION_CODE || '',
+            clientId: process.env.SPOTIFY_CLIENT_ID || '',
+            clientSecret: process.env.SPOTIFY_CLIENT_SECRET || '',
+        },
+    );
 
-  pusher.trigger('spotify', 'fetch-currently-listening-track', data);
+    // get a currently playing track with an access token
+    const token = await spotify.getToken();
+    const data = await spotify.getCurrentlyListeningTrack(token.accessToken);
 
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
-    },
-    body: JSON.stringify(data),
-  };
+    // send a currently listening track data to the client
+    pusher.trigger('spotify', 'fetch-currently-listening-track', data);
+
+    // return response
+    return {
+        statusCode: 200,
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin':
+                isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
+        },
+        body: data.toJson(),
+    };
 };
 
 process.on('uncaughtException', function (err) {
-  // console.error(err);
+    console.error(err);
 });
