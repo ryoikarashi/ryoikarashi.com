@@ -1,7 +1,13 @@
 import {RefreshToken} from "./RefreshToken";
 import {AccessToken} from "./AccessToken";
+import {IDomain} from "../IDomain";
 
-export class Token {
+export interface TokenPlainObj {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export class Token implements IDomain<TokenPlainObj> {
     private readonly _accessToken: AccessToken;
     private readonly _refreshToken: RefreshToken;
 
@@ -16,5 +22,20 @@ export class Token {
 
     public get refreshToken(): RefreshToken {
         return this._refreshToken;
+    }
+
+    isValid(): boolean {
+        return this._accessToken.value() !== null && !!this._accessToken.value().length;
+    }
+
+    toPlainObj(): TokenPlainObj {
+        return {
+            accessToken: this._accessToken.value(),
+            refreshToken: this._refreshToken.value(),
+        };
+    }
+
+    toJson(): string {
+        return JSON.stringify(this.toPlainObj());
     }
 }

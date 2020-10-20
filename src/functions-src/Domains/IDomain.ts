@@ -1,4 +1,5 @@
-export interface IDomain {
+export interface IDomain<T> {
     isValid(): boolean;
+    toPlainObj(): T;
     toJson(): string;
 }

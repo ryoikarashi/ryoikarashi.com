@@ -4,7 +4,14 @@ import {Link} from "./Link";
 import {IsPlaying} from "./IsPlaying";
 import {IDomain} from "../IDomain";
 
-export class Track implements IDomain {
+export interface TrackPlainObj {
+    name: string;
+    artist: string;
+    isPlaying: boolean;
+    link: string;
+}
+
+export class Track implements IDomain<TrackPlainObj> {
     private readonly _name;
     private readonly _artist;
     private _isPlaying;
@@ -41,12 +48,16 @@ export class Track implements IDomain {
         return this._name.value() !== null && !!this._name.value().length;
     }
 
-    toJson(): string {
-        return JSON.stringify({
+    toPlainObj(): TrackPlainObj {
+        return {
             name: this._name.value(),
             artist: this._artist.value(),
             isPlaying: this._isPlaying.value(),
             link: this._link.value(),
-        });
+        }
+    }
+
+    toJson(): string {
+        return JSON.stringify(this.toPlainObj());
     }
 }

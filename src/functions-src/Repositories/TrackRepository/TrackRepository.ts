@@ -1,7 +1,6 @@
 import * as admin from "firebase-admin";
 import {ITrackRepository} from "./ITtrackRepository";
-import {ISpotifyCurrentlyListeningTrackData} from "../../Services/Spotify/ISpotifyCurrentlyListeningTrackData";
-import {Track} from "../../Domains/Track/Track";
+import {Track, TrackPlainObj} from "../../Domains/Track/Track";
 import {Name} from "../../Domains/Track/Name";
 import {Artist} from "../../Domains/Track/Artist";
 import {IsPlaying} from "../../Domains/Track/IsPlaying";
@@ -22,7 +21,7 @@ export class TrackRepository implements ITrackRepository {
         this._http = http;
     }
 
-    public async storeLastPlayedTrack(data: ISpotifyCurrentlyListeningTrackData): Promise<void> {
+    public async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
         const doc = await this._ref.get();
         doc.exists && (await this._ref.update(data)) || (await this._ref.create(data));
     }
@@ -60,13 +59,14 @@ export class TrackRepository implements ITrackRepository {
             switch (status) {
                 // when listening to a track on spotify
                 case 200: {
-                    await this.storeLastPlayedTrack(data);
-                    return new Track(
+                    const track = new Track(
                         Name.of(data?.item?.name),
                         Artist.of(data?.item?.artists[0]?.name),
                         IsPlaying.of(data?.is_playing),
                         Link.of(data?.item?.external_urls?.spotify),
                     );
+                    await this.storeLastPlayedTrack(track.toPlainObj());
+                    return track;
                 }
 
                 // when nothing's playing
