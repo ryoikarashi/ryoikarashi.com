@@ -4,7 +4,7 @@ import './index.css';
 import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
 import isEqual from 'lodash.isequal';
-import {Track} from "./functions-src/Domains/Track/Track";
+import {TrackPlainObj} from "./functions-src/Domains/Track/Track";
 
 let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
@@ -12,7 +12,7 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:
 const getCurrentlyPlaying = (): Promise<AxiosResponse> =>
     axios.get(`${ENDPOINT}/.netlify/functions/currently-playing`);
 
-const updateDOM = (track: Track) => {
+const updateDOM = (track: TrackPlainObj) => {
     const $spotifyElement = document.getElementById('spotify');
     if ($spotifyElement) {
         $spotifyElement.innerHTML = track && track?.artist && track?.link
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const channel = pusher.subscribe('spotify');
-    channel.bind('fetch-currently-listening-track', function(data: any) {
+    channel.bind('fetch-currently-listening-track', function(data: TrackPlainObj) {
         if (!isEqual(currentlyListening, data)) {
             updateDOM(data);
             currentlyListening = data;
