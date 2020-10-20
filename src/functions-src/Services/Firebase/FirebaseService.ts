@@ -9,27 +9,27 @@ export interface FirebaseAdminAppConfig {
 }
 
 export class FirebaseService {
-    private readonly databaseURL: string;
-    private readonly privateKey: string;
-    private readonly clientEmail: string;
-    private readonly projectId: string;
+    private readonly _databaseURL: string;
+    private readonly _privateKey: string;
+    private readonly _clientEmail: string;
+    private readonly _projectId: string;
 
     constructor(params: FirebaseAdminAppConfig) {
-        this.databaseURL = params.databaseURL;
-        this.privateKey = params.privateKey;
-        this.clientEmail = params.clientEmail;
-        this.projectId = params.projectId;
+        this._databaseURL = params.databaseURL;
+        this._privateKey = params.privateKey;
+        this._clientEmail = params.clientEmail;
+        this._projectId = params.projectId;
     }
 
-    init(): FirebaseFirestore.Firestore {
+    public init(): FirebaseFirestore.Firestore {
         // Initialise firebase admin with the credentials when there is no firebase app
         if (!admin.apps.length) {
             admin.initializeApp({
-                databaseURL: this.databaseURL,
+                databaseURL: this._databaseURL,
                 credential: admin.credential.cert({
-                    privateKey: this.privateKey.replace(/\\n/g, '\n'), // without this replacing leads to a malformed token
-                    clientEmail: this.clientEmail,
-                    projectId: this.projectId,
+                    privateKey: this._privateKey.replace(/\\n/g, '\n'), // without this replacing leads to a malformed token
+                    clientEmail: this._clientEmail,
+                    projectId: this._projectId,
                 }),
             });
         }
@@ -40,7 +40,7 @@ export class FirebaseService {
         // tweak db settings for local development
         if (!isProduction && !admin.apps.length) {
             db.settings({
-                host: this.databaseURL,
+                host: this._databaseURL,
                 ssl: false
             });
         }

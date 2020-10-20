@@ -9,6 +9,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    backgroundColor: ['hover'],
+    textColor: ['hover'],
+  },
   plugins: [],
 }

@@ -17,11 +17,11 @@ export class Track implements IDomain {
         this._link = link;
     }
 
-    public name(): Name {
+    public get name(): Name {
         return this._name;
     }
 
-    public artist(): Artist {
+    public get artist(): Artist {
         return this._artist;
     }
 
@@ -33,7 +33,7 @@ export class Track implements IDomain {
         this._isPlaying = isPlaying;
     }
 
-    public link(): Link {
+    public get link(): Link {
         return this._link;
     }
 
@@ -41,12 +41,12 @@ export class Track implements IDomain {
         return this._name.value() !== null && !!this._name.value().length;
     }
 
-    toJson(): { [p: string]: unknown } {
-        return {
+    toJson(): string {
+        return JSON.stringify({
             name: this._name.value(),
             artist: this._artist.value(),
             isPlaying: this._isPlaying.value(),
             link: this._link.value(),
-        };
+        });
     }
 }

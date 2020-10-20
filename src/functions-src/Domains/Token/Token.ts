@@ -10,11 +10,11 @@ export class Token {
         this._refreshToken = refreshToken;
     }
 
-    accessToken(): AccessToken {
+    public get accessToken(): AccessToken {
         return this._accessToken;
     }
 
-    refreshToken(): RefreshToken {
+    public get refreshToken(): RefreshToken {
         return this._refreshToken;
     }
 }

@@ -56,11 +56,39 @@ module.exports = {
                       return attributes.property === 'og:image' || attributes.name === 'twitter:image';
                     },
                   },
+                  {
+                    tag: 'audio',
+                    attribute: 'src',
+                    type: 'src',
+                  },
+                  {
+                    tag: 'source',
+                    attribute: 'src',
+                    type: 'src',
+                  },
+                  {
+                    tag: 'iframe',
+                    attribute: 'src',
+                    type: 'src',
+                  },
                 ],
               },
             },
           },
         ],
+      },
+      {
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash].[ext]',
+            publicPath: process.env.NODE_ENV === 'production'
+              ? 'https://ryoikarashi.com/assets/sounds'
+              : '/assets/sounds',
+            outputPath: '/assets/sounds',
+          },
+        }],
       },
       {
         test: /\.css$/,
@@ -96,7 +124,7 @@ module.exports = {
               name: '[name].[hash].[ext]',
               limit: '10000',
               publicPath: process.env.NODE_ENV === 'production'
-                ? 'https://ryoikarashi.com/assets/images'
+                ? 'https://ryoikarashi.com/assets/fonts'
                 : '/assets/fonts',
               outputPath: '/assets/fonts',
             },

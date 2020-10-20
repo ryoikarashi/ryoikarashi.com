@@ -14,64 +14,65 @@ export interface SpotifyConfig {
 }
 
 export class SpotifyService implements ISpotifyService {
-    private readonly tokenRepo: ITokenRepository;
-    private readonly trackRepo: ITrackRepository;
-    private readonly http: AxiosStatic;
-    private readonly config: SpotifyConfig;
+    private readonly _tokenRepo: ITokenRepository;
+    private readonly _trackRepo: ITrackRepository;
+    private readonly _http: AxiosStatic;
+    private readonly _config: SpotifyConfig;
 
     constructor(tokenRepo: ITokenRepository, trackRepo: ITrackRepository, http: AxiosStatic, config: SpotifyConfig) {
-        this.tokenRepo = tokenRepo;
-        this.trackRepo = trackRepo;
-        this.http = http;
-        this.config = config;
+        this._tokenRepo = tokenRepo;
+        this._trackRepo = trackRepo;
+        this._http = http;
+        this._config = config;
     }
 
     // encode authorization code to Base64
     private encodeAuthorizationCode(): string {
         return Buffer
-            .from(`${this.config.clientId}:${this.config.clientSecret}`, 'utf-8')
+            .from(`${this._config.clientId}:${this._config.clientSecret}`, 'utf-8')
             .toString('base64');
     }
 
     // get an access token and refresh token with authorization code
-    async getToken(): Promise<Token> {
+    public async getToken(): Promise<Token> {
         try {
-            const currentToken = await this.tokenRepo.getFirstToken();
+            const currentToken = await this._tokenRepo.getFirstToken();
 
-            if (currentToken.accessToken().isValid() && currentToken.refreshToken().isValid()) {
+            if (currentToken.accessToken.isValid() && currentToken.refreshToken.isValid()) {
                 return currentToken;
             }
 
             const tokenIssuedByAuthorizationCode =
-                await this.tokenRepo.getTokenByAuthorizationCode(
+                await this._tokenRepo.getTokenByAuthorizationCode(
                     axios,
                     this.encodeAuthorizationCode(),
-                    this.config.authorizationCode
+                    this._config.authorizationCode
                 );
 
-            await this.tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
+            await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
             return Promise.resolve(tokenIssuedByAuthorizationCode);
         } catch(e) {
-            const token = new Token(
-                new AccessToken(null),
-                new RefreshToken(null),
+            return Promise.resolve(
+                new Token(
+                    AccessToken.of(null),
+                    RefreshToken.of(null),
+                )
             );
-            return Promise.resolve(token);
         }
     }
 
     // get a currently listening track
-    async getCurrentlyListeningTrack(accessToken: AccessToken): Promise<Track | null> {
-        return await this.trackRepo.getCurrentlyListeningTrack(accessToken, async () => {
+    public async getCurrentlyListeningTrack(accessToken: AccessToken): Promise<Track> {
+        return await this._trackRepo.getCurrentlyListeningTrack(accessToken, async () => {
             return await this.refreshAccessToken();
         });
     }
 
     // refresh access token with refresh token (access token expires within 1 hour)
-    async refreshAccessToken(): Promise<AccessToken> {
-        const token = await this.tokenRepo.getFirstToken();
-        const refreshedToken = await this.tokenRepo.refreshAccessToken(axios, token, this.encodeAuthorizationCode());
-        await this.tokenRepo.storeAccessTokenAndMaybeRefreshToken(refreshedToken);
-        return refreshedToken.accessToken();
+    public async refreshAccessToken(): Promise<AccessToken> {
+        const token = await this._tokenRepo.getFirstToken();
+        const refreshedToken = await this._tokenRepo.refreshToken(axios, token, this.encodeAuthorizationCode());
+        await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(refreshedToken);
+        return refreshedToken.accessToken;
     }
 }
