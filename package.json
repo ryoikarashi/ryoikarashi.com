@@ -13,7 +13,10 @@
     "build": "yarn run clean && NODE_ENV=development webpack --config webpack.config.js --mode development && yarn run build-functions",
     "build:prod": "yarn run clean && NODE_ENV=production webpack --config webpack.config.js --mode production && yarn run build-functions",
     "serve": "NODE_ENV=development netlify-lambda serve --config webpack.functions.js src/functions/",
-    "firestore-emulator": "firebase emulators:start --only firestore"
+    "firestore-emulator": "firebase emulators:start --only firestore",
+    "test": "yarn test:test && yarn test:prod",
+    "test:test": "jest",
+    "test:prod": "NODE_ENV=production jest"
   },
   "husky": {
     "hooks": {
@@ -23,6 +26,24 @@
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix"
+    ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/?(*.)(spec|test).ts",
+      "**/tests/**/*.test.ts"
     ]
   },
   "dependencies": {
@@ -75,5 +96,10 @@
   },
   "engines": {
     "node": "^14.13.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "jest": "^26.6.0",
+    "ts-jest": "^26.4.1"
   }
 }
