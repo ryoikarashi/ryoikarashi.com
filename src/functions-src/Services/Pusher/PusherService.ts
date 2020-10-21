@@ -5,14 +5,14 @@ export class PusherService {
     private readonly _key: string;
     private readonly _secret: string;
     private readonly _cluster: string | undefined;
-    private readonly _encrypted: boolean | undefined;
+    private readonly _useTLS: boolean | undefined;
 
     constructor(params: Options) {
         this._appId = params.appId;
         this._key = params.key;
         this._secret = params.secret;
         this._cluster = "cluster" in params ? params.cluster : undefined;
-        this._encrypted = params.encrypted;
+        this._useTLS = params.useTLS;
     }
 
     public init(): Pusher {
@@ -21,7 +21,7 @@ export class PusherService {
             key: this._key,
             secret: this._secret,
             cluster: this._cluster || '',
-            encrypted: this._encrypted,
+            useTLS: this._useTLS,
         });
     }
 }
