@@ -37,12 +37,12 @@ export class TrackRepository implements ITrackRepository {
             );
         }
 
-        const data = doc.data();
+        const data = doc.data() as TrackPlainObj;
         const track = new Track(
-            Name.of(data?.item?.name),
-            Artist.of(data?.item?.artists[0]?.name),
-            IsPlaying.of(data?.is_playing),
-            Link.of(data?.item?.external_urls?.spotify),
+            Name.of(data?.name || null),
+            Artist.of(data?.artist || null),
+            IsPlaying.of(data?.isPlaying || false),
+            Link.of(data?.link || null),
         );
 
         return Promise.resolve(track);
@@ -71,17 +71,7 @@ export class TrackRepository implements ITrackRepository {
 
                 // when nothing's playing
                 default: {
-                    const lastPlayedTrack = await this.getLastPlayedTrack();
-                    if (!lastPlayedTrack.isValid()) {
-                        return new Track(
-                            Name.of(null),
-                            Artist.of(null),
-                            IsPlaying.of(null),
-                            Link.of(null),
-                        );
-                    }
-                    lastPlayedTrack.isPlaying = IsPlaying.of(false);
-                    return lastPlayedTrack;
+                    return await this.getLastPlayedTrack();
                 }
             }
         } catch(e) {
