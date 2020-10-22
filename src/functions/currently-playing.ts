@@ -25,7 +25,7 @@ const pusher = new PusherService({
     key: process.env.PUSHER_KEY || '',
     secret: process.env.PUSHER_SECRET || '',
     cluster: process.env.PUSHER_CLUSTER || '',
-    encrypted: process.env.PUSHER_ENCRYPTED === 'true',
+    useTLS: process.env.PUSHER_USE_TLS === 'true',
 }).init();
 
 export const handler = async function (
