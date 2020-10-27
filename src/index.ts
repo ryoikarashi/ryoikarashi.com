@@ -6,6 +6,7 @@ import axios, {AxiosResponse} from 'axios';
 import isEqual from 'lodash.isequal';
 import imagesLoaded from 'imagesloaded';
 import {TrackPlainObj} from "./functions-src/Domains/Track/Track";
+import defaultBg from './assets/bg.jpeg';
 
 let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
@@ -60,11 +61,26 @@ const toggleContent = () => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const [{ data: trackData }, { data: { url } }] = await Promise.all([
+    const results = await Promise.allSettled([
         getCurrentlyPlaying(),
         getARandomPhoto(),
-    ]);
+   ]);
 
+    const [trackData, url] = results.map((result, index) => {
+        if (index === 0) {
+            return result.status === 'fulfilled'
+                ? result.value.data
+                : {
+                    isPlaying: false,
+                    link: "",
+                    name: "",
+                    artist: '',
+                };
+        }
+        if (index === 1) {
+            return result.status === 'fulfilled' ? result.value.data.url : defaultBg;
+        }
+    })
 
     // update background image
     updateBg(url);
