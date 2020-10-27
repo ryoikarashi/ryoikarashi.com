@@ -4,7 +4,9 @@ import './index.css';
 import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
 import isEqual from 'lodash.isequal';
+import imagesLoaded from 'imagesloaded';
 import {TrackPlainObj} from "./functions-src/Domains/Track/Track";
+import defaultBg from './assets/bg.jpeg';
 
 let currentlyListening = {};
 const ENDPOINT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
@@ -37,21 +39,74 @@ const playClickSound = () => {
     });
 };
 
+const getARandomPhoto = (): Promise<AxiosResponse> =>
+    axios.get(`${ENDPOINT}/.netlify/functions/get-random-photo`);
+
+const updateBg = (src: string) => {
+    const $bg = document.getElementById('bg');
+    if ($bg && src.length) {
+        $bg.style.backgroundImage = `url(${src})`;
+    }
+};
+
+const toggleContent = () => {
+    const $bg = document.getElementById('bg');
+    const $loading = document.getElementById('loading');
+    const $content = document.getElementById('content');
+    if ($loading && $content && $bg) {
+        $loading.style.display = 'none';
+        $content.style.display = 'block';
+        $bg.style.display = 'block';
+    }
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
-    const { data } = await getCurrentlyPlaying();
-    currentlyListening = data;
-    updateDOM(data);
+    const results = await Promise.allSettled([
+        getCurrentlyPlaying(),
+        getARandomPhoto(),
+   ]);
+
+    const [trackData, url] = results.map((result, index) => {
+        if (index === 0) {
+            return result.status === 'fulfilled'
+                ? result.value.data
+                : {
+                    isPlaying: false,
+                    link: "",
+                    name: "",
+                    artist: '',
+                };
+        }
+        if (index === 1) {
+            return result.status === 'fulfilled' ? result.value.data.url : defaultBg;
+        }
+    })
+
+    // update background image
+    updateBg(url);
+
+    // initially reflect a currently playing track
+    currentlyListening = trackData;
+    updateDOM(trackData);
     playClickSound();
 
+    // show main content when the background image is fully loaded
+    imagesLoaded( '#bg', { background: true }, function() {
+        // show main content
+        toggleContent();
+    });
+
+    // initialize pusher
     const pusher = new Pusher('f3f5751318b2c7958521', {
         cluster: 'ap3'
     });
 
+    // dynamically reflect a currently playing track
     const channel = pusher.subscribe('spotify');
-    channel.bind('fetch-currently-listening-track', function(data: TrackPlainObj) {
-        if (!isEqual(currentlyListening, data)) {
-            updateDOM(data);
-            currentlyListening = data;
+    channel.bind('fetch-currently-listening-track', function(trackData: TrackPlainObj) {
+        if (!isEqual(currentlyListening, trackData)) {
+            updateDOM(trackData);
+            currentlyListening = trackData;
         }
     });
 });
