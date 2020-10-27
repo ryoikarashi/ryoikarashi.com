@@ -53,7 +53,6 @@ const toggleContent = () => {
     const $loading = document.getElementById('loading');
     const $content = document.getElementById('content');
     if ($loading && $content && $bg) {
-        console.log('hello');
         $loading.style.display = 'none';
         $content.style.display = 'block';
         $bg.style.display = 'block';
