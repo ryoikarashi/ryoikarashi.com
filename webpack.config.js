@@ -72,6 +72,11 @@ module.exports = {
                     attribute: 'src',
                     type: 'src',
                   },
+                  {
+                    tag: 'link',
+                    attribute: 'href',
+                    type: 'src',
+                  },
                 ],
               },
             },
@@ -101,7 +106,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
+        test: /\.(jpe?g|png|gif|ico)$/i,
         use: [
           {
             loader: 'url-loader',
