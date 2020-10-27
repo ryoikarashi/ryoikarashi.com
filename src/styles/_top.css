@@ -10,26 +10,17 @@
   }
 }
 
-.wrapper,
-.bg {
+#overlay {
+  background-color: rgba(84, 79, 92, .2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%232e2d2f' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+#content {
   animation-name: fadeIn;
   animation-duration: 1.3s;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
   backface-visibility: hidden;
-}
-
-.bg {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 #loading:after {
