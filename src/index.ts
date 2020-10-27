@@ -50,13 +50,11 @@ const updateBg = (src: string) => {
 };
 
 const toggleContent = () => {
-    const $bg = document.getElementById('bg');
     const $loading = document.getElementById('loading');
     const $content = document.getElementById('content');
-    if ($loading && $content && $bg) {
+    if ($loading && $content) {
         $loading.style.display = 'none';
         $content.style.display = 'block';
-        $bg.style.display = 'block';
     }
 };
 
