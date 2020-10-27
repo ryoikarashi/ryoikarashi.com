@@ -20,7 +20,7 @@ export class PhotoRepository implements IPhotoRepository {
                 'Content-Type': 'application/json',
             };
             const data = JSON.stringify({
-                pageSize: process.env.GOOGLE_PHOTO_PAGE_SIZE || '10',
+                pageSize: process.env.GOOGLE_PHOTOS_PAGE_SIZE || '10',
                 albumId: albumId.value(),
             });
             const { data: { mediaItems } } =
