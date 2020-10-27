@@ -1,15 +1,16 @@
 import * as admin from "firebase-admin";
 import {AxiosStatic} from "axios";
-import {stringify, stringify as QsStringify} from "query-string";
-import {ITokenRepository} from "./ITokenRepository";
+import {stringify} from "query-string";
 import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
 import {getRootCollectionName} from "../../../utils";
+import {GoogleApiConfig} from "../../Services/GooglePhoto/GooglePhotoService";
+import {IGoogleTokenRepository} from "./IGoogleTokenRepository";
 
-export class TokenRepository implements ITokenRepository {
+export class GoogleTokenRepository implements IGoogleTokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
-    private readonly _collectionName = 'spotify_tokens';
+    private readonly _collectionName = 'google_tokens';
 
     constructor(db: FirebaseFirestore.Firestore) {
         this._ref = db
@@ -33,19 +34,20 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 
-    public async getTokenByAuthorizationCode(http: AxiosStatic, encodedBasicAuthorizationCode: string, authorizationCode: string): Promise<Token> {
+    public async getTokenByAuthorizationCode(http: AxiosStatic, config: GoogleApiConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedBasicAuthorizationCode}`,
             "Content-Type": 'application/x-www-form-urlencoded',
         };
-        const params = {
+        const payload = {
+            "code": config.authorizationCode,
+            "client_id": config.clientId,
+            "client_secret": config.clientSecret,
+            "redirect_uri": config.redirectUri,
             "grant_type": "authorization_code",
-            "code": authorizationCode,
-            "redirect_uri": "https://example.com/callback"
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
-            await http.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
+            await http.post("https://www.googleapis.com/oauth2/v4/token", stringify(payload), { headers });
 
         return new Token(
             AccessToken.of(accessToken),
@@ -53,19 +55,20 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 
-    public async refreshToken(http: AxiosStatic, currentToken: Token, encodedAuthorizationCode: string): Promise<Token> {
+    public async refreshToken(http: AxiosStatic, currentToken: Token, config: GoogleApiConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedAuthorizationCode}`,
             "Content-Type": "application/x-www-form-urlencoded"
         };
 
         const payload = {
-            "grant_type": "refresh_token",
+            "client_id": config.clientId,
+            "client_secret": config.clientSecret,
             "refresh_token": currentToken.refreshToken.value(),
+            "grant_type": "refresh_token",
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
-            await http.post("https://accounts.spotify.com/api/token", stringify(payload), { headers });
+            await http.post("https://www.googleapis.com/oauth2/v4/token", stringify(payload), { headers });
 
         return Promise.resolve(
             new Token(
