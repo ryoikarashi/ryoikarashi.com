@@ -10,7 +10,6 @@
   }
 }
 
-body,
 .wrapper,
 .bg {
   animation-name: fadeIn;
@@ -27,7 +26,6 @@ body,
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("./assets/bg.jpeg");
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
