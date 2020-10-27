@@ -48,24 +48,25 @@ const updateBg = (src: string) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const results = await Promise.all([
+    const [{ data: trackData }, { data: { url } }] = await Promise.all([
         getCurrentlyPlaying(),
         getARandomPhoto(),
     ]);
 
-    const { data: trackData } = results[0];
-    const { data: { url } } = results[1];
-
+    // update background image
     updateBg(url);
 
+    // initially reflect a currently playing track
     currentlyListening = trackData;
     updateDOM(trackData);
     playClickSound();
 
+    // initialize pusher
     const pusher = new Pusher('f3f5751318b2c7958521', {
         cluster: 'ap3'
     });
 
+    // dynamically reflect a currently playing track
     const channel = pusher.subscribe('spotify');
     channel.bind('fetch-currently-listening-track', function(trackData: TrackPlainObj) {
         if (!isEqual(currentlyListening, trackData)) {
