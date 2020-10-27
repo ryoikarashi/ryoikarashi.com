@@ -2,7 +2,7 @@ import axios from 'axios';
 import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
 import {config} from 'dotenv';
 import {isProduction} from "../utils";
-import {TokenRepository} from "../functions-src/Repositories/TokenRepository/TokenRepository";
+import {SpotifyTokenRepository} from "../functions-src/Repositories/TokenRepository/SpotifyTokenRepository";
 import {TrackRepository} from "../functions-src/Repositories/TrackRepository/TrackRepository";
 import {SpotifyService} from "../functions-src/Services/Spotify/SpotifyService";
 import {PusherService} from "../functions-src/Services/Pusher/PusherService";
@@ -38,7 +38,7 @@ export const handler = async function (
 ): Promise<any> {
     // composition root with pure DI
     const spotify = new SpotifyService(
-        new TokenRepository(db),
+        new SpotifyTokenRepository(db),
         new TrackRepository(db, axios),
         axios,
         {

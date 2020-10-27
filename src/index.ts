@@ -37,10 +37,29 @@ const playClickSound = () => {
     });
 };
 
+const getARandomPhoto = (): Promise<AxiosResponse> =>
+    axios.get(`${ENDPOINT}/.netlify/functions/get-random-photo`);
+
+const updateBg = (src: string) => {
+    const $bg = document.getElementById('bg');
+    if ($bg && src.length) {
+        $bg.style.backgroundImage = `url(${src})`;
+    }
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
-    const { data } = await getCurrentlyPlaying();
-    currentlyListening = data;
-    updateDOM(data);
+    const results = await Promise.all([
+        getCurrentlyPlaying(),
+        getARandomPhoto(),
+    ]);
+
+    const { data: trackData } = results[0];
+    const { data: { url } } = results[1];
+
+    updateBg(url);
+
+    currentlyListening = trackData;
+    updateDOM(trackData);
     playClickSound();
 
     const pusher = new Pusher('f3f5751318b2c7958521', {
@@ -48,10 +67,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const channel = pusher.subscribe('spotify');
-    channel.bind('fetch-currently-listening-track', function(data: TrackPlainObj) {
-        if (!isEqual(currentlyListening, data)) {
-            updateDOM(data);
-            currentlyListening = data;
+    channel.bind('fetch-currently-listening-track', function(trackData: TrackPlainObj) {
+        if (!isEqual(currentlyListening, trackData)) {
+            updateDOM(trackData);
+            currentlyListening = trackData;
         }
     });
 });
