@@ -1,6 +1,6 @@
 import axios, {AxiosStatic} from 'axios';
 import {ISpotifyService} from "./ISpotifyService";
-import {ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
+import {ISpotifyTokenRepository} from "../../Repositories/TokenRepository/ISpotifyTokenRepository";
 import {ITrackRepository} from "../../Repositories/TrackRepository/ITtrackRepository";
 import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
@@ -14,12 +14,12 @@ export interface SpotifyConfig {
 }
 
 export class SpotifyService implements ISpotifyService {
-    private readonly _tokenRepo: ITokenRepository;
+    private readonly _tokenRepo: ISpotifyTokenRepository;
     private readonly _trackRepo: ITrackRepository;
     private readonly _http: AxiosStatic;
     private readonly _config: SpotifyConfig;
 
-    constructor(tokenRepo: ITokenRepository, trackRepo: ITrackRepository, http: AxiosStatic, config: SpotifyConfig) {
+    constructor(tokenRepo: ISpotifyTokenRepository, trackRepo: ITrackRepository, http: AxiosStatic, config: SpotifyConfig) {
         this._tokenRepo = tokenRepo;
         this._trackRepo = trackRepo;
         this._http = http;
