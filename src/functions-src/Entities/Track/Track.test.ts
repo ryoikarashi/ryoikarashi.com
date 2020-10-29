@@ -1,8 +1,8 @@
-import {Track} from "./Track";
-import {Name} from "./Name";
-import {Artist} from "./Artist";
-import {IsPlaying} from "./IsPlaying";
-import {Link} from "./Link";
+import { Track } from './Track';
+import { Name } from './Name';
+import { Artist } from './Artist';
+import { IsPlaying } from './IsPlaying';
+import { Link } from './Link';
 
 describe('Test Track Entity', () => {
     const track = new Track(
@@ -38,12 +38,7 @@ describe('Test Track Entity', () => {
         expect(track.link).toStrictEqual(Link.of('https://example.com'));
     });
 
-    const invalidTrack = new Track(
-        Name.of(''),
-        Artist.of('track_artist'),
-        IsPlaying.of(false),
-        Link.of('')
-    );
+    const invalidTrack = new Track(Name.of(''), Artist.of('track_artist'), IsPlaying.of(false), Link.of(''));
 
     test('should be an invalid track', () => {
         expect(invalidTrack.isValid()).toStrictEqual(false);

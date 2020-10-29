@@ -18,7 +18,9 @@ describe('prependStrOnlyDev', (): void => {
 
     if (process.env.NODE_ENV !== 'production') {
         test('should prepend `_dev` in dev/test environment', (): void => {
-            expect(utils.prependStrOnlyDev(originalInput, strToBePrepended)).toBe(`${strToBePrepended}${originalInput}`);
+            expect(utils.prependStrOnlyDev(originalInput, strToBePrepended)).toBe(
+                `${strToBePrepended}${originalInput}`,
+            );
         });
     } else {
         test('should not prepend `_dev` in production', (): void => {

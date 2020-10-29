@@ -1,5 +1,5 @@
-import {IDomain} from "../IDomain";
-import {Url} from "./Url";
+import { IDomain } from '../IDomain';
+import { Url } from './Url';
 
 export interface PhotoPlainObj {
     url: string;

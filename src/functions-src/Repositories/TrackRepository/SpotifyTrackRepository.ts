@@ -1,13 +1,13 @@
-import * as admin from "firebase-admin";
-import {ITrackRepository} from "./ITtrackRepository";
-import {Track, TrackPlainObj} from "../../Entities/Track/Track";
-import {Name} from "../../Entities/Track/Name";
-import {Artist} from "../../Entities/Track/Artist";
-import {IsPlaying} from "../../Entities/Track/IsPlaying";
-import {Link} from "../../Entities/Track/Link";
-import {getRootCollectionName} from "../../../utils";
-import {AccessToken} from "../../Entities/Token/AccessToken";
-import {AxiosStatic} from "axios";
+import * as admin from 'firebase-admin';
+import { ITrackRepository } from './ITtrackRepository';
+import { Track, TrackPlainObj } from '../../Entities/Track/Track';
+import { Name } from '../../Entities/Track/Name';
+import { Artist } from '../../Entities/Track/Artist';
+import { IsPlaying } from '../../Entities/Track/IsPlaying';
+import { Link } from '../../Entities/Track/Link';
+import { getRootCollectionName } from '../../../utils';
+import { AccessToken } from '../../Entities/Token/AccessToken';
+import { AxiosStatic } from 'axios';
 
 export class SpotifyTrackRepository implements ITrackRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
@@ -16,26 +16,19 @@ export class SpotifyTrackRepository implements ITrackRepository {
     private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore, http: AxiosStatic) {
-        this._ref = db
-            .collection(getRootCollectionName(this._collectionName))
-            .doc(this._docPath);
+        this._ref = db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
         this._http = http;
     }
 
     public async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
         const doc = await this._ref.get();
-        doc.exists && (await this._ref.update(data)) || (await this._ref.create(data));
+        (doc.exists && (await this._ref.update(data))) || (await this._ref.create(data));
     }
 
     public async getLastPlayedTrack(): Promise<Track> {
         const doc = await this._ref.get();
         if (!doc.exists) {
-            return new Track(
-                Name.of(null),
-                Artist.of(null),
-                IsPlaying.of(null),
-                Link.of(null),
-            );
+            return new Track(Name.of(null), Artist.of(null), IsPlaying.of(null), Link.of(null));
         }
 
         const data = doc.data() as TrackPlainObj;
@@ -49,13 +42,18 @@ export class SpotifyTrackRepository implements ITrackRepository {
         return Promise.resolve(track);
     }
 
-    public async getCurrentlyListeningTrack(accessToken: AccessToken, callback: () => Promise<AccessToken>): Promise<Track> {
+    public async getCurrentlyListeningTrack(
+        accessToken: AccessToken,
+        callback: () => Promise<AccessToken>,
+    ): Promise<Track> {
         try {
             const options = {
-                "headers": { "Authorization": `Bearer  ${accessToken.value()}` },
+                headers: { Authorization: `Bearer  ${accessToken.value()}` },
             };
-            const { status, data } =
-                await this._http.get("https://api.spotify.com/v1/me/player/currently-playing", options);
+            const { status, data } = await this._http.get(
+                'https://api.spotify.com/v1/me/player/currently-playing',
+                options,
+            );
 
             switch (status) {
                 // when listening to a track on spotify
@@ -75,7 +73,7 @@ export class SpotifyTrackRepository implements ITrackRepository {
                     return await this.getLastPlayedTrack();
                 }
             }
-        } catch(e) {
+        } catch (e) {
             // when having an expired access token (unauthorized request)
             const accessToken = await callback();
             return await this.getCurrentlyListeningTrack(accessToken, callback);

@@ -16,9 +16,9 @@ export interface ResponseMediaItemsList {
 }
 
 export interface MediaMetadata {
-    creationTime: string,
-    width: string,
-    height: string,
+    creationTime: string;
+    width: string;
+    height: string;
     photo: MediaMetadataPhoto;
 }
 

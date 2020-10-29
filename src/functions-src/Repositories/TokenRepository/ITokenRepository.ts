@@ -1,5 +1,5 @@
-import {AxiosStatic} from "axios";
-import {Token} from "../../Entities/Token/Token";
+import { AxiosStatic } from 'axios';
+import { Token } from '../../Entities/Token/Token';
 
 export interface IOAuthConfig {
     clientId: string;
