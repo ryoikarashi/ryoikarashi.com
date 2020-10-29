@@ -1,9 +1,9 @@
-import {AxiosStatic} from "axios";
-import {ITokenService} from "./ITokenService";
-import {Token} from "../../Domains/Token/Token";
-import {AccessToken} from "../../Domains/Token/AccessToken";
-import {RefreshToken} from "../../Domains/Token/RefreshToken";
-import {IOAuthConfig, ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
+import { AxiosStatic } from 'axios';
+import { ITokenService } from './ITokenService';
+import { Token } from '../../Entities/Token/Token';
+import { AccessToken } from '../../Entities/Token/AccessToken';
+import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { IOAuthConfig, ITokenRepository } from '../../Repositories/TokenRepository/ITokenRepository';
 
 export class TokenService implements ITokenService {
     private readonly _http: AxiosStatic;
@@ -25,18 +25,15 @@ export class TokenService implements ITokenService {
                 return currentToken;
             }
 
-            const tokenIssuedByAuthorizationCode =
-                await this._tokenRepo.getTokenByAuthorizationCode(this._http, this._config);
+            const tokenIssuedByAuthorizationCode = await this._tokenRepo.getTokenByAuthorizationCode(
+                this._http,
+                this._config,
+            );
 
             await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
             return Promise.resolve(tokenIssuedByAuthorizationCode);
-        } catch(e) {
-            return Promise.resolve(
-                new Token(
-                    AccessToken.of(null),
-                    RefreshToken.of(null),
-                )
-            );
+        } catch (e) {
+            return Promise.resolve(new Token(AccessToken.of(null), RefreshToken.of(null)));
         }
     }
 

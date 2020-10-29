@@ -1,6 +1,6 @@
-import {ValueObject} from "../ValueObject";
+import { IValueObject } from '../IValueObject';
 
-export class IsPlaying implements ValueObject<boolean | null> {
+export class IsPlaying implements IValueObject<boolean | null> {
     private readonly _value: boolean | null;
 
     constructor(value: boolean | null) {

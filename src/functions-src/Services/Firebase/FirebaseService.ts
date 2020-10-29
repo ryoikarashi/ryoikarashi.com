@@ -1,5 +1,5 @@
-import admin from "firebase-admin";
-import {isProduction} from "../../../utils";
+import admin from 'firebase-admin';
+import { isProduction } from '../../../utils';
 
 export interface FirebaseAdminAppConfig {
     databaseURL: string;
@@ -41,7 +41,7 @@ export class FirebaseService {
         if (!isProduction && !admin.apps.length) {
             db.settings({
                 host: this._databaseURL,
-                ssl: false
+                ssl: false,
             });
         }
 

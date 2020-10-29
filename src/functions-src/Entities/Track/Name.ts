@@ -1,6 +1,6 @@
-import {ValueObject} from "../ValueObject";
+import { IValueObject } from '../IValueObject';
 
-export class Name implements ValueObject<string | null> {
+export class Name implements IValueObject<string | null> {
     private readonly _value: string | null;
 
     constructor(value: string | null) {
