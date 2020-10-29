@@ -2,12 +2,13 @@ import axios from 'axios';
 import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
 import {config} from 'dotenv';
 import {isProduction} from "../utils";
+import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
 import {SpotifyTokenRepository} from "../functions-src/Repositories/TokenRepository/SpotifyTokenRepository";
 import {SpotifyTrackRepository} from "../functions-src/Repositories/TrackRepository/SpotifyTrackRepository";
 import {SpotifyService} from "../functions-src/Services/Track/SpotifyService";
 import {PusherService} from "../functions-src/Services/Pusher/PusherService";
 import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
-import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
+import {TokenService} from "../functions-src/Services/Token/TokenService";
 
 // load environment variables from .env
 config();
@@ -47,10 +48,12 @@ export const handler = async function (
 ): Promise<any> {
     // composition root with pure DI
     const spotify = new SpotifyService(
-        new SpotifyTokenRepository(db),
         new SpotifyTrackRepository(db, axios),
-        axios,
-        spotifyOAuthConfig
+        new TokenService(
+            axios,
+            new SpotifyTokenRepository(db),
+            spotifyOAuthConfig
+        )
     );
 
     // get a currently playing track with an access token

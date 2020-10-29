@@ -1,14 +1,15 @@
 // initialize pusher
-import {APIGatewayProxyCallback, APIGatewayProxyEvent} from "aws-lambda";
-import {config} from 'dotenv';
-import {isProduction} from "../utils";
-import {GoogleTokenRepository} from "../functions-src/Repositories/TokenRepository/GoogleTokenRepository";
 import axios from "axios";
+import {APIGatewayProxyCallback, APIGatewayProxyEvent} from "aws-lambda";
+import {isProduction} from "../utils";
+import {config} from 'dotenv';
+import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
+import {GoogleTokenRepository} from "../functions-src/Repositories/TokenRepository/GoogleTokenRepository";
 import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
 import {GooglePhotosRepository} from "../functions-src/Repositories/PhotoRepository/GooglePhotosRepository";
 import {AlbumId} from "../functions-src/Domains/Photo/AlbumId";
-import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
 import {GooglePhotoService} from "../functions-src/Services/Photo/GooglePhotoService";
+import {TokenService} from "../functions-src/Services/Token/TokenService";
 
 // load environment variables from .env
 config();
@@ -38,9 +39,12 @@ export const handler = async function (
 ): Promise<any> {
     // composition root with pure DI
     const googlePhotos = new GooglePhotoService(
-        new GoogleTokenRepository(db),
         new GooglePhotosRepository(axios),
-        googleOAuthConfig
+        new TokenService(
+            axios,
+            new GoogleTokenRepository(db),
+            googleOAuthConfig
+        ),
     );
 
     // get a random photo from a specified album
