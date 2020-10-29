@@ -4,7 +4,7 @@ import {config} from 'dotenv';
 import {isProduction} from "../utils";
 import {SpotifyTokenRepository} from "../functions-src/Repositories/TokenRepository/SpotifyTokenRepository";
 import {SpotifyTrackRepository} from "../functions-src/Repositories/TrackRepository/SpotifyTrackRepository";
-import {SpotifyService} from "../functions-src/Services/Spotify/SpotifyService";
+import {SpotifyService} from "../functions-src/Services/Track/SpotifyService";
 import {PusherService} from "../functions-src/Services/Pusher/PusherService";
 import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
 import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";

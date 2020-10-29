@@ -1,5 +1,5 @@
 import {Track} from "../../Domains/Track/Track";
 
-export interface ISpotifyService {
+export interface ITrackService {
     getCurrentlyListeningTrack(): Promise<Track>;
 }
