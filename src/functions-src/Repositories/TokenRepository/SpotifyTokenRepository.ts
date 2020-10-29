@@ -10,11 +10,12 @@ import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 export class SpotifyTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _collectionName = 'spotify_tokens';
+    private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore) {
         this._ref = db
             .collection(getRootCollectionName(this._collectionName))
-            .doc('ryoikarashi-com');
+            .doc(this._docPath);
     }
 
     public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
@@ -41,7 +42,7 @@ export class SpotifyTokenRepository implements ITokenRepository {
         const params = {
             "grant_type": "authorization_code",
             "code": config.authorizationCode,
-            "redirect_uri": "https://example.com/callback"
+            "redirect_uri": config.redirectUri,
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
