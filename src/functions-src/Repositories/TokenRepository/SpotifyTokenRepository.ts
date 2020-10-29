@@ -1,9 +1,9 @@
 import * as admin from "firebase-admin";
 import {AxiosStatic} from "axios";
 import {stringify, stringify as QsStringify} from "query-string";
-import {Token} from "../../Domains/Token/Token";
-import {AccessToken} from "../../Domains/Token/AccessToken";
-import {RefreshToken} from "../../Domains/Token/RefreshToken";
+import {Token} from "../../Entities/Token/Token";
+import {AccessToken} from "../../Entities/Token/AccessToken";
+import {RefreshToken} from "../../Entities/Token/RefreshToken";
 import {getRootCollectionName} from "../../../utils";
 import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 

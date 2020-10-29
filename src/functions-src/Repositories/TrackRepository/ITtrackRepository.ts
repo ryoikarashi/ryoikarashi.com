@@ -1,5 +1,5 @@
-import {Track, TrackPlainObj} from "../../Domains/Track/Track";
-import {AccessToken} from "../../Domains/Token/AccessToken";
+import {Track, TrackPlainObj} from "../../Entities/Track/Track";
+import {AccessToken} from "../../Entities/Token/AccessToken";
 
 export interface ITrackRepository {
     // queries
