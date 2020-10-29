@@ -43,11 +43,8 @@ export const handler = async function (
         googleOAuthConfig
     );
 
-    // get tokens
-    const token = await googlePhotos.getToken();
-
     // get a random photo from a specified album
-    const photo = await googlePhotos.getARandomPhotoFromAlbum(token.accessToken, AlbumId.of(process.env.GOOGLE_PHOTOS_ALBUM_ID || ''));
+    const photo = await googlePhotos.getARandomPhotoFromAlbum(AlbumId.of(process.env.GOOGLE_PHOTOS_ALBUM_ID || ''));
 
     // return response
     return {
