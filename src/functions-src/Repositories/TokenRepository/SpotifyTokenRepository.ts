@@ -1,11 +1,11 @@
-import * as admin from "firebase-admin";
-import {AxiosStatic} from "axios";
-import {stringify, stringify as QsStringify} from "query-string";
-import {Token} from "../../Domains/Token/Token";
-import {AccessToken} from "../../Domains/Token/AccessToken";
-import {RefreshToken} from "../../Domains/Token/RefreshToken";
-import {getRootCollectionName} from "../../../utils";
-import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
+import * as admin from 'firebase-admin';
+import { AxiosStatic } from 'axios';
+import { stringify, stringify as QsStringify } from 'query-string';
+import { Token } from '../../Entities/Token/Token';
+import { AccessToken } from '../../Entities/Token/AccessToken';
+import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { getRootCollectionName } from '../../../utils';
+import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class SpotifyTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
@@ -13,9 +13,7 @@ export class SpotifyTokenRepository implements ITokenRepository {
     private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore) {
-        this._ref = db
-            .collection(getRootCollectionName(this._collectionName))
-            .doc(this._docPath);
+        this._ref = db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
     }
 
     public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
@@ -23,56 +21,50 @@ export class SpotifyTokenRepository implements ITokenRepository {
         const data = token.refreshToken.isValid()
             ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
             : { access_token: token.accessToken.value() };
-        doc.exists && (await this._ref.update(data)) || (await this._ref.create(data));
+        (doc.exists && (await this._ref.update(data))) || (await this._ref.create(data));
     }
 
     public async getFirstToken(): Promise<Token> {
         const doc = await this._ref.get();
         return new Token(
-            AccessToken.of(doc?.exists && doc?.data()?.access_token || null),
-            RefreshToken.of(doc?.exists && doc?.data()?.refresh_token || null),
+            AccessToken.of((doc?.exists && doc?.data()?.access_token) || null),
+            RefreshToken.of((doc?.exists && doc?.data()?.refresh_token) || null),
         );
     }
 
     public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${config.basicAuthorizationCode}`,
-            "Content-Type": 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${config.basicAuthorizationCode}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
         };
         const params = {
-            "grant_type": "authorization_code",
-            "code": config.authorizationCode,
-            "redirect_uri": config.redirectUri,
+            grant_type: 'authorization_code',
+            code: config.authorizationCode,
+            redirect_uri: config.redirectUri,
         };
 
-        const { data: { access_token: accessToken, refresh_token: refreshToken } } =
-            await http.post("https://accounts.spotify.com/api/token", QsStringify(params), { headers });
+        const {
+            data: { access_token: accessToken, refresh_token: refreshToken },
+        } = await http.post('https://accounts.spotify.com/api/token', QsStringify(params), { headers });
 
-        return new Token(
-            AccessToken.of(accessToken),
-            RefreshToken.of(refreshToken),
-        );
+        return new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken));
     }
 
     public async refreshToken(http: AxiosStatic, expiredToken: Token, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${config.basicAuthorizationCode}`,
-            "Content-Type": "application/x-www-form-urlencoded"
+            Authorization: `Basic ${config.basicAuthorizationCode}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
         };
 
         const payload = {
-            "grant_type": "refresh_token",
-            "refresh_token": expiredToken.refreshToken.value(),
+            grant_type: 'refresh_token',
+            refresh_token: expiredToken.refreshToken.value(),
         };
 
-        const { data: { access_token: accessToken, refresh_token: refreshToken } } =
-            await http.post("https://accounts.spotify.com/api/token", stringify(payload), { headers });
+        const {
+            data: { access_token: accessToken, refresh_token: refreshToken },
+        } = await http.post('https://accounts.spotify.com/api/token', stringify(payload), { headers });
 
-        return Promise.resolve(
-            new Token(
-                AccessToken.of(accessToken),
-                RefreshToken.of(refreshToken)
-            )
-        );
+        return Promise.resolve(new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken)));
     }
 }

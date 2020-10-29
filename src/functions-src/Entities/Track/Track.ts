@@ -1,8 +1,8 @@
-import {Name} from "./Name";
-import {Artist} from "./Artist";
-import {Link} from "./Link";
-import {IsPlaying} from "./IsPlaying";
-import {IDomain} from "../IDomain";
+import { Name } from './Name';
+import { Artist } from './Artist';
+import { Link } from './Link';
+import { IsPlaying } from './IsPlaying';
+import { IDomain } from '../IDomain';
 
 export interface TrackPlainObj {
     name: string;
@@ -54,7 +54,7 @@ export class Track implements IDomain<TrackPlainObj> {
             artist: this._artist.value(),
             isPlaying: this._isPlaying.value(),
             link: this._link.value(),
-        }
+        };
     }
 
     toJson(): string {

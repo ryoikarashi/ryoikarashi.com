@@ -1,15 +1,14 @@
-// initialize pusher
-import axios from "axios";
-import {APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
-import {isProduction} from "../utils";
-import {config} from 'dotenv';
-import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
-import {GoogleTokenRepository} from "../functions-src/Repositories/TokenRepository/GoogleTokenRepository";
-import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
-import {GooglePhotosRepository} from "../functions-src/Repositories/PhotoRepository/GooglePhotosRepository";
-import {AlbumId} from "../functions-src/Domains/Photo/AlbumId";
-import {GooglePhotoService} from "../functions-src/Services/Photo/GooglePhotoService";
-import {TokenService} from "../functions-src/Services/Token/TokenService";
+import axios from 'axios';
+import { APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { isProduction } from '../utils';
+import { config } from 'dotenv';
+import { IOAuthConfig } from '../functions-src/Repositories/TokenRepository/ITokenRepository';
+import { GoogleTokenRepository } from '../functions-src/Repositories/TokenRepository/GoogleTokenRepository';
+import { FirebaseService } from '../functions-src/Services/Firebase/FirebaseService';
+import { GooglePhotosRepository } from '../functions-src/Repositories/PhotoRepository/GooglePhotosRepository';
+import { AlbumId } from '../functions-src/Entities/Photo/AlbumId';
+import { GooglePhotoService } from '../functions-src/Services/Photo/GooglePhotoService';
+import { TokenService } from '../functions-src/Services/Token/TokenService';
 
 // load environment variables from .env
 config();
@@ -35,16 +34,12 @@ export const handler = async function (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     context: never,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    callback: APIGatewayProxyCallback
+    callback: APIGatewayProxyCallback,
 ): Promise<APIGatewayProxyResult> {
     // composition root with pure DI
     const googlePhotos = new GooglePhotoService(
         new GooglePhotosRepository(axios),
-        new TokenService(
-            axios,
-            new GoogleTokenRepository(db),
-            googleOAuthConfig
-        ),
+        new TokenService(axios, new GoogleTokenRepository(db), googleOAuthConfig),
     );
 
     // get a random photo from a specified album
@@ -55,8 +50,7 @@ export const handler = async function (
         statusCode: 200,
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin':
-                isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
+            'Access-Control-Allow-Origin': isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
         },
         body: photo.toJson(),
     };

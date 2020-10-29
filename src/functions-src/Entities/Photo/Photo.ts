@@ -1,5 +1,5 @@
-import {IDomain} from "../IDomain";
-import {Url} from "./Url";
+import { IDomain } from '../IDomain';
+import { Url } from './Url';
 
 export interface PhotoPlainObj {
     url: string;
@@ -12,7 +12,7 @@ export class Photo implements IDomain<PhotoPlainObj> {
         this._url = url;
     }
 
-    public get getUrl(): Url {
+    public get url(): Url {
         return this._url;
     }
 
