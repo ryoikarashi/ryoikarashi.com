@@ -9,7 +9,7 @@ import {getRootCollectionName} from "../../../utils";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {AxiosStatic} from "axios";
 
-export class TrackRepository implements ITrackRepository {
+export class SpotifyTrackRepository implements ITrackRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _http: AxiosStatic;
     private readonly _collectionName = 'spotify_last_listening_track';

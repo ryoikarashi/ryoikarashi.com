@@ -4,10 +4,11 @@ import {config} from 'dotenv';
 import {isProduction} from "../utils";
 import {GoogleTokenRepository} from "../functions-src/Repositories/TokenRepository/GoogleTokenRepository";
 import axios from "axios";
-import {GoogleApiConfig, GooglePhotoService} from "../functions-src/Services/GooglePhoto/GooglePhotoService";
 import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
-import {PhotoRepository} from "../functions-src/Repositories/PhotoRepository/PhotoRepository";
+import {GooglePhotosRepository} from "../functions-src/Repositories/PhotoRepository/GooglePhotosRepository";
 import {AlbumId} from "../functions-src/Domains/Photo/AlbumId";
+import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
+import {GooglePhotoService} from "../functions-src/Services/GooglePhoto/GooglePhotoService";
 
 // load environment variables from .env
 config();
@@ -20,7 +21,7 @@ const db = new FirebaseService({
     projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || '',
 }).init();
 
-const googleApiConfig: GoogleApiConfig = {
+const googleOAuthConfig: IOAuthConfig = {
     clientId: process.env.GOOGLE_API_CLIENT_ID || '',
     clientSecret: process.env.GOOGLE_API_CLIENT_SECRET || '',
     authorizationCode: process.env.GOOGLE_API_AUTH_CODE || '',
@@ -38,8 +39,8 @@ export const handler = async function (
     // composition root with pure DI
     const googlePhotos = new GooglePhotoService(
         new GoogleTokenRepository(db),
-        new PhotoRepository(axios),
-        googleApiConfig
+        new GooglePhotosRepository(axios),
+        googleOAuthConfig
     );
 
     // get tokens
