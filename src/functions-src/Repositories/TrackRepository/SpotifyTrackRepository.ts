@@ -13,11 +13,12 @@ export class SpotifyTrackRepository implements ITrackRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _http: AxiosStatic;
     private readonly _collectionName = 'spotify_last_listening_track';
+    private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore, http: AxiosStatic) {
         this._ref = db
             .collection(getRootCollectionName(this._collectionName))
-            .doc('ryoikarashi-com');
+            .doc(this._docPath);
         this._http = http;
     }
 

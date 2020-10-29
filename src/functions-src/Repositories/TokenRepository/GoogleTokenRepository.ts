@@ -10,11 +10,12 @@ import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 export class GoogleTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _collectionName = 'google_tokens';
+    private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore) {
         this._ref = db
             .collection(getRootCollectionName(this._collectionName))
-            .doc('ryoikarashi-com');
+            .doc(this._docPath);
     }
 
     public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
