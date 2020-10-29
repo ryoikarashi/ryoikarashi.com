@@ -1,35 +1,42 @@
-import axios, {AxiosStatic} from 'axios';
-import {ISpotifyService} from "./ISpotifyService";
-import {ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
-import {ITrackRepository} from "../../Repositories/TrackRepository/ITtrackRepository";
-import {IOAuthConfig} from "../../Repositories/TokenRepository/ITokenRepository";
+import axios from "axios";
+import {IPhotoService} from "./IPhotoService";
+import {IOAuthConfig, ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
+import {IPhotoRepository} from "../../Repositories/PhotoRepository/IPhotoRepository";import {AccessToken} from "../../Domains/Token/AccessToken";
 import {Token} from "../../Domains/Token/Token";
-import {AccessToken} from "../../Domains/Token/AccessToken";
+import {AlbumId} from "../../Domains/Photo/AlbumId";
+import {Photo} from "../../Domains/Photo/Photo";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
-import {Track} from "../../Domains/Track/Track";
+import {Url} from "../../Domains/Photo/Url";
 
-export class SpotifyService implements ISpotifyService {
+export class GooglePhotoService implements IPhotoService {
     private readonly _tokenRepo: ITokenRepository;
-    private readonly _trackRepo: ITrackRepository;
-    private readonly _http: AxiosStatic;
+    private readonly _photoRepo: IPhotoRepository;
     private readonly _config: IOAuthConfig;
 
-    constructor(tokenRepo: ITokenRepository, trackRepo: ITrackRepository, http: AxiosStatic, config: IOAuthConfig) {
+    constructor(tokenRepo: ITokenRepository, photoRepo: IPhotoRepository, config: IOAuthConfig) {
         this._tokenRepo = tokenRepo;
-        this._trackRepo = trackRepo;
-        this._http = http;
+        this._photoRepo = photoRepo;
         this._config = config;
     }
 
-    // get a currently listening track
-    public async getCurrentlyListeningTrack(): Promise<Track> {
+    async getARandomPhotoFromAlbum(albumId: AlbumId): Promise<Photo> {
         const token = await this.getToken();
-        return await this._trackRepo.getCurrentlyListeningTrack(token.accessToken, async () => {
+
+        const photos = await this._photoRepo.getPhotosFromAlbum(albumId, token.accessToken, async () => {
             return await this.refreshAccessToken();
         });
+        const randomIndex = Math.floor(Math.random() * photos.length);
+        const randomPhoto = photos?.[randomIndex];
+
+        if (!randomPhoto) {
+            return new Photo(
+                Url.of(null),
+            );
+        }
+
+        return randomPhoto;
     }
 
-    // get an access token and refresh token with authorization code
     private async getToken(): Promise<Token> {
         try {
             const currentToken = await this._tokenRepo.getFirstToken();
@@ -39,7 +46,10 @@ export class SpotifyService implements ISpotifyService {
             }
 
             const tokenIssuedByAuthorizationCode =
-                await this._tokenRepo.getTokenByAuthorizationCode(axios, this._config);
+                await this._tokenRepo.getTokenByAuthorizationCode(
+                    axios,
+                    this._config
+                );
 
             await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
             return Promise.resolve(tokenIssuedByAuthorizationCode);
@@ -53,7 +63,6 @@ export class SpotifyService implements ISpotifyService {
         }
     }
 
-    // refresh access token with refresh token (access token expires within 1 hour)
     private async refreshAccessToken(): Promise<AccessToken> {
         const token = await this._tokenRepo.getFirstToken();
         const refreshedToken = await this._tokenRepo.refreshToken(axios, token, this._config);

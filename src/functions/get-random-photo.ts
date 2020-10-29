@@ -8,7 +8,7 @@ import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseServic
 import {GooglePhotosRepository} from "../functions-src/Repositories/PhotoRepository/GooglePhotosRepository";
 import {AlbumId} from "../functions-src/Domains/Photo/AlbumId";
 import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
-import {GooglePhotoService} from "../functions-src/Services/GooglePhoto/GooglePhotoService";
+import {GooglePhotoService} from "../functions-src/Services/Photo/GooglePhotoService";
 
 // load environment variables from .env
 config();

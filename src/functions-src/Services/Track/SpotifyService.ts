@@ -1,42 +1,35 @@
-import axios from "axios";
-import {IGooglePhotoService} from "./IGooglePhotoService";
-import {IOAuthConfig, ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
-import {IPhotoRepository} from "../../Repositories/PhotoRepository/IPhotoRepository";import {AccessToken} from "../../Domains/Token/AccessToken";
+import axios, {AxiosStatic} from 'axios';
+import {ITrackService} from "./ITrackService";
+import {ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
+import {ITrackRepository} from "../../Repositories/TrackRepository/ITtrackRepository";
+import {IOAuthConfig} from "../../Repositories/TokenRepository/ITokenRepository";
 import {Token} from "../../Domains/Token/Token";
-import {AlbumId} from "../../Domains/Photo/AlbumId";
-import {Photo} from "../../Domains/Photo/Photo";
+import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
-import {Url} from "../../Domains/Photo/Url";
+import {Track} from "../../Domains/Track/Track";
 
-export class GooglePhotoService implements IGooglePhotoService {
+export class SpotifyService implements ITrackService {
     private readonly _tokenRepo: ITokenRepository;
-    private readonly _photoRepo: IPhotoRepository;
+    private readonly _trackRepo: ITrackRepository;
+    private readonly _http: AxiosStatic;
     private readonly _config: IOAuthConfig;
 
-    constructor(tokenRepo: ITokenRepository, photoRepo: IPhotoRepository, config: IOAuthConfig) {
+    constructor(tokenRepo: ITokenRepository, trackRepo: ITrackRepository, http: AxiosStatic, config: IOAuthConfig) {
         this._tokenRepo = tokenRepo;
-        this._photoRepo = photoRepo;
+        this._trackRepo = trackRepo;
+        this._http = http;
         this._config = config;
     }
 
-    async getARandomPhotoFromAlbum(albumId: AlbumId): Promise<Photo> {
+    // get a currently listening track
+    public async getCurrentlyListeningTrack(): Promise<Track> {
         const token = await this.getToken();
-
-        const photos = await this._photoRepo.getPhotosFromAlbum(albumId, token.accessToken, async () => {
+        return await this._trackRepo.getCurrentlyListeningTrack(token.accessToken, async () => {
             return await this.refreshAccessToken();
         });
-        const randomIndex = Math.floor(Math.random() * photos.length);
-        const randomPhoto = photos?.[randomIndex];
-
-        if (!randomPhoto) {
-            return new Photo(
-                Url.of(null),
-            );
-        }
-
-        return randomPhoto;
     }
 
+    // get an access token and refresh token with authorization code
     private async getToken(): Promise<Token> {
         try {
             const currentToken = await this._tokenRepo.getFirstToken();
@@ -46,10 +39,7 @@ export class GooglePhotoService implements IGooglePhotoService {
             }
 
             const tokenIssuedByAuthorizationCode =
-                await this._tokenRepo.getTokenByAuthorizationCode(
-                    axios,
-                    this._config
-                );
+                await this._tokenRepo.getTokenByAuthorizationCode(axios, this._config);
 
             await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(tokenIssuedByAuthorizationCode);
             return Promise.resolve(tokenIssuedByAuthorizationCode);
@@ -63,6 +53,7 @@ export class GooglePhotoService implements IGooglePhotoService {
         }
     }
 
+    // refresh access token with refresh token (access token expires within 1 hour)
     private async refreshAccessToken(): Promise<AccessToken> {
         const token = await this._tokenRepo.getFirstToken();
         const refreshedToken = await this._tokenRepo.refreshToken(axios, token, this._config);
