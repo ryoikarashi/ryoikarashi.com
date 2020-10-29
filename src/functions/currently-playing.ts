@@ -55,10 +55,10 @@ export const handler = async function (
 
     // get a currently playing track with an access token
     const token = await spotify.getToken();
-    const data = await spotify.getCurrentlyListeningTrack(token.accessToken);
+    const track = await spotify.getCurrentlyListeningTrack(token.accessToken);
 
     // send a currently listening track data to the client
-    await pusher.trigger('spotify', 'fetch-currently-listening-track', data.toPlainObj());
+    await pusher.trigger('spotify', 'fetch-currently-listening-track', track.toPlainObj());
 
     // return response
     return {
@@ -68,7 +68,7 @@ export const handler = async function (
             'Access-Control-Allow-Origin':
                 isProduction ? 'https://ryoikarashi.com' : 'http://localhost:8000',
         },
-        body: data.toJson(),
+        body: track.toJson(),
     };
 };
 
