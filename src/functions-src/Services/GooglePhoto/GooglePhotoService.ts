@@ -19,8 +19,10 @@ export class GooglePhotoService implements IGooglePhotoService {
         this._config = config;
     }
 
-    async getARandomPhotoFromAlbum(accessToken: AccessToken, albumId: AlbumId): Promise<Photo> {
-        const photos = await this._photoRepo.getPhotosFromAlbum(albumId, accessToken, async () => {
+    async getARandomPhotoFromAlbum(albumId: AlbumId): Promise<Photo> {
+        const token = await this.getToken();
+
+        const photos = await this._photoRepo.getPhotosFromAlbum(albumId, token.accessToken, async () => {
             return await this.refreshAccessToken();
         });
         const randomIndex = Math.floor(Math.random() * photos.length);
@@ -35,7 +37,7 @@ export class GooglePhotoService implements IGooglePhotoService {
         return randomPhoto;
     }
 
-    async getToken(): Promise<Token> {
+    private async getToken(): Promise<Token> {
         try {
             const currentToken = await this._tokenRepo.getFirstToken();
 
@@ -61,7 +63,7 @@ export class GooglePhotoService implements IGooglePhotoService {
         }
     }
 
-    async refreshAccessToken(): Promise<AccessToken> {
+    private async refreshAccessToken(): Promise<AccessToken> {
         const token = await this._tokenRepo.getFirstToken();
         const refreshedToken = await this._tokenRepo.refreshToken(axios, token, this._config);
         await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(refreshedToken);

@@ -21,8 +21,16 @@ export class SpotifyService implements ISpotifyService {
         this._config = config;
     }
 
+    // get a currently listening track
+    public async getCurrentlyListeningTrack(): Promise<Track> {
+        const token = await this.getToken();
+        return await this._trackRepo.getCurrentlyListeningTrack(token.accessToken, async () => {
+            return await this.refreshAccessToken();
+        });
+    }
+
     // get an access token and refresh token with authorization code
-    public async getToken(): Promise<Token> {
+    private async getToken(): Promise<Token> {
         try {
             const currentToken = await this._tokenRepo.getFirstToken();
 
@@ -45,15 +53,8 @@ export class SpotifyService implements ISpotifyService {
         }
     }
 
-    // get a currently listening track
-    public async getCurrentlyListeningTrack(accessToken: AccessToken): Promise<Track> {
-        return await this._trackRepo.getCurrentlyListeningTrack(accessToken, async () => {
-            return await this.refreshAccessToken();
-        });
-    }
-
     // refresh access token with refresh token (access token expires within 1 hour)
-    public async refreshAccessToken(): Promise<AccessToken> {
+    private async refreshAccessToken(): Promise<AccessToken> {
         const token = await this._tokenRepo.getFirstToken();
         const refreshedToken = await this._tokenRepo.refreshToken(axios, token, this._config);
         await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(refreshedToken);

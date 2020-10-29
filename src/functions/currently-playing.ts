@@ -54,8 +54,7 @@ export const handler = async function (
     );
 
     // get a currently playing track with an access token
-    const token = await spotify.getToken();
-    const track = await spotify.getCurrentlyListeningTrack(token.accessToken);
+    const track = await spotify.getCurrentlyListeningTrack();
 
     // send a currently listening track data to the client
     await pusher.trigger('spotify', 'fetch-currently-listening-track', track.toPlainObj());
