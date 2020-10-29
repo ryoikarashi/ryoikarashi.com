@@ -5,10 +5,9 @@ import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
 import {getRootCollectionName} from "../../../utils";
-import {GoogleApiConfig} from "../../Services/GooglePhoto/GooglePhotoService";
-import {IGoogleTokenRepository} from "./IGoogleTokenRepository";
+import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 
-export class GoogleTokenRepository implements IGoogleTokenRepository {
+export class GoogleTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _collectionName = 'google_tokens';
 
@@ -34,7 +33,7 @@ export class GoogleTokenRepository implements IGoogleTokenRepository {
         );
     }
 
-    public async getTokenByAuthorizationCode(http: AxiosStatic, config: GoogleApiConfig): Promise<Token> {
+    public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {
         const headers = {
             "Content-Type": 'application/x-www-form-urlencoded',
         };
@@ -55,7 +54,7 @@ export class GoogleTokenRepository implements IGoogleTokenRepository {
         );
     }
 
-    public async refreshToken(http: AxiosStatic, currentToken: Token, config: GoogleApiConfig): Promise<Token> {
+    public async refreshToken(http: AxiosStatic, currentToken: Token, config: IOAuthConfig): Promise<Token> {
         const headers = {
             "Content-Type": "application/x-www-form-urlencoded"
         };

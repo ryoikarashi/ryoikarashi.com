@@ -6,7 +6,7 @@ import {AccessToken} from "../../Domains/Token/AccessToken";
 import {Url} from "../../Domains/Photo/Url";
 import {ResponseMediaItemsList} from "../../../types/google-photos";
 
-export class PhotoRepository implements IPhotoRepository {
+export class GooglePhotosRepository implements IPhotoRepository {
     private readonly _http: AxiosStatic;
 
     constructor(http: AxiosStatic) {

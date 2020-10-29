@@ -3,10 +3,11 @@ import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
 import {config} from 'dotenv';
 import {isProduction} from "../utils";
 import {SpotifyTokenRepository} from "../functions-src/Repositories/TokenRepository/SpotifyTokenRepository";
-import {TrackRepository} from "../functions-src/Repositories/TrackRepository/TrackRepository";
+import {SpotifyTrackRepository} from "../functions-src/Repositories/TrackRepository/SpotifyTrackRepository";
 import {SpotifyService} from "../functions-src/Services/Spotify/SpotifyService";
 import {PusherService} from "../functions-src/Services/Pusher/PusherService";
 import {FirebaseService} from "../functions-src/Services/Firebase/FirebaseService";
+import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
 
 // load environment variables from .env
 config();
@@ -28,6 +29,14 @@ const pusher = new PusherService({
     useTLS: process.env.PUSHER_USE_TLS === 'true',
 }).init();
 
+const spotifyOAuthConfig: IOAuthConfig = {
+    clientId: process.env.SPOTIFY_CLIENT_ID || '',
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET || '',
+    authorizationCode: process.env.SPOTIFY_AUTHORIZATION_CODE || '',
+    basicAuthorizationCode: Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`, 'utf-8').toString('base64'),
+    redirectUri: process.env.GOOGLE_API_REDIRECT_URI || '',
+};
+
 export const handler = async function (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     event: APIGatewayProxyEvent,
@@ -39,13 +48,9 @@ export const handler = async function (
     // composition root with pure DI
     const spotify = new SpotifyService(
         new SpotifyTokenRepository(db),
-        new TrackRepository(db, axios),
+        new SpotifyTrackRepository(db, axios),
         axios,
-        {
-            authorizationCode: process.env.SPOTIFY_AUTHORIZATION_CODE || '',
-            clientId: process.env.SPOTIFY_CLIENT_ID || '',
-            clientSecret: process.env.SPOTIFY_CLIENT_SECRET || '',
-        },
+        spotifyOAuthConfig
     );
 
     // get a currently playing track with an access token

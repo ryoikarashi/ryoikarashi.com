@@ -5,9 +5,9 @@ import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
 import {getRootCollectionName} from "../../../utils";
-import {ISpotifyTokenRepository} from "./ISpotifyTokenRepository";
+import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 
-export class SpotifyTokenRepository implements ISpotifyTokenRepository {
+export class SpotifyTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _collectionName = 'spotify_tokens';
 
@@ -33,14 +33,14 @@ export class SpotifyTokenRepository implements ISpotifyTokenRepository {
         );
     }
 
-    public async getTokenByAuthorizationCode(http: AxiosStatic, encodedBasicAuthorizationCode: string, authorizationCode: string): Promise<Token> {
+    public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedBasicAuthorizationCode}`,
+            "Authorization": `Basic ${config.basicAuthorizationCode}`,
             "Content-Type": 'application/x-www-form-urlencoded',
         };
         const params = {
             "grant_type": "authorization_code",
-            "code": authorizationCode,
+            "code": config.authorizationCode,
             "redirect_uri": "https://example.com/callback"
         };
 
@@ -53,15 +53,15 @@ export class SpotifyTokenRepository implements ISpotifyTokenRepository {
         );
     }
 
-    public async refreshToken(http: AxiosStatic, currentToken: Token, encodedAuthorizationCode: string): Promise<Token> {
+    public async refreshToken(http: AxiosStatic, expiredToken: Token, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedAuthorizationCode}`,
+            "Authorization": `Basic ${config.basicAuthorizationCode}`,
             "Content-Type": "application/x-www-form-urlencoded"
         };
 
         const payload = {
             "grant_type": "refresh_token",
-            "refresh_token": currentToken.refreshToken.value(),
+            "refresh_token": expiredToken.refreshToken.value(),
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =

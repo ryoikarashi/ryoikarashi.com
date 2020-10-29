@@ -1,27 +1,19 @@
+import axios from "axios";
 import {IGooglePhotoService} from "./IGooglePhotoService";
-import {AccessToken} from "../../Domains/Token/AccessToken";
+import {IOAuthConfig, ITokenRepository} from "../../Repositories/TokenRepository/ITokenRepository";
+import {IPhotoRepository} from "../../Repositories/PhotoRepository/IPhotoRepository";import {AccessToken} from "../../Domains/Token/AccessToken";
 import {Token} from "../../Domains/Token/Token";
 import {AlbumId} from "../../Domains/Photo/AlbumId";
 import {Photo} from "../../Domains/Photo/Photo";
-import {IPhotoRepository} from "../../Repositories/PhotoRepository/IPhotoRepository";
-import {IGoogleTokenRepository} from "../../Repositories/TokenRepository/IGoogleTokenRepository";
-import axios from "axios";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
 import {Url} from "../../Domains/Photo/Url";
 
-export interface GoogleApiConfig {
-    clientId: string;
-    clientSecret: string;
-    authorizationCode: string;
-    redirectUri: string;
-}
-
 export class GooglePhotoService implements IGooglePhotoService {
-    private readonly _tokenRepo: IGoogleTokenRepository;
+    private readonly _tokenRepo: ITokenRepository;
     private readonly _photoRepo: IPhotoRepository;
-    private readonly _config: GoogleApiConfig;
+    private readonly _config: IOAuthConfig;
 
-    constructor(tokenRepo: IGoogleTokenRepository, photoRepo: IPhotoRepository, config: GoogleApiConfig) {
+    constructor(tokenRepo: ITokenRepository, photoRepo: IPhotoRepository, config: IOAuthConfig) {
         this._tokenRepo = tokenRepo;
         this._photoRepo = photoRepo;
         this._config = config;
