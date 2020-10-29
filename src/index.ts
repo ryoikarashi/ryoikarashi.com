@@ -5,7 +5,7 @@ import Pusher from 'pusher-js';
 import axios, {AxiosResponse} from 'axios';
 import isEqual from 'lodash.isequal';
 import imagesLoaded from 'imagesloaded';
-import {TrackPlainObj} from "./functions-src/Domains/Track/Track";
+import {TrackPlainObj} from "./functions-src/Entities/Track/Track";
 import defaultBg from './assets/bg.jpeg';
 
 let currentlyListening = {};

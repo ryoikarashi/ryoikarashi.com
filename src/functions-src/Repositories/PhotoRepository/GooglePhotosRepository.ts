@@ -1,9 +1,9 @@
 import {AxiosStatic} from "axios";
 import {IPhotoRepository} from "./IPhotoRepository";
-import {AlbumId} from "../../Domains/Photo/AlbumId";
-import {Photo} from "../../Domains/Photo/Photo";
-import {AccessToken} from "../../Domains/Token/AccessToken";
-import {Url} from "../../Domains/Photo/Url";
+import {AlbumId} from "../../Entities/Photo/AlbumId";
+import {Photo} from "../../Entities/Photo/Photo";
+import {AccessToken} from "../../Entities/Token/AccessToken";
+import {Url} from "../../Entities/Photo/Url";
 import {ResponseMediaItemsList} from "../../../types/google-photos";
 
 export class GooglePhotosRepository implements IPhotoRepository {

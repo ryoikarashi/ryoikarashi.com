@@ -12,7 +12,7 @@ export class Photo implements IDomain<PhotoPlainObj> {
         this._url = url;
     }
 
-    public get getUrl(): Url {
+    public get url(): Url {
         return this._url;
     }
 

@@ -1,12 +1,12 @@
 import * as admin from "firebase-admin";
 import {ITrackRepository} from "./ITtrackRepository";
-import {Track, TrackPlainObj} from "../../Domains/Track/Track";
-import {Name} from "../../Domains/Track/Name";
-import {Artist} from "../../Domains/Track/Artist";
-import {IsPlaying} from "../../Domains/Track/IsPlaying";
-import {Link} from "../../Domains/Track/Link";
+import {Track, TrackPlainObj} from "../../Entities/Track/Track";
+import {Name} from "../../Entities/Track/Name";
+import {Artist} from "../../Entities/Track/Artist";
+import {IsPlaying} from "../../Entities/Track/IsPlaying";
+import {Link} from "../../Entities/Track/Link";
 import {getRootCollectionName} from "../../../utils";
-import {AccessToken} from "../../Domains/Token/AccessToken";
+import {AccessToken} from "../../Entities/Token/AccessToken";
 import {AxiosStatic} from "axios";
 
 export class SpotifyTrackRepository implements ITrackRepository {
