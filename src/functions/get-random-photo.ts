@@ -1,6 +1,6 @@
 // initialize pusher
 import axios from "axios";
-import {APIGatewayProxyCallback, APIGatewayProxyEvent} from "aws-lambda";
+import {APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 import {isProduction} from "../utils";
 import {config} from 'dotenv';
 import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
@@ -36,7 +36,7 @@ export const handler = async function (
     context: never,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     callback: APIGatewayProxyCallback
-): Promise<any> {
+): Promise<APIGatewayProxyResult> {
     // composition root with pure DI
     const googlePhotos = new GooglePhotoService(
         new GooglePhotosRepository(axios),

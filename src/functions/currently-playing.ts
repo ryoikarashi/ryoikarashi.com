@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {APIGatewayProxyEvent, APIGatewayProxyCallback} from "aws-lambda";
+import {APIGatewayProxyEvent, APIGatewayProxyCallback, APIGatewayProxyResult} from "aws-lambda";
 import {config} from 'dotenv';
 import {isProduction} from "../utils";
 import {IOAuthConfig} from "../functions-src/Repositories/TokenRepository/ITokenRepository";
@@ -45,7 +45,7 @@ export const handler = async function (
     context: never,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     callback: APIGatewayProxyCallback
-): Promise<any> {
+): Promise<APIGatewayProxyResult> {
     // composition root with pure DI
     const spotify = new SpotifyService(
         new SpotifyTrackRepository(db, axios),
