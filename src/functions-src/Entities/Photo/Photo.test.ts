@@ -1,10 +1,8 @@
-import {Photo} from "./Photo";
-import {Url} from "./Url";
+import { Photo } from './Photo';
+import { Url } from './Url';
 
 describe('Test Photo Entity', () => {
-    const photo = new Photo(
-        Url.of('https://example.com/a-path-to-photo')
-    );
+    const photo = new Photo(Url.of('https://example.com/a-path-to-photo'));
 
     const expectedPlainObj = {
         url: 'https://example.com/a-path-to-photo',
@@ -26,9 +24,7 @@ describe('Test Photo Entity', () => {
         expect(photo.url).toStrictEqual(Url.of('https://example.com/a-path-to-photo'));
     });
 
-    const invalidPhoto = new Photo(
-        Url.of(''),
-    );
+    const invalidPhoto = new Photo(Url.of(''));
 
     test('should be an invalid photo', () => {
         expect(invalidPhoto.isValid()).toStrictEqual(false);

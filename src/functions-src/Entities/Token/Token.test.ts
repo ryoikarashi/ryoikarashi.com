@@ -1,12 +1,9 @@
-import {Token} from "./Token";
-import {AccessToken} from "./AccessToken";
-import {RefreshToken} from "./RefreshToken";
+import { Token } from './Token';
+import { AccessToken } from './AccessToken';
+import { RefreshToken } from './RefreshToken';
 
 describe('Test Token Entity', () => {
-    const token = new Token(
-        AccessToken.of('access_token'),
-        RefreshToken.of('refresh_token')
-    );
+    const token = new Token(AccessToken.of('access_token'), RefreshToken.of('refresh_token'));
 
     const expectedPlainObj = {
         accessToken: 'access_token',
@@ -30,10 +27,7 @@ describe('Test Token Entity', () => {
         expect(token.refreshToken).toStrictEqual(RefreshToken.of('refresh_token'));
     });
 
-    const invalidToken = new Token(
-        AccessToken.of(''),
-        RefreshToken.of('refresh_token'),
-    );
+    const invalidToken = new Token(AccessToken.of(''), RefreshToken.of('refresh_token'));
 
     test('should be an invalid token', () => {
         expect(invalidToken.isValid()).toStrictEqual(false);

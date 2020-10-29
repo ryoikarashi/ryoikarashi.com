@@ -1,6 +1,6 @@
-import {RefreshToken} from "./RefreshToken";
-import {AccessToken} from "./AccessToken";
-import {IDomain} from "../IDomain";
+import { RefreshToken } from './RefreshToken';
+import { AccessToken } from './AccessToken';
+import { IDomain } from '../IDomain';
 
 export interface TokenPlainObj {
     accessToken: string;

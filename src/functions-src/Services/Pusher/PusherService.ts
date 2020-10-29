@@ -1,4 +1,4 @@
-import Pusher, {Options} from "pusher";
+import Pusher, { Options } from 'pusher';
 
 export class PusherService {
     private readonly _appId: string;
@@ -11,7 +11,7 @@ export class PusherService {
         this._appId = params.appId;
         this._key = params.key;
         this._secret = params.secret;
-        this._cluster = "cluster" in params ? params.cluster : undefined;
+        this._cluster = 'cluster' in params ? params.cluster : undefined;
         this._useTLS = params.useTLS;
     }
 

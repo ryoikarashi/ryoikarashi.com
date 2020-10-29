@@ -1,9 +1,9 @@
-import {AlbumId} from "../../Entities/Photo/AlbumId";
-import {Photo} from "../../Entities/Photo/Photo";
-import {Url} from "../../Entities/Photo/Url";
-import {IPhotoService} from "./IPhotoService";
-import {IPhotoRepository} from "../../Repositories/PhotoRepository/IPhotoRepository";
-import {ITokenService} from "../Token/ITokenService";
+import { AlbumId } from '../../Entities/Photo/AlbumId';
+import { Photo } from '../../Entities/Photo/Photo';
+import { Url } from '../../Entities/Photo/Url';
+import { IPhotoService } from './IPhotoService';
+import { IPhotoRepository } from '../../Repositories/PhotoRepository/IPhotoRepository';
+import { ITokenService } from '../Token/ITokenService';
 
 export class GooglePhotoService implements IPhotoService {
     private readonly _photoRepo: IPhotoRepository;
@@ -24,9 +24,7 @@ export class GooglePhotoService implements IPhotoService {
         const randomPhoto = photos?.[randomIndex];
 
         if (!randomPhoto) {
-            return new Photo(
-                Url.of(null),
-            );
+            return new Photo(Url.of(null));
         }
 
         return randomPhoto;
