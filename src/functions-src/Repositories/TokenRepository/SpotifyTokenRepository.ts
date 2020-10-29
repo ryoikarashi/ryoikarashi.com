@@ -1,20 +1,21 @@
 import * as admin from "firebase-admin";
 import {AxiosStatic} from "axios";
 import {stringify, stringify as QsStringify} from "query-string";
-import {ITokenRepository} from "./ITokenRepository";
 import {Token} from "../../Domains/Token/Token";
 import {AccessToken} from "../../Domains/Token/AccessToken";
 import {RefreshToken} from "../../Domains/Token/RefreshToken";
 import {getRootCollectionName} from "../../../utils";
+import {IOAuthConfig, ITokenRepository} from "./ITokenRepository";
 
-export class TokenRepository implements ITokenRepository {
+export class SpotifyTokenRepository implements ITokenRepository {
     private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
     private readonly _collectionName = 'spotify_tokens';
+    private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore) {
         this._ref = db
             .collection(getRootCollectionName(this._collectionName))
-            .doc('ryoikarashi-com');
+            .doc(this._docPath);
     }
 
     public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
@@ -33,15 +34,15 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 
-    public async getTokenByAuthorizationCode(http: AxiosStatic, encodedBasicAuthorizationCode: string, authorizationCode: string): Promise<Token> {
+    public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedBasicAuthorizationCode}`,
+            "Authorization": `Basic ${config.basicAuthorizationCode}`,
             "Content-Type": 'application/x-www-form-urlencoded',
         };
         const params = {
             "grant_type": "authorization_code",
-            "code": authorizationCode,
-            "redirect_uri": "https://example.com/callback"
+            "code": config.authorizationCode,
+            "redirect_uri": config.redirectUri,
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
@@ -53,15 +54,15 @@ export class TokenRepository implements ITokenRepository {
         );
     }
 
-    public async refreshToken(http: AxiosStatic, currentToken: Token, encodedAuthorizationCode: string): Promise<Token> {
+    public async refreshToken(http: AxiosStatic, expiredToken: Token, config: IOAuthConfig): Promise<Token> {
         const headers = {
-            "Authorization": `Basic ${encodedAuthorizationCode}`,
+            "Authorization": `Basic ${config.basicAuthorizationCode}`,
             "Content-Type": "application/x-www-form-urlencoded"
         };
 
         const payload = {
             "grant_type": "refresh_token",
-            "refresh_token": currentToken.refreshToken.value(),
+            "refresh_token": expiredToken.refreshToken.value(),
         };
 
         const { data: { access_token: accessToken, refresh_token: refreshToken } } =
