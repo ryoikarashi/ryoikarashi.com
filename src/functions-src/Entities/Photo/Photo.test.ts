@@ -8,25 +8,25 @@ describe('Test Photo Entity', () => {
         url: 'https://example.com/a-path-to-photo',
     };
 
-    test('should return a correct plainObj', () => {
+    it('returns a correct plainObj', () => {
         expect(photo.toPlainObj()).toStrictEqual(expectedPlainObj);
     });
 
-    test('should return a correct JSON stringified plainObj', () => {
+    it('returns a correct JSON stringified plainObj', () => {
         expect(photo.toJson()).toStrictEqual(JSON.stringify(expectedPlainObj));
     });
 
-    test('should be a valid token', () => {
+    it('is a valid token', () => {
         expect(photo.isValid()).toStrictEqual(true);
     });
 
-    test('should return a corresponding value object', () => {
+    it('returns a corresponding value object', () => {
         expect(photo.url).toStrictEqual(Url.of('https://example.com/a-path-to-photo'));
     });
 
     const invalidPhoto = new Photo(Url.of(''));
 
-    test('should be an invalid photo', () => {
+    it('is an invalid photo', () => {
         expect(invalidPhoto.isValid()).toStrictEqual(false);
     });
 });
