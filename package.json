@@ -28,8 +28,7 @@
     "lint-staged": {
         "*.{js,ts,tsx}": [
             "eslint --fix",
-            "jest",
-            "NODE_ENV=production jest"
+            "jest"
         ],
         "*.{js,ts,tsx,json}": "prettier --write"
     },
@@ -55,6 +54,7 @@
         "@babel/preset-typescript": "^7.12.1",
         "@types/aws-lambda": "^8.10.64",
         "@types/imagesloaded": "^4.1.2",
+        "@types/jest": "^26.0.15",
         "@types/lodash.isequal": "^4.5.5",
         "@types/urlsafe-base64": "^1.0.28",
         "@typescript-eslint/eslint-plugin": "^4.6.0",
@@ -78,6 +78,7 @@
         "html-webpack-plugin": "^4.5.0",
         "husky": "^4.3.0",
         "imagesloaded": "^4.1.4",
+        "jest": "^26.6.0",
         "lint-staged": "^10.5.0",
         "lodash.isequal": "^4.5.0",
         "mini-css-extract-plugin": "^1.2.0",
@@ -95,6 +96,7 @@
         "query-string": "^6.13.6",
         "style-loader": "^2.0.0",
         "tailwindcss": "^1.9.6",
+        "ts-jest": "^26.4.1",
         "ts-loader": "^8.0.7",
         "typescript": "^4.0.5",
         "url-loader": "^4.1.0",
@@ -102,10 +104,7 @@
         "webpack-bundle-analyzer": "^3.9.0",
         "webpack-cli": "^4.1.0",
         "webpack-dev-server": "^3.11.0",
-        "webpack-node-externals": "^2.5.2",
-        "@types/jest": "^26.0.15",
-        "jest": "^26.6.0",
-        "ts-jest": "^26.4.1"
+        "webpack-node-externals": "^2.5.2"
     },
     "engines": {
         "node": "^14.13.1"
