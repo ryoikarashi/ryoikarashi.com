@@ -62,16 +62,15 @@ describe('Test GooglePhotosRepository', () => {
             clientSecret: 'client_secret',
             redirectUri: 'https://example.com/callback',
         };
+        const repository = new GoogleTokenRepository(admin.firestore());
 
         it('returns a valid token', async () => {
-            (axios as jest.Mocked<typeof axios>).post.mockResolvedValueOnce({ data: httpTokenResponse });
-            const repository = new GoogleTokenRepository(admin.firestore());
+            jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: httpTokenResponse });
             await expect(repository.getTokenByAuthorizationCode(axios, oauthConfig)).resolves.toEqual(token);
         });
 
         it('returns an invalid token', async () => {
-            (axios as jest.Mocked<typeof axios>).post.mockRejectedValueOnce(new Error());
-            const repository = new GoogleTokenRepository(admin.firestore());
+            jest.spyOn(axios, 'post').mockRejectedValueOnce(new Error());
             await expect(repository.getTokenByAuthorizationCode(axios, oauthConfig)).rejects.toEqual(new Error());
         });
     });
