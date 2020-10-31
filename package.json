@@ -28,7 +28,7 @@
     "lint-staged": {
         "*.{js,ts,tsx}": [
             "eslint --fix",
-            "jest"
+            "jest && NODE_ENV=production jest"
         ],
         "*.{js,ts,tsx,json}": "prettier --write"
     },
