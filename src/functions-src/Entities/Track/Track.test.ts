@@ -19,19 +19,19 @@ describe('Test Track Entity', () => {
         link: 'https://example.com',
     };
 
-    test('should return a correct plainObj', () => {
+    it('returns a correct plainObj', () => {
         expect(track.toPlainObj()).toStrictEqual(expectedPlainObj);
     });
 
-    test('should return a correct JSON stringified plainObj', () => {
+    it('returns a correct JSON stringified plainObj', () => {
         expect(track.toJson()).toStrictEqual(JSON.stringify(expectedPlainObj));
     });
 
-    test('should be a valid track', () => {
+    it('is a valid track', () => {
         expect(track.isValid()).toStrictEqual(true);
     });
 
-    test('should return a corresponding value object', () => {
+    it('returns a corresponding value object', () => {
         expect(track.name).toStrictEqual(Name.of('track_name'));
         expect(track.artist).toStrictEqual(Artist.of('track_artist'));
         expect(track.isPlaying).toStrictEqual(IsPlaying.of(true));
@@ -40,7 +40,7 @@ describe('Test Track Entity', () => {
 
     const invalidTrack = new Track(Name.of(''), Artist.of('track_artist'), IsPlaying.of(false), Link.of(''));
 
-    test('should be an invalid track', () => {
+    it('is an invalid track', () => {
         expect(invalidTrack.isValid()).toStrictEqual(false);
     });
 });
