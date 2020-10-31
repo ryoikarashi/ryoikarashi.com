@@ -69,19 +69,21 @@ describe('Test GooglePhotosRepository', () => {
     const accessToken = AccessToken.of('access_token');
     const callback = async () => new AccessToken('new_access_token');
 
-    it('returns an array of photos when api call succeeds', async () => {
-        (axios as jest.Mocked<typeof axios>).post.mockResolvedValueOnce({ data: mediaItemsList });
-        const repository = new GooglePhotosRepository(axios);
-        await expect(repository.getPhotosFromAlbum(albumId, accessToken, callback)).resolves.toEqual(photos);
-        expect(axios.post).toHaveBeenCalledTimes(1);
-    });
+    describe('getPhotosFromAlbum', () => {
+        it('returns an array of photos when api call succeeds', async () => {
+            (axios as jest.Mocked<typeof axios>).post.mockResolvedValueOnce({ data: mediaItemsList });
+            const repository = new GooglePhotosRepository(axios);
+            await expect(repository.getPhotosFromAlbum(albumId, accessToken, callback)).resolves.toEqual(photos);
+            expect(axios.post).toHaveBeenCalledTimes(1);
+        });
 
-    it('throws an exception first and catch the error and return an array of photos', async () => {
-        (axios as jest.Mocked<typeof axios>).post
-            .mockImplementationOnce(() => Promise.reject(new Error('requested access token is expired')))
-            .mockImplementationOnce(() => Promise.resolve({ data: mediaItemsList }));
-        const repository = new GooglePhotosRepository(axios);
-        await expect(repository.getPhotosFromAlbum(albumId, accessToken, callback)).resolves.toEqual(photos);
-        expect(axios.post).toHaveBeenCalledTimes(2);
+        it('throws an exception first and catch the error and return an array of photos', async () => {
+            (axios as jest.Mocked<typeof axios>).post
+                .mockImplementationOnce(() => Promise.reject(new Error('requested access token is expired')))
+                .mockImplementationOnce(() => Promise.resolve({ data: mediaItemsList }));
+            const repository = new GooglePhotosRepository(axios);
+            await expect(repository.getPhotosFromAlbum(albumId, accessToken, callback)).resolves.toEqual(photos);
+            expect(axios.post).toHaveBeenCalledTimes(2);
+        });
     });
 });
