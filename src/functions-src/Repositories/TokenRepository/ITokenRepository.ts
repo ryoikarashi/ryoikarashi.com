@@ -9,6 +9,11 @@ export interface IOAuthConfig {
     redirectUri: string;
 }
 
+export interface HTTPTokenResponse {
+    access_token: string | null;
+    refresh_token: string | null;
+}
+
 export interface ITokenRepository {
     // queries
     getFirstToken(): Promise<Token>;
