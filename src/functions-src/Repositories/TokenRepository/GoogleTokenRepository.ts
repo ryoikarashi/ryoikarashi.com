@@ -8,24 +8,26 @@ import { getRootCollectionName } from '../../../utils';
 import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class GoogleTokenRepository implements ITokenRepository {
-    private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
+    private readonly _db: FirebaseFirestore.Firestore;
     private readonly _collectionName = 'google_tokens';
     private readonly _docPath = 'ryoikarashi-com';
 
     constructor(db: FirebaseFirestore.Firestore) {
-        this._ref = db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
+        this._db = db;
     }
 
     public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
-        const doc = await this._ref.get();
+        const ref = this._db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
+        const doc = await ref.get();
         const data = token.refreshToken.isValid()
             ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
             : { access_token: token.accessToken.value() };
-        (doc.exists && (await this._ref.update(data))) || (await this._ref.create(data));
+        (doc.exists && (await ref.update(data))) || (await ref.create(data));
     }
 
     public async getFirstToken(): Promise<Token> {
-        const doc = await this._ref.get();
+        const ref = this._db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
+        const doc = await ref.get();
         return new Token(
             AccessToken.of((doc?.exists && doc?.data()?.access_token) || null),
             RefreshToken.of((doc?.exists && doc?.data()?.refresh_token) || null),
@@ -67,6 +69,6 @@ export class GoogleTokenRepository implements ITokenRepository {
             data: { access_token: accessToken, refresh_token: refreshToken },
         } = await http.post('https://www.googleapis.com/oauth2/v4/token', stringify(payload), { headers });
 
-        return Promise.resolve(new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken)));
+        return new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken));
     }
 }
