@@ -6,6 +6,7 @@ import { Token } from '../../Entities/Token/Token';
 import { RefreshToken } from '../../Entities/Token/RefreshToken';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { getRootCollectionName } from '../../../utils';
+import { stringify } from 'query-string';
 
 // create mocks
 jest.mock('axios');
@@ -110,6 +111,27 @@ describe('Test GooglePhotosRepository', () => {
     });
 
     describe('getTokenByAuthorizationCode', () => {
+        it('it has been called with appropriate params', async () => {
+            const repository = new GoogleTokenRepository(admin.firestore());
+            jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: httpTokenResponse });
+            await repository.getTokenByAuthorizationCode(axios, oauthConfig);
+            const tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
+            const params = {
+                code: oauthConfig.authorizationCode,
+                client_id: oauthConfig.clientId,
+                client_secret: oauthConfig.clientSecret,
+                redirect_uri: oauthConfig.redirectUri,
+                grant_type: 'authorization_code',
+            };
+            const requestConfig = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+
+            expect(axios.post).toHaveBeenCalledWith(tokenEndpoint, stringify(params), requestConfig);
+        });
+
         it('returns a valid token', async () => {
             const repository = new GoogleTokenRepository(admin.firestore());
             jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: httpTokenResponse });
@@ -137,6 +159,26 @@ describe('Test GooglePhotosRepository', () => {
             const repository = new GoogleTokenRepository(admin.firestore());
             jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: newHttpTokenResponse });
             await expect(repository.refreshToken(axios, token, oauthConfig)).resolves.toEqual(newToken);
+        });
+
+        it('it has been called with appropriate params', async () => {
+            const repository = new GoogleTokenRepository(admin.firestore());
+            jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: newHttpTokenResponse });
+            await repository.refreshToken(axios, token, oauthConfig);
+            const tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
+            const params = {
+                client_id: oauthConfig.clientId,
+                client_secret: oauthConfig.clientSecret,
+                grant_type: 'refresh_token',
+                refresh_token: httpTokenResponse.refresh_token,
+            };
+            const requestConfig = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+
+            expect(axios.post).toHaveBeenCalledWith(tokenEndpoint, stringify(params), requestConfig);
         });
 
         it('throws an exception', async () => {

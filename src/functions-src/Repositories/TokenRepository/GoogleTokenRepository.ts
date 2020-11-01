@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { AxiosStatic } from 'axios';
 import { stringify } from 'query-string';
 import { Token } from '../../Entities/Token/Token';
