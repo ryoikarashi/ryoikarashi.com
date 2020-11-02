@@ -1,35 +1,13 @@
-import * as admin from 'firebase-admin';
 import { AxiosStatic } from 'axios';
 import { stringify, stringify as QsStringify } from 'query-string';
 import { Token } from '../../Entities/Token/Token';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { RefreshToken } from '../../Entities/Token/RefreshToken';
-import { getRootCollectionName } from '../../../utils';
 import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
-export class SpotifyTokenRepository implements ITokenRepository {
-    private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
-    private readonly _collectionName = 'spotify_tokens';
-    private readonly _docPath = 'ryoikarashi-com';
-
-    constructor(db: FirebaseFirestore.Firestore) {
-        this._ref = db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
-    }
-
-    public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
-        const doc = await this._ref.get();
-        const data = token.refreshToken.isValid()
-            ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
-            : { access_token: token.accessToken.value() };
-        (doc.exists && (await this._ref.update(data))) || (await this._ref.create(data));
-    }
-
-    public async getFirstToken(): Promise<Token> {
-        const doc = await this._ref.get();
-        return new Token(
-            AccessToken.of((doc?.exists && doc?.data()?.access_token) || null),
-            RefreshToken.of((doc?.exists && doc?.data()?.refresh_token) || null),
-        );
+export class SpotifyTokenRepository extends ITokenRepository {
+    public constructor(db: FirebaseFirestore.Firestore, collectionName: string, docPath: string) {
+        super(db, collectionName, docPath);
     }
 
     public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {

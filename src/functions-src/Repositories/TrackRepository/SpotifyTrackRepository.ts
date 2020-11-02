@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { ITrackRepository } from './ITtrackRepository';
 import { Track, TrackPlainObj } from '../../Entities/Track/Track';
 import { Name } from '../../Entities/Track/Name';
@@ -8,21 +7,26 @@ import { Link } from '../../Entities/Track/Link';
 import { getRootCollectionName } from '../../../utils';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { AxiosStatic } from 'axios';
+import * as admin from 'firebase-admin';
 
 export class SpotifyTrackRepository implements ITrackRepository {
-    private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
+    private readonly _db: FirebaseFirestore.Firestore;
     private readonly _http: AxiosStatic;
-    private readonly _collectionName = 'spotify_last_listening_track';
-    private readonly _docPath = 'ryoikarashi-com';
+    private readonly _collectionName: string;
+    private readonly _docPath: string;
+    private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
 
-    constructor(db: FirebaseFirestore.Firestore, http: AxiosStatic) {
-        this._ref = db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
+    constructor(db: FirebaseFirestore.Firestore, http: AxiosStatic, collectionName: string, docPath: string) {
+        this._db = db;
         this._http = http;
+        this._collectionName = collectionName;
+        this._docPath = docPath;
+        this._ref = db.collection(getRootCollectionName(collectionName)).doc(docPath);
     }
 
     public async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
         const doc = await this._ref.get();
-        (doc.exists && (await this._ref.update(data))) || (await this._ref.create(data));
+        doc.exists ? await this._ref.update(data) : await this._ref.create(data);
     }
 
     public async getLastPlayedTrack(): Promise<Track> {
@@ -48,7 +52,7 @@ export class SpotifyTrackRepository implements ITrackRepository {
     ): Promise<Track> {
         try {
             const options = {
-                headers: { Authorization: `Bearer  ${accessToken.value()}` },
+                headers: { Authorization: `Bearer ${accessToken.value()}` },
             };
             const { status, data } = await this._http.get(
                 'https://api.spotify.com/v1/me/player/currently-playing',

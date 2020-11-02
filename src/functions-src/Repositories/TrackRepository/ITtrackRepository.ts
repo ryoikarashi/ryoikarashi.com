@@ -1,6 +1,10 @@
 import { Track, TrackPlainObj } from '../../Entities/Track/Track';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 
+export interface HTTPTrackResponse {
+    name: string;
+}
+
 export interface ITrackRepository {
     // queries
     getLastPlayedTrack(): Promise<Track>;
