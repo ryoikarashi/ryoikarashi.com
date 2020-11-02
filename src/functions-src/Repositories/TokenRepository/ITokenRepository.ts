@@ -1,5 +1,9 @@
 import { AxiosStatic } from 'axios';
 import { Token } from '../../Entities/Token/Token';
+import * as admin from 'firebase-admin';
+import { getRootCollectionName } from '../../../utils';
+import { AccessToken } from '../../Entities/Token/AccessToken';
+import { RefreshToken } from '../../Entities/Token/RefreshToken';
 
 export interface IOAuthConfig {
     clientId: string;
@@ -14,11 +18,31 @@ export interface HTTPTokenResponse {
     refresh_token: string | null;
 }
 
-export interface ITokenRepository {
+export abstract class ITokenRepository {
+    private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
+
+    public constructor(db: FirebaseFirestore.Firestore, collectionName: string, docPath: string) {
+        this._ref = db.collection(getRootCollectionName(collectionName)).doc(docPath);
+    }
+
     // queries
-    getFirstToken(): Promise<Token>;
-    getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token>;
-    refreshToken(http: AxiosStatic, expiredToken: Token, config: IOAuthConfig): Promise<Token>;
+    abstract getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token>;
+    abstract refreshToken(http: AxiosStatic, expiredToken: Token, config: IOAuthConfig): Promise<Token>;
+
+    public async getFirstToken(): Promise<Token> {
+        const doc = await this._ref.get();
+        return new Token(
+            AccessToken.of(doc?.exists ? doc?.data()?.access_token || null : null),
+            RefreshToken.of(doc?.exists ? doc?.data()?.refresh_token || null : null),
+        );
+    }
+
     // commands
-    storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void>;
+    public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
+        const doc = await this._ref.get();
+        const data = token.refreshToken.isValid()
+            ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
+            : { access_token: token.accessToken.value() };
+        doc.exists ? await this._ref.update(data) : await this._ref.create(data);
+    }
 }
