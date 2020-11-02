@@ -28,7 +28,7 @@ afterEach(() => {
     jest.clearAllMocks();
 });
 
-describe('Test GooglePhotosRepository', () => {
+describe('Test GoogleTokenRepository', () => {
     const oauthConfig: IOAuthConfig = {
         authorizationCode: 'authorization_code',
         clientId: 'client_id',
