@@ -51,8 +51,12 @@ export const handler = async function (
 ): Promise<APIGatewayProxyResult> {
     // composition root with pure DI
     const spotify = new SpotifyService(
-        new SpotifyTrackRepository(db, axios),
-        new TokenService(axios, new SpotifyTokenRepository(db), spotifyOAuthConfig),
+        new SpotifyTrackRepository(db, axios, 'spotify_last_listening_track', 'ryoikarashi-com'),
+        new TokenService(
+            axios,
+            new SpotifyTokenRepository(db, 'spotify_tokens', 'ryoikarashi-com'),
+            spotifyOAuthConfig,
+        ),
     );
 
     // get a currently playing track with an access token
