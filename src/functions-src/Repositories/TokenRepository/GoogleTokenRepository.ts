@@ -3,35 +3,11 @@ import { stringify } from 'query-string';
 import { Token } from '../../Entities/Token/Token';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { RefreshToken } from '../../Entities/Token/RefreshToken';
-import { getRootCollectionName } from '../../../utils';
 import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
-export class GoogleTokenRepository implements ITokenRepository {
-    private readonly _db: FirebaseFirestore.Firestore;
-    private readonly _collectionName = 'google_tokens';
-    private readonly _docPath = 'ryoikarashi-com';
-
-    constructor(db: FirebaseFirestore.Firestore) {
-        this._db = db;
-    }
-
-    public async storeAccessTokenAndMaybeRefreshToken(token: Token): Promise<void> {
-        const ref = this._db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
-        const doc = await ref.get();
-        const data = token.refreshToken.isValid()
-            ? { access_token: token.accessToken.value(), refresh_token: token.refreshToken.value() }
-            : { access_token: token.accessToken.value() };
-
-        doc.exists ? await ref.update(data) : await ref.create(data);
-    }
-
-    public async getFirstToken(): Promise<Token> {
-        const ref = this._db.collection(getRootCollectionName(this._collectionName)).doc(this._docPath);
-        const doc = await ref.get();
-        return new Token(
-            AccessToken.of(doc?.exists ? doc?.data()?.access_token || null : null),
-            RefreshToken.of(doc?.exists ? doc?.data()?.refresh_token || null : null),
-        );
+export class GoogleTokenRepository extends ITokenRepository {
+    public constructor(db: FirebaseFirestore.Firestore, collectionName: string, docPath: string) {
+        super(db, collectionName, docPath);
     }
 
     public async getTokenByAuthorizationCode(http: AxiosStatic, config: IOAuthConfig): Promise<Token> {

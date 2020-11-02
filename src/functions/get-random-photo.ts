@@ -39,7 +39,7 @@ export const handler = async function (
     // composition root with pure DI
     const googlePhotos = new GooglePhotoService(
         new GooglePhotosRepository(axios),
-        new TokenService(axios, new GoogleTokenRepository(db), googleOAuthConfig),
+        new TokenService(axios, new GoogleTokenRepository(db, 'google_tokens', 'ryoikarashi-com'), googleOAuthConfig),
     );
 
     // get a random photo from a specified album
