@@ -118,7 +118,6 @@ describe('Test TokenService', () => {
                 'test',
             );
             const service = new TokenService(axios, MockTokenRepositoryInstance, oauthConfig);
-
             const mockGetFirstToken = jest.fn().mockRejectedValueOnce(new Error());
             jest.spyOn(MockTokenRepositoryInstance, 'getFirstToken').mockImplementationOnce(mockGetFirstToken);
 
@@ -126,6 +125,30 @@ describe('Test TokenService', () => {
         });
     });
 
-    // describe('refreshAccessToken', async () => {
-    // });
+    describe('refreshAccessToken', () => {
+        it('it returns a new token', async () => {
+            const MockTokenRepositoryInstance = new MockTokenRepository(
+                admin.initializeApp().firestore(),
+                'test',
+                'test',
+            );
+            const service = new TokenService(axios, MockTokenRepositoryInstance, oauthConfig);
+            const mockGetFirstToken = jest.fn().mockResolvedValueOnce(token);
+            const mockRefreshToken = jest.fn().mockResolvedValueOnce(newToken);
+            const mockStoreAccessTokenAndMaybeRefreshToken = jest.fn();
+            jest.spyOn(MockTokenRepositoryInstance, 'getFirstToken').mockImplementationOnce(mockGetFirstToken);
+            jest.spyOn(MockTokenRepositoryInstance, 'refreshToken').mockImplementationOnce(mockRefreshToken);
+            jest.spyOn(MockTokenRepositoryInstance, 'storeAccessTokenAndMaybeRefreshToken').mockImplementationOnce(
+                mockStoreAccessTokenAndMaybeRefreshToken,
+            );
+
+            await expect(service.refreshAccessToken()).resolves.toEqual(newToken.accessToken);
+            expect(mockGetFirstToken).toHaveBeenCalledTimes(1);
+            expect(mockGetFirstToken).toHaveBeenCalledWith();
+            expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+            expect(mockRefreshToken).toHaveBeenCalledWith(axios, token, oauthConfig);
+            expect(mockStoreAccessTokenAndMaybeRefreshToken).toHaveBeenCalledTimes(1);
+            expect(mockStoreAccessTokenAndMaybeRefreshToken).toHaveBeenCalledWith(newToken);
+        });
+    });
 });
