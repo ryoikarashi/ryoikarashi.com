@@ -42,6 +42,8 @@ export const handler = async function (
         new TokenService(axios, new GoogleTokenRepository(db, 'google_tokens', 'ryoikarashi-com'), googleOAuthConfig),
     );
 
+    console.log(isProduction);
+
     // get a random photo from a specified album
     const photo = await googlePhotos.getARandomPhotoFromAlbum(AlbumId.of(process.env.GOOGLE_PHOTOS_ALBUM_ID || ''));
 
