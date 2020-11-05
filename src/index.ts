@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         .subscribe(pusherSettings.channelName)
         .bind(pusherSettings.eventName, function (trackData: TrackPlainObj) {
             if (!isEqual(topPage.currentlyListeningTrack, trackData)) {
-                topPage.currentlyListeningTrack = trackData;
                 topPage.updateDOM(trackData);
             }
         });
