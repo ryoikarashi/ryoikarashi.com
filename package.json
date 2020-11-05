@@ -26,9 +26,9 @@
         }
     },
     "lint-staged": {
-        "*.{js,ts,tsx}": [
+        "*.{ts,tsx}": [
             "eslint --fix",
-            "jest"
+            "jest --passWithNoTests"
         ],
         "*.{js,ts,tsx,json}": "prettier --write"
     },
