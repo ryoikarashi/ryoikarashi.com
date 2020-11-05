@@ -9,8 +9,7 @@ export default class Photo {
     }
 
     public async getARandomPhoto(): Promise<AxiosResponse<PhotoPlainObj>> {
-        const URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
-        return axios.get<PhotoPlainObj>(`${URL}/.netlify/functions/get-random-photo`);
+        return axios.get<PhotoPlainObj>(`/.netlify/functions/get-random-photo`);
     }
 
     public setBackgroundImage(src: string): void {
