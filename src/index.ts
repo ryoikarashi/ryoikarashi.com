@@ -1,4 +1,5 @@
 import './index.html';
+import './404.html';
 import './index.css';
 
 import Pusher from 'pusher-js';
