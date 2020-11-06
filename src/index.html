@@ -34,52 +34,58 @@
         <div class="flex justify-center items-center h-full w-full">
             <div class="text-black z-50 font-light font-medium:md text-white text-3xl:md text-xl italic w-full text-center" id="loading">Loading</div>
             <div class="hidden" id="content">
-                <div class="fixed top-0 right-0 font-thin z-50 text-2xl leading-none p-4 md:p-6" id="title" style="letter-spacing: 0.06rem;">anicca.</div>
-                <div class="fixed inset-0 bg-no-repeat bg-cover bg-center z-10" id="bg"></div>
-                <div class="fixed inset-0 z-20" id="overlay"></div>
-                <div class="absolute bottom-0 left-0 w-100 z-30">
-                    <div class="p-3 text-lg font-medium italic leading-none">
-                        <p class="m-0 mb-2 block">
-                            <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block mb-1">Hi, I'm
-                                <a class="border-dotted border-b p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block" href="//me.ryoikarashi.com" target="_blank" rel="nofollow noopener">Ryo Ikarashi</a>
-                                , a freelance
-                            </small>
-                            <br>
-                            <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block mb-1">software developer based in Kyoto, Japan.</small>
-                        </p>
-                        <ul class="m-0 mb-2 p-0 list block">
-                            <li class="lh-copy mb-1">
-                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//sarara.software" target="_blank" rel="nofollow noopener">＊ Sarara Software</a>
+                <div class="fixed top-0 right-0 font-thin z-30 text-2xl leading-none p-4 md:p-6" id="word" style="letter-spacing: 0.06rem;">
+                    <span class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block cursor-pointer" id="name"></span>
+                    <div class="invisible fixed fade-out inset-0 z-5 cursor-pointer" id="explanation_overlay"></div>
+                    <div class="invisible fixed fade-out" id="explanation"></div>
+                </div>
+                <div class="fixed inset-0 transition-all duration-700" id="wrapper">
+                    <div class="fixed inset-0 bg-no-repeat bg-cover bg-center z-10" id="bg"></div>
+                    <div class="fixed inset-0 z-20" id="overlay"></div>
+                    <div class="absolute bottom-0 left-0 w-100 z-30">
+                        <div class="p-3 text-lg font-medium italic leading-none">
+                            <p class="m-0 mb-2 block">
+                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block mb-1">Hi, I'm
+                                    <a class="border-dotted border-b p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block" href="//me.ryoikarashi.com" target="_blank" rel="nofollow noopener">Ryo Ikarashi</a>
+                                    , a freelance
                                 </small>
-                            </li>
-                            <li class="lh-copy mb-1">
+                                <br>
+                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block mb-1">software developer based in Kyoto, Japan.</small>
+                            </p>
+                            <ul class="m-0 mb-2 p-0 list block">
+                                <li class="lh-copy mb-1">
+                                    <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
+                                        <a class="block leading-none" href="//sarara.software" target="_blank" rel="nofollow noopener">＊ Sarara Software</a>
+                                    </small>
+                                </li>
+                                <li class="lh-copy mb-1">
+                                    <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
+                                        <a class="block leading-none" href="//github.com/RyoIkarashi" target="_blank" rel="nofollow noopener">＊ Code</a>
+                                    </small>
+                                </li>
+                                <li class="lh-copy mb-1">
+                                    <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
+                                        <a class="block leading-none" href="//soundcloud.com/ryo_ikarashi" target="_blank" rel="nofollow noopener">＊ Music</a>
+                                    </small>
+                                </li>
+                                <li class="lh-copy mb-1">
+                                    <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
+                                        <a class="block leading-none" href="//photos.app.goo.gl/E1ReiRfaKaBrfQCw8" target="_blank" rel="nofollow noopener">＊ Photos</a>
+                                    </small>
+                                </li>
+                            </ul>
+                            <p class="m-0 mb-1 block">
                                 <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//github.com/RyoIkarashi" target="_blank" rel="nofollow noopener">＊ Code</a>
+                                    <a class="block leading-none" href="mailto:me@ryoikarashi.com" target="_blank" rel="nofollow noopener">Email: me@ryoikarashi.com</a>
                                 </small>
-                            </li>
-                            <li class="lh-copy mb-1">
-                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//soundcloud.com/ryo_ikarashi" target="_blank" rel="nofollow noopener">＊ Music</a>
-                                </small>
-                            </li>
-                            <li class="lh-copy mb-1">
-                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//photos.app.goo.gl/E1ReiRfaKaBrfQCw8" target="_blank" rel="nofollow noopener">＊ Photos</a>
-                                </small>
-                            </li>
-                        </ul>
-                        <p class="m-0 mb-1 block">
-                            <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                <a class="block leading-none" href="mailto:me@ryoikarashi.com" target="_blank" rel="nofollow noopener">Email: me@ryoikarashi.com</a>
-                            </small>
-                        </p>
-                        <p class="m-0 mb-1 block">
-                            <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block">Feel free to drop me a line :)</small>
-                        </p>
-                        <p class="pt-2 mt-2 border-t border-white block">
-                            <small id="spotify" class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block">Loading...</small>
-                        </p>
+                            </p>
+                            <p class="m-0 mb-1 block">
+                                <small class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out inline-block">Feel free to drop me a line :)</small>
+                            </p>
+                            <p class="pt-2 mt-2 border-t border-white block">
+                                <small id="spotify" class="p-1 bg-white bg-opacity-10 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block">Loading...</small>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
