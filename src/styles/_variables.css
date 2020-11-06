@@ -1,5 +1,6 @@
 :root {
-  --f-main: 'Avenir Next', 'Avenir', 'YuGothic', 'Yu-Gothic', '遊ゴシック', sans-serif;
+  /*--f-main: 'Avenir Next', 'Avenir', 'YuGothic', 'Yu-Gothic', '遊ゴシック', sans-serif;*/
+  --f-main: 'EB Garamond', 'YuGothic', 'Yu-Gothic', '遊ゴシック', sans-serif;
   --c-dark: #333537;
   --c-white: #fff;
   --c-purple--grad: linear-gradient(-228deg, #bab0ff 21%, #e69eff 100%);
