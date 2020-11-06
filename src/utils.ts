@@ -6,3 +6,5 @@ export const prependStrOnlyDev = (original: string, prependStr: string): string 
 export const prependDev = (original: string): string => prependStrOnlyDev(original, 'dev_');
 
 export const getRootCollectionName = (collectionName: string): string => prependDev(collectionName);
+
+export const sleep = (msec: number) => new Promise((resolve) => setTimeout(resolve, msec));

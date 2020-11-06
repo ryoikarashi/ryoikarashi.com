@@ -9,6 +9,7 @@ import Photo from './clients/photo';
 import ClickSound from './clients/click-sound';
 import Track from './clients/track';
 import { TrackPlainObj } from './functions-src/Entities/Track/Track';
+import Word from './clients/word';
 
 const pusherSettings = {
     appKey: 'f3f5751318b2c7958521',
@@ -24,11 +25,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const topPage = new TopPage(
         new Photo('bg'),
         new Track(),
+        new Word(),
         new ClickSound('clickSound'),
         'spotify',
         'bg',
         'loading',
         'content',
+        'word',
     );
 
     // initialize top page
@@ -39,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         .subscribe(pusherSettings.channelName)
         .bind(pusherSettings.eventName, function (trackData: TrackPlainObj) {
             if (!isEqual(topPage.currentlyListeningTrack, trackData)) {
-                topPage.updateDOM(trackData);
+                topPage.updateTrackDOM(trackData);
             }
         });
 });
