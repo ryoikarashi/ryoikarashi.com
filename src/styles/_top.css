@@ -40,7 +40,6 @@
   animation: dots 1s steps(5, end) infinite;}
 
 #explanation {
-  max-width: 50%;
   z-index: 111111;
   top: 50%;
   line-height: 1.7;
