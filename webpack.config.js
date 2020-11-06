@@ -155,6 +155,10 @@ module.exports = {
             template: './src/index.html',
             filename: 'index.html',
         }),
+        new HTMLWebpackPlugin({
+            template: './src/404.html',
+            filename: '404.html',
+        }),
         new MiniCssExtractPlugin({
             filename: '[name].[chunkhash].css',
             chunkFilename: '[id].[chunkhash].css',
