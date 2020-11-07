@@ -12,8 +12,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath,
-        filename: '[name].[chunkhash].js',
-        chunkFilename: '[name].[chunkhash].js',
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].[hash].js',
     },
 
     devtool: 'inline-source-map',
@@ -117,7 +117,7 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[name].[chunkhash].[ext]',
+                            name: '[name].[hash].[ext]',
                             limit: '10000',
                             publicPath:
                                 process.env.NODE_ENV === 'production'
@@ -134,7 +134,7 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[name].[chunkhash].[ext]',
+                            name: '[name].[hash].[ext]',
                             limit: '10000',
                             publicPath:
                                 process.env.NODE_ENV === 'production'
@@ -160,8 +160,8 @@ module.exports = {
             filename: '404.html',
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[chunkhash].css',
-            chunkFilename: '[id].[chunkhash].css',
+            filename: '[name].[hash].css',
+            chunkFilename: '[id].[hash].css',
         }),
         // new WebpackBundleAnalyzerPlugin(),
         // new FaviconsWebpackPlugin({
@@ -173,7 +173,7 @@ module.exports = {
         //   // Emit all stats of the generated icons
         //   emitStats: false,
         //   // The name of the json containing all favicon information
-        //   statsFilename: 'iconstats-[chunkhash].json',
+        //   statsFilename: 'iconstats-[hash].json',
         //   // Generate a cache file with control hashes and
         //   // don't rebuild the favicons until those hashes change
         //   persistentCache: true,
