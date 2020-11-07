@@ -25,7 +25,7 @@ export const handler = async function (
     callback: APIGatewayProxyCallback,
 ): Promise<APIGatewayProxyResult> {
     // composition root with pure DI
-    const wordService = new WordService(new WordRepository(db, 'pali_word_list_by_initial_letter'));
+    const wordService = new WordService(new WordRepository(db, 'pali_dictionary', 'dictionary'));
 
     // get a random word
     const randomWord = await wordService.getARandomWord();
