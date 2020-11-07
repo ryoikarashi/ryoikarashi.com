@@ -18,7 +18,7 @@ export class WordRepository implements IWordRepository {
 
     public async getRandomWords(getRandomWords: GetRandomWords): Promise<Array<Word>> {
         const snapshot = await this._db.collection(this._collectionName).doc(this._docPath).get();
-        const dictionary = snapshot.data() as Array<WordPlainObject> | undefined;
+        const dictionary = snapshot.data()?.list;
 
         if (!dictionary) {
             return [new Word(Name.of(null), Chapter.of(null), Explanation.of(null))];
