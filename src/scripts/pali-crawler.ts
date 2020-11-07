@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 import puppeteer from 'puppeteer';
 import { resolve } from 'path';
 import { getRootCollectionName } from '../utils';
-import _groupBy from 'lodash.groupby';
 
 // load env variables
 config({ path: resolve(__dirname, '..', '..', '.env') });
@@ -23,11 +22,9 @@ interface WordItem {
     chapter: string;
 }
 type Dictionary = Array<WordItem>;
-type GroupedDictionary = {
-    [initialLetter: string]: Dictionary;
-};
 
 const COLLECTION_NAME = getRootCollectionName('pali_dictionary');
+const DOC_PATH = 'dictionary';
 const batch = db.batch();
 
 (async () => {
@@ -65,18 +62,7 @@ const batch = db.batch();
             }),
         );
 
-    const groupedDictionary: GroupedDictionary = _groupBy(processedDictionary, (item) => item.chapter);
-
-    Object.entries(groupedDictionary).map(([key, value]) => {
-        value.map((item) => {
-            const ref = db
-                .collection(COLLECTION_NAME)
-                .doc(key)
-                .collection('pali_word_list_by_initial_letter')
-                .doc(item.name.replace('/', '-'));
-            batch.set(ref, item);
-        });
-    });
+    await db.collection(COLLECTION_NAME).doc(DOC_PATH).set({ list: processedDictionary });
 
     // batch insert data
     await batch.commit();

@@ -18,7 +18,8 @@
         "test": "yarn test:test && yarn test:prod",
         "test:test": "jest",
         "test:prod": "NODE_ENV=production jest",
-        "format": "prettier --write 'src/**/*.{js,ts,json}'"
+        "format": "prettier --write 'src/**/*.{js,ts,json}'",
+        "create-pali-dictionary": "npx tsc src/scripts/pali-crawler.ts --esModuleInterop && node src/scripts/pali-crawler"
     },
     "husky": {
         "hooks": {
