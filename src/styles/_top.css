@@ -25,12 +25,17 @@
 #overlay {
   background-color: rgba(12, 6, 3, .4);]
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%232e2d2f' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-  border: 0.7vw solid #fff;
+  border: 5px solid #fff;
 }
 
 #about {
-  left: 0.7vw;
-  bottom: 0.7vw;
+  left: 5px;
+  bottom: 5px;
+}
+
+#word {
+  right: 5px;
+  top: 5px;
 }
 
 #content {
