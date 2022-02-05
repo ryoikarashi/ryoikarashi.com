@@ -53,6 +53,7 @@
     },
     "dependencies": {
         "@babel/preset-typescript": "^7.12.1",
+        "@firebase/app-compat": "^0.1.17",
         "@types/aws-lambda": "^8.10.64",
         "@types/imagesloaded": "^4.1.2",
         "@types/jest": "^26.0.15",
