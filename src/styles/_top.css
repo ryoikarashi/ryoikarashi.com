@@ -52,8 +52,8 @@
   transform: translate(-50%, -50%);
 }
 
-#wrapper.filtered {
-  filter: blur(10px);
+#wrapper.filtered, #about.filtered {
+  filter: blur(50px);
 }
 
 @keyframes dots {

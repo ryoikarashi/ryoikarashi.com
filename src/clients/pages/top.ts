@@ -157,8 +157,10 @@ export default class TopPage implements IPage {
 
     private _toggleFilteringWrapper(): void {
         const $wrapper = document.getElementById('wrapper');
-        if (!$wrapper) return;
+        const $about = document.getElementById('about');
+        if (!$wrapper || !$about) return;
         $wrapper.classList.toggle('filtered');
+        $about.classList.toggle('filtered');
     }
 
     public async exec(): Promise<void> {
