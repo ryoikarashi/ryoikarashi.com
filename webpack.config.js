@@ -23,7 +23,7 @@ module.exports = {
         compress: true,
         port: 8000,
         proxy: {
-            '/': {
+            '/.netlify/functions': {
                 target: 'http://localhost:9000',
                 pathRewrite: { '^/.netlify/functions': '' },
             },
