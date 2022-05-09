@@ -15,14 +15,14 @@ export default class Photo {
     public setBackgroundImage(src: string): void {
         const $bg = document.getElementById(this._bgId);
         if ($bg && src.length) {
-            $bg.style.backgroundImage = `url(${src})`;
+            $bg.setAttribute('src', src);
         }
     }
 
     public updateBg(src: string): void {
         const $bg = document.getElementById(this._bgId);
         if ($bg && src.length) {
-            $bg.style.backgroundImage = `url(${src})`;
+            $bg.setAttribute('src', src);
         }
     }
 }
