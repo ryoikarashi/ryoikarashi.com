@@ -34,7 +34,7 @@ describe('Test SpotifyTrackRepository', () => {
     const docPath = 'ryoikarashi-com';
 
     const trackPlainObj: TrackPlainObj = {
-        artist: 'artist',
+        artists: ['artist'],
         isPlaying: false,
         link: 'https://example.com/track',
         name: 'track name',
@@ -42,12 +42,12 @@ describe('Test SpotifyTrackRepository', () => {
 
     const track = new Track(
         Name.of(trackPlainObj.name),
-        Artist.of(trackPlainObj.artist),
+        trackPlainObj.artists.map((artist) => Artist.of(artist)),
         IsPlaying.of(trackPlainObj.isPlaying),
         Link.of(trackPlainObj.link),
     );
 
-    const invalidTrack = new Track(Name.of(null), Artist.of(null), IsPlaying.of(null), Link.of(null));
+    const invalidTrack = new Track(Name.of(null), [], IsPlaying.of(null), Link.of(null));
 
     describe('storeLastPlayedTrack', () => {
         it('creates a new doc for track on firestore', async () => {
@@ -152,11 +152,7 @@ describe('Test SpotifyTrackRepository', () => {
             data: {
                 item: {
                     name: trackPlainObj.name,
-                    artists: [
-                        {
-                            name: trackPlainObj.artist,
-                        },
-                    ],
+                    artists: trackPlainObj.artists.map((artist) => ({ name: artist })),
                     external_urls: {
                         spotify: trackPlainObj.link,
                     },
