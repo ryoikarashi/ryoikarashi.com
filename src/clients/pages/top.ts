@@ -99,7 +99,7 @@ export default class TopPage implements IPage {
         if ($spotifyElement) {
             $spotifyElement.innerHTML =
                 trackData && trackData.artists.length && trackData?.link
-                    ? `<a href="${trackData.link}" target="_blank">♫ ${
+                    ? `<a href="${trackData.link}" target="_blank" class="leading-4">♫ ${
                           trackData.isPlaying ? 'Currently playing' : 'Recently played'
                       }: ${trackData.name} - ${trackData.artists.join(', ')}</a>`
                     : `♫ Nothing's playing right now. Check back later. :)`;
