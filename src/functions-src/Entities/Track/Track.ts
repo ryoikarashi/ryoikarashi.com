@@ -4,22 +4,37 @@ import { Link } from './Link';
 import { IsPlaying } from './IsPlaying';
 import { IDomain } from '../IDomain';
 
+export interface SpotifyTrack {
+    item: {
+        name: string;
+        artists: [
+            {
+                name: string;
+            },
+        ];
+        external_urls: {
+            spotify: string;
+        };
+    };
+    is_playing: boolean;
+}
+
 export interface TrackPlainObj {
     name: string;
-    artist: string;
+    artists: string[];
     isPlaying: boolean;
     link: string;
 }
 
 export class Track implements IDomain<TrackPlainObj> {
     private readonly _name;
-    private readonly _artist;
+    private readonly _artists;
     private _isPlaying;
     private readonly _link;
 
-    constructor(name: Name, artist: Artist, isPlaying: IsPlaying, link: Link) {
+    constructor(name: Name, artists: Artist[], isPlaying: IsPlaying, link: Link) {
         this._name = name;
-        this._artist = artist;
+        this._artists = artists;
         this._isPlaying = isPlaying;
         this._link = link;
     }
@@ -28,8 +43,8 @@ export class Track implements IDomain<TrackPlainObj> {
         return this._name;
     }
 
-    public get artist(): Artist {
-        return this._artist;
+    public get artists(): Artist[] {
+        return this._artists;
     }
 
     public get isPlaying(): IsPlaying {
@@ -51,7 +66,7 @@ export class Track implements IDomain<TrackPlainObj> {
     toPlainObj(): TrackPlainObj {
         return {
             name: this._name.value(),
-            artist: this._artist.value(),
+            artists: this._artists.map((artist) => artist.value()),
             isPlaying: this._isPlaying.value(),
             link: this._link.value(),
         };

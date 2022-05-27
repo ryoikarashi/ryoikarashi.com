@@ -1,4 +1,4 @@
-import { Track } from './Track';
+import { Track, TrackPlainObj } from './Track';
 import { Name } from './Name';
 import { Artist } from './Artist';
 import { IsPlaying } from './IsPlaying';
@@ -7,14 +7,14 @@ import { Link } from './Link';
 describe('Test Track Entity', () => {
     const track = new Track(
         Name.of('track_name'),
-        Artist.of('track_artist'),
+        [Artist.of('track_artist')],
         IsPlaying.of(true),
         Link.of('https://example.com'),
     );
 
-    const expectedPlainObj = {
+    const expectedPlainObj: TrackPlainObj = {
         name: 'track_name',
-        artist: 'track_artist',
+        artists: ['track_artist'],
         isPlaying: true,
         link: 'https://example.com',
     };
@@ -33,12 +33,12 @@ describe('Test Track Entity', () => {
 
     it('returns a corresponding value object', () => {
         expect(track.name).toStrictEqual(Name.of('track_name'));
-        expect(track.artist).toStrictEqual(Artist.of('track_artist'));
+        expect(track.artists).toStrictEqual([Artist.of('track_artist')]);
         expect(track.isPlaying).toStrictEqual(IsPlaying.of(true));
         expect(track.link).toStrictEqual(Link.of('https://example.com'));
     });
 
-    const invalidTrack = new Track(Name.of(''), Artist.of('track_artist'), IsPlaying.of(false), Link.of(''));
+    const invalidTrack = new Track(Name.of(''), [Artist.of('track_artist')], IsPlaying.of(false), Link.of(''));
 
     it('is an invalid track', () => {
         expect(invalidTrack.isValid()).toStrictEqual(false);

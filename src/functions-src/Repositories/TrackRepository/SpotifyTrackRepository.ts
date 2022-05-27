@@ -1,13 +1,13 @@
+import { AxiosResponse, AxiosStatic } from 'axios';
+import * as admin from 'firebase-admin';
 import { ITrackRepository } from './ITtrackRepository';
-import { Track, TrackPlainObj } from '../../Entities/Track/Track';
+import { SpotifyTrack, Track, TrackPlainObj } from '../../Entities/Track/Track';
 import { Name } from '../../Entities/Track/Name';
 import { Artist } from '../../Entities/Track/Artist';
 import { IsPlaying } from '../../Entities/Track/IsPlaying';
 import { Link } from '../../Entities/Track/Link';
-import { getRootCollectionName } from '../../../utils';
 import { AccessToken } from '../../Entities/Token/AccessToken';
-import { AxiosStatic } from 'axios';
-import * as admin from 'firebase-admin';
+import { getRootCollectionName } from '../../../utils';
 
 export class SpotifyTrackRepository implements ITrackRepository {
     private readonly _db: FirebaseFirestore.Firestore;
@@ -32,13 +32,13 @@ export class SpotifyTrackRepository implements ITrackRepository {
     public async getLastPlayedTrack(): Promise<Track> {
         const doc = await this._ref.get();
         if (!doc.exists) {
-            return new Track(Name.of(null), Artist.of(null), IsPlaying.of(null), Link.of(null));
+            return new Track(Name.of(null), [], IsPlaying.of(null), Link.of(null));
         }
 
         const data = doc.data() as TrackPlainObj;
         const track = new Track(
             Name.of(data?.name || null),
-            Artist.of(data?.artist || null),
+            data?.artists.map((artist) => Artist.of(artist)),
             IsPlaying.of(data?.isPlaying || false),
             Link.of(data?.link || null),
         );
@@ -54,7 +54,7 @@ export class SpotifyTrackRepository implements ITrackRepository {
             const options = {
                 headers: { Authorization: `Bearer ${accessToken.value()}` },
             };
-            const { status, data } = await this._http.get(
+            const { status, data } = await this._http.get<null, AxiosResponse<SpotifyTrack>>(
                 'https://api.spotify.com/v1/me/player/currently-playing',
                 options,
             );
@@ -64,7 +64,7 @@ export class SpotifyTrackRepository implements ITrackRepository {
                 case 200: {
                     const track = new Track(
                         Name.of(data?.item?.name),
-                        Artist.of(data?.item?.artists[0]?.name),
+                        data?.item?.artists.map((artist) => Artist.of(artist.name)),
                         IsPlaying.of(data?.is_playing),
                         Link.of(data?.item?.external_urls?.spotify),
                     );

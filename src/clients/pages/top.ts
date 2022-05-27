@@ -38,7 +38,7 @@ export default class TopPage implements IPage {
         this._clickSound = clickSound;
         this._word = word;
         this._currentlyListeningTrack = {
-            artist: '',
+            artists: [],
             isPlaying: false,
             link: '',
             name: '',
@@ -67,7 +67,7 @@ export default class TopPage implements IPage {
                     isPlaying: false,
                     link: '',
                     name: '',
-                    artist: '',
+                    artists: [],
                 } as TrackPlainObj;
             }
 
@@ -98,10 +98,10 @@ export default class TopPage implements IPage {
         const $spotifyElement = document.getElementById(this._trackElementId);
         if ($spotifyElement) {
             $spotifyElement.innerHTML =
-                trackData && trackData?.artist && trackData?.link
+                trackData && trackData.artists.length && trackData?.link
                     ? `<a href="${trackData.link}" target="_blank">♫ ${
                           trackData.isPlaying ? 'Currently playing' : 'Recently played'
-                      }: ${trackData.name} - ${trackData.artist}</a>`
+                      }: ${trackData.name} - ${trackData.artists.join(', ')}</a>`
                     : `♫ Nothing's playing right now. Check back later. :)`;
         }
     }

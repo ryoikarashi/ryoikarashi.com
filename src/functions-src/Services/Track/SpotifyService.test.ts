@@ -15,14 +15,14 @@ import { ITokenService } from '../Token/ITokenService';
 /////////////////////////////////////////////////////////////////////
 const playingTrack = new Track(
     Name.of('track_name'),
-    Artist.of('artist'),
+    [Artist.of('artist')],
     IsPlaying.of(true),
     Link.of('https://example.com/track'),
 );
 
 const notPlayingTrack = new Track(
     Name.of('track_name'),
-    Artist.of('artist'),
+    [Artist.of('artist')],
     IsPlaying.of(false),
     Link.of('https://example.com/track'),
 );
