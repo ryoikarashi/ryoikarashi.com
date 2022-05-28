@@ -1,91 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="description" content="">
-        <meta property="og:title" content="RYO IKARASHI">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://ryoikarashi.com">
-        <meta property="og:image" content="./assets/ogp.jpg">
-        <meta property="og:site_name" content="RYO IKARASHI">
-        <meta property="og:description" content="">
-        <meta property="fb:app_id" content="561741473987172">
-        <meta property="article:author" content="">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="">
-        <meta name="twitter:title" content="RYO IKARASHI">
-        <meta name="twitter:url" content="https://ryoikarashi.com">
-        <meta name="twitter:description" content="">
-        <meta name="twitter:image" content="./assets/ogp.jpg">
-        <link rel="shortcut icon" href="./assets/favicon.ico">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB+Garamond">
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="" />
+        <meta property="og:title" content="RYO IKARASHI" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ryoikarashi.com" />
+        <meta property="og:image" content="./assets/ogp.jpg" />
+        <meta property="og:site_name" content="RYO IKARASHI" />
+        <meta property="og:description" content="" />
+        <meta property="fb:app_id" content="561741473987172" />
+        <meta property="article:author" content="" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="" />
+        <meta name="twitter:title" content="RYO IKARASHI" />
+        <meta name="twitter:url" content="https://ryoikarashi.com" />
+        <meta name="twitter:description" content="" />
+        <meta name="twitter:image" content="./assets/ogp.jpg" />
+        <link rel="shortcut icon" href="./assets/favicon.ico" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB+Garamond" />
         <title>RYO IKARASHI</title>
         <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-          ga('create', 'UA-54659896-6', 'auto');
-          ga('send', 'pageview');
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                (i[r] =
+                    i[r] ||
+                    function () {
+                        (i[r].q = i[r].q || []).push(arguments);
+                    }),
+                    (i[r].l = 1 * new Date());
+                (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-54659896-6', 'auto');
+            ga('send', 'pageview');
         </script>
     </head>
-    <body>
+    <body class="bg-white dark:bg-black transition duration-500">
         <div class="flex justify-center fixed inset-0">
-            <div class="flex items-center justify-center text-black z-50 font-light font-medium:md text-white text-3xl:md text-sm italic w-full" id="loading">Loading</div>
+            <div
+                class="flex items-center justify-center text-white dark:text-black z-40 font-light font-medium:md text-black dark:text-white text-3xl:md text-sm italic w-full"
+                id="loading"
+            >
+                Loading
+            </div>
             <div class="hidden" id="content">
-                <div class="fixed top-0 right-0 font-thin z-30 text-sm md:text-xl leading-none p-4 md:p-6" id="word" style="letter-spacing: 0.06rem;">
-                    <span class="p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block cursor-pointer" id="name"></span>
-                    <div class="invisible fixed fade-out inset-0 z-5 cursor-pointer" id="explanation_overlay"></div>
-                    <div class="invisible fixed fade-out max-w-9/10 md:max-w-1/2 w-full text-lg md:text-2xl italic" id="explanation"></div>
+                <button
+                    class="fixed z-50 top-5 left-5 inline-flex items-center rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus:outline-none ext-black focus-visible:black"
+                    id="darkModeToggleButton"
+                    role="switch"
+                    type="button"
+                    tabindex="0"
+                    aria-checked="false"
+                >
+                    <span class="sr-only">Disable dark mode</span>
+                    <svg
+                        id="darkIcon"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        class="transform scale-100 duration-200 fill-black dark:fill-white"
+                        stroke-width="2"
+                    >
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+
+                    <svg
+                        id="lightIcon"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        class="transition duration-200 transform text-cyan-500 opacity-100 scale-100 fill-black dark:fill-white"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </button>
+                <div
+                    class="fixed top-0 right-0 font-thin z-30 text-sm md:text-lg leading-none p-4 md:p-6"
+                    id="word"
+                    style="letter-spacing: 0.06rem"
+                >
+                    <span
+                        class="p-1 transition-all duration-100 ease-in-out text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black inline-block cursor-pointer"
+                        id="name"
+                    ></span>
+                    <div
+                        class="invisible fixed fade-out inset-0 z-5 cursor-pointer bg-white/50 dark:bg-black/50"
+                        id="explanation_overlay"
+                    ></div>
+                    <div
+                        class="invisible fixed fade-out max-w-9/10 md:max-w-1/2 w-full text-lg italic text-black dark:text-white"
+                        id="explanation"
+                    ></div>
                 </div>
                 <div class="flex items-center justify-center h-full" id="wrapper">
-                    <figure class="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-white mx-12">
+                    <figure
+                        class="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-black dark:border-white mx-12"
+                    >
                         <img src="" id="bg" alt="" />
                     </figure>
                 </div>
                 <div class="absolute bottom-0 left-0 w-100 z-30" id="about">
                     <div class="p-3 text-sm md:text-lg font-medium italic leading-none">
                         <p class="m-0 mb-3 block">
-                            <small class="p-1 transition-all duration-200 ease-in-out inline-block">Hi, I'm
-                                <a class="border-dotted border-b p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block" href="//me.ryoikarashi.com" target="_blank" rel="nofollow noopener">Ryo Ikarashi</a>
+                            <small
+                                class="p-1 transition-all duration-200 ease-in-out inline-block text-black dark:text-white"
+                                >Hi, I'm
+                                <a
+                                    class="border-dotted border-b border-black dark:border-white transition-all duration-200 ease-in-out text-black dark:text-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white inline-block"
+                                    href="//me.ryoikarashi.com"
+                                    target="_blank"
+                                    rel="nofollow noopener"
+                                    >Ryo Ikarashi</a
+                                >
                                 , a freelance software developer based in Kyoto, Japan.
                             </small>
                         </p>
                         <ul class="flex m-0 mb-3 p-0 list block">
                             <li class="lh-copy mb-1 flex items-center">
-                                <small class="flex p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//sarara.software" target="_blank" rel="nofollow noopener">Sarara Software</a>
+                                <small
+                                    class="flex p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block border-dotted border-b border-black dark:border-white"
+                                >
+                                    <a
+                                        class="block leading-none"
+                                        href="//sarara.software"
+                                        target="_blank"
+                                        rel="nofollow noopener"
+                                        >Sarara Software</a
+                                    >
                                 </small>
                                 <span class="mx-1 text-xs">/</span>
                             </li>
                             <li class="lh-copy mb-1 flex items-center">
-                                <small class="flex p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//github.com/RyoIkarashi" target="_blank" rel="nofollow noopener">Code</a>
+                                <small
+                                    class="flex p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block border-dotted border-b border-black dark:border-white"
+                                >
+                                    <a
+                                        class="block leading-none"
+                                        href="//github.com/RyoIkarashi"
+                                        target="_blank"
+                                        rel="nofollow noopener"
+                                        >Code</a
+                                    >
                                 </small>
                                 <span class="mx-1 text-xs">/</span>
                             </li>
                             <li class="lh-copy mb-1 flex items-center">
-                                <small class="flex p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//soundcloud.com/ryo_ikarashi" target="_blank" rel="nofollow noopener">Music</a>
+                                <small
+                                    class="flex p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block border-dotted border-b border-black dark:border-white"
+                                >
+                                    <a
+                                        class="block leading-none"
+                                        href="//soundcloud.com/ryo_ikarashi"
+                                        target="_blank"
+                                        rel="nofollow noopener"
+                                        >Music</a
+                                    >
                                 </small>
                                 <span class="mx-1 text-xs">/</span>
                             </li>
                             <li class="lh-copy mb-1 flex items-center">
-                                <small class="flex p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="//photos.app.goo.gl/E1ReiRfaKaBrfQCw8" target="_blank" rel="nofollow noopener">Photos</a>
+                                <small
+                                    class="flex p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block border-dotted border-b border-black dark:border-white"
+                                >
+                                    <a
+                                        class="block leading-none"
+                                        href="//photos.app.goo.gl/E1ReiRfaKaBrfQCw8"
+                                        target="_blank"
+                                        rel="nofollow noopener"
+                                        >Photos</a
+                                    >
                                 </small>
                                 <span class="mx-1 text-xs">/</span>
                             </li>
                             <li class="lh-copy">
-                                <small class="flex p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block border-dotted border-b">
-                                    <a class="block leading-none" href="mailto:me@ryoikarashi.com" rel="nofollow noopener">Email</a>
+                                <small
+                                    class="flex p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block border-dotted border-b border-black dark:border-white"
+                                >
+                                    <a
+                                        class="block leading-none"
+                                        href="mailto:me@ryoikarashi.com"
+                                        rel="nofollow noopener"
+                                        >Email</a
+                                    >
                                 </small>
                             </li>
                         </ul>
                         <p class="block">
-                            <small id="spotify" class="p-1 transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-black inline-block">Loading...</small>
+                            <small
+                                id="spotify"
+                                class="p-1 transition-all duration-200 ease-in-out text-black hover:text-white hover:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white inline-block"
+                                >Loading...</small
+                            >
                         </p>
                     </div>
                 </div>
