@@ -1,6 +1,7 @@
 import { TrackPlainObj } from '../../functions-src/Entities/Track/Track';
 import { PhotoPlainObj } from '../../functions-src/Entities/Photo/Photo';
 import imagesLoaded from 'imagesloaded';
+import DarkMode from '../darkMode';
 import Photo from '../photo';
 import Track from '../track';
 import ClickSound from '../click-sound';
@@ -11,6 +12,7 @@ import { WordPlainObject } from '../../functions-src/Entities/Word/Word';
 import { sleep } from '../../utils';
 
 export default class TopPage implements IPage {
+    private readonly _darkMode: DarkMode;
     private readonly _photo: Photo;
     private readonly _track: Track;
     private readonly _clickSound: ClickSound;
@@ -23,6 +25,7 @@ export default class TopPage implements IPage {
     private readonly _wordElementId: string;
 
     constructor(
+        darkMode: DarkMode,
         photo: Photo,
         track: Track,
         word: Word,
@@ -33,6 +36,7 @@ export default class TopPage implements IPage {
         contentElementId: string,
         wordElementId: string,
     ) {
+        this._darkMode = darkMode;
         this._photo = photo;
         this._track = track;
         this._clickSound = clickSound;
@@ -164,6 +168,10 @@ export default class TopPage implements IPage {
     }
 
     public async exec(): Promise<void> {
+        // init dark mode
+        this._darkMode.init();
+
+        // setup each data
         const [trackData, photoData, wordData] = (await this.setUpData()) as [
             TrackPlainObj,
             PhotoPlainObj,
