@@ -1,3 +1,8 @@
+:root {
+    --dark-color: #111111;
+    --light-color: #ffffff;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -40,9 +45,14 @@
     backface-visibility: hidden;
 }
 
-#loading:after {
+.dark #loading:after {
     content: ' .';
-    animation: dots 1s steps(5, end) infinite;
+    animation: dots-dark 1s steps(5, end) infinite;
+}
+
+:not(.dark) #loading:after {
+    content: ' .';
+    animation: dots-light 1s steps(5, end) infinite;
 }
 
 #explanation {
@@ -58,21 +68,40 @@
     filter: blur(50px);
 }
 
-@keyframes dots {
+@keyframes dots-dark {
     0%,
     20% {
-        color: rgba(0, 0, 0, 0);
-        text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+        color: var(--dark-color);
+        text-shadow: 0.25em 0 0 var(--dark-color), 0.5em 0 0 var(--dark-color);
     }
     40% {
-        color: white;
-        text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+        color: var(--light-color);
+        text-shadow: 0.25em 0 0 var(--dark-color), 0.5em 0 0 var(--dark-color);
     }
     60% {
-        text-shadow: 0.25em 0 0 white, 0.5em 0 0 rgba(0, 0, 0, 0);
+        text-shadow: 0.25em 0 0 var(--light-color), 0.5em 0 0 var(--dark-color);
     }
     80%,
     100% {
-        text-shadow: 0.25em 0 0 white, 0.5em 0 0 white;
+        text-shadow: 0.25em 0 0 var(--light-color), 0.5em 0 0 var(--light-color);
+    }
+}
+
+@keyframes dots-light {
+    0%,
+    20% {
+        color: var(--light-color);
+        text-shadow: 0.25em 0 0 var(--light-color), 0.5em 0 0 var(--light-color);
+    }
+    40% {
+        color: var(--dark-color);
+        text-shadow: 0.25em 0 0 var(--light-color), 0.5em 0 0 var(--light-color);
+    }
+    60% {
+        text-shadow: 0.25em 0 0 var(--dark-color), 0.5em 0 0 var(--light-color);
+    }
+    80%,
+    100% {
+        text-shadow: 0.25em 0 0 var(--dark-color), 0.5em 0 0 var(--dark-color);
     }
 }
