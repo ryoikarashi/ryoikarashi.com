@@ -7,6 +7,9 @@ module.exports = {
     purge: ['./src/**/*.{html,js,ts}'],
     theme: {
         extend: {
+            colors: {
+                black: '#111111',
+            },
             backgroundOpacity: {
                 10: '0.1',
             },
