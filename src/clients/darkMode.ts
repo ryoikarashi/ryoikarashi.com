@@ -5,6 +5,8 @@ export default class DarkMode {
     private static readonly _darkModeClassName = 'dark';
     private static readonly _lightModeClassName = 'light';
     private static readonly _localStorageKey = 'theme';
+    private static readonly _darkColor = '#111111';
+    private static readonly _lightColor = '#ffffff';
 
     constructor(toggleButtonId = 'darkModeToggleButton', lightModeIconId = 'lightIcon', darkModeIconId = 'darkIcon') {
         this._toggleButtonId = toggleButtonId;
@@ -22,6 +24,10 @@ export default class DarkMode {
 
     private getDarkModeIcon() {
         return document.getElementById(this._darkModeIconId);
+    }
+
+    private static getColor(isDarkMode: boolean) {
+        return isDarkMode ? DarkMode._darkColor : DarkMode._lightColor;
     }
 
     private static isDarkMode() {
@@ -53,7 +59,12 @@ export default class DarkMode {
         localStorage.theme = isDarkMode ? DarkMode._darkModeClassName : DarkMode._lightModeClassName;
     }
 
+    private static changeMetaThemeColor(isDarkMode: boolean) {
+        document.querySelector("meta[name='theme-color']")?.setAttribute('content', DarkMode.getColor(isDarkMode));
+    }
+
     private changeMode(isDarkMode: boolean) {
+        DarkMode.changeMetaThemeColor(isDarkMode);
         DarkMode.toggleModeClass(isDarkMode);
         this.toggleIcon(isDarkMode);
         DarkMode.saveToLocalStorage(isDarkMode);
