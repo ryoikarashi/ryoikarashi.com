@@ -1,77 +1,78 @@
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
 
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .fade-out {
-  visibility: hidden;
-  opacity: 0;
-  transition: all cubic-bezier(0.17, 0.67, 0.83, 0.67) 500ms;
+    visibility: hidden;
+    opacity: 0;
+    transition: all cubic-bezier(0.17, 0.67, 0.83, 0.67) 500ms;
 }
 
 .fade-in {
-  visibility: visible;
-  opacity: 1;
-  transition: all cubic-bezier(0.17, 0.67, 0.83, 0.67) 500ms;
+    visibility: visible;
+    opacity: 1;
+    transition: all cubic-bezier(0.17, 0.67, 0.83, 0.67) 500ms;
 }
 
 #about {
-  left: 0px;
-  bottom: 0px;
+    left: 0px;
+    bottom: 0px;
 }
 
 #word {
-  right: 0px;
-  top: 0px;
+    right: 0px;
+    top: 0px;
 }
 
 #content {
-  animation-name: fadeIn;
-  animation-duration: 1.3s;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  backface-visibility: hidden;
+    animation-name: fadeIn;
+    animation-duration: 1.3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    backface-visibility: hidden;
 }
 
 #loading:after {
-  content: ' .';
-  animation: dots 1s steps(5, end) infinite;}
-
-#explanation {
-  z-index: 111111;
-  top: 50%;
-  line-height: 1.7;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    content: ' .';
+    animation: dots 1s steps(5, end) infinite;
 }
 
-#wrapper.filtered, #about.filtered {
-  filter: blur(50px);
+#explanation {
+    z-index: 111111;
+    top: 50%;
+    line-height: 1.7;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#wrapper.filtered,
+#about.filtered {
+    filter: blur(50px);
 }
 
 @keyframes dots {
-  0%, 20% {
-    color: rgba(0,0,0,0);
-    text-shadow:
-            .25em 0 0 rgba(0,0,0,0),
-            .5em 0 0 rgba(0,0,0,0);}
-  40% {
-    color: white;
-    text-shadow:
-            .25em 0 0 rgba(0,0,0,0),
-            .5em 0 0 rgba(0,0,0,0);}
-  60% {
-    text-shadow:
-            .25em 0 0 white,
-            .5em 0 0 rgba(0,0,0,0);}
-  80%, 100% {
-    text-shadow:
-            .25em 0 0 white,
-            .5em 0 0 white;}}
+    0%,
+    20% {
+        color: rgba(0, 0, 0, 0);
+        text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    40% {
+        color: white;
+        text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    60% {
+        text-shadow: 0.25em 0 0 white, 0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    80%,
+    100% {
+        text-shadow: 0.25em 0 0 white, 0.5em 0 0 white;
+    }
+}
