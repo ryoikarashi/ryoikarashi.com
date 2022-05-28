@@ -50,7 +50,7 @@
     animation: dots-dark 1s steps(5, end) infinite;
 }
 
-:not(.dark) #loading:after {
+html:not(.dark) #loading:after {
     content: ' .';
     animation: dots-light 1s steps(5, end) infinite;
 }
