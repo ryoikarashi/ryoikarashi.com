@@ -91,9 +91,21 @@
 
                 <div class="flex items-center justify-center h-full" id="wrapper">
                     <figure
-                        class="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-black dark:border-white mx-12"
+                        class="relative max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-black dark:border-white mx-12"
                     >
                         <img src="" id="bg" alt="a random gif from giphy" class="grayscale" />
+                        <img
+                            class="absolute bottom-0 right-0 w-32"
+                            style="bottom: -30px"
+                            src="./assets/giphy--dark.png"
+                            alt="Powered by GIPHY"
+                        />
+                        <img
+                            class="absolute bottom-0 right-0 w-32 dark:hidden"
+                            style="bottom: -30px"
+                            src="./assets/giphy--light.png"
+                            alt="Powered by GIPHY"
+                        />
                     </figure>
                 </div>
                 <div class="absolute bottom-0 left-0 w-100 z-30" id="about">

@@ -61,6 +61,14 @@ module.exports = {
                                         },
                                     },
                                     {
+                                        tag: 'img',
+                                        attribute: 'src',
+                                        type: 'src',
+                                        filter: (_tag, _attribute, attributes, _resourcePath) => {
+                                            return attributes.src && attributes.src.length;
+                                        },
+                                    },
+                                    {
                                         tag: 'audio',
                                         attribute: 'src',
                                         type: 'src',
