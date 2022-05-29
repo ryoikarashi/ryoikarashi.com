@@ -1,18 +1,21 @@
+import imagesLoaded from 'imagesloaded';
+import { IPage } from './IPage';
 import { TrackPlainObj } from '../../functions-src/Entities/Track/Track';
 import { PhotoPlainObj } from '../../functions-src/Entities/Photo/Photo';
-import imagesLoaded from 'imagesloaded';
+import { WordPlainObject } from '../../functions-src/Entities/Word/Word';
+import { GiphyPlainObj } from '../../functions-src/Entities/Giphy/Giphy';
 import DarkMode from '../darkMode';
+import Giphy from '../giphy';
 import Photo from '../photo';
 import Track from '../track';
 import ClickSound from '../click-sound';
 import Word from '../word';
-import defaultBg from '../../assets/bg.jpeg';
-import { IPage } from './IPage';
-import { WordPlainObject } from '../../functions-src/Entities/Word/Word';
 import { sleep } from '../../utils';
+import defaultBg from '../../assets/bg.jpeg';
 
 export default class TopPage implements IPage {
     private readonly _darkMode: DarkMode;
+    private readonly _giphy: Giphy;
     private readonly _photo: Photo;
     private readonly _track: Track;
     private readonly _clickSound: ClickSound;
@@ -26,6 +29,7 @@ export default class TopPage implements IPage {
 
     constructor(
         darkMode: DarkMode,
+        giphy: Giphy,
         photo: Photo,
         track: Track,
         word: Word,
@@ -37,6 +41,7 @@ export default class TopPage implements IPage {
         wordElementId: string,
     ) {
         this._darkMode = darkMode;
+        this._giphy = giphy;
         this._photo = photo;
         this._track = track;
         this._clickSound = clickSound;
@@ -56,6 +61,7 @@ export default class TopPage implements IPage {
 
     private async setUpData() {
         const results = await Promise.allSettled([
+            this._giphy.getRandom(),
             this._track.getCurrentlyPlaying(),
             this._photo.getARandomPhoto(),
             this._word.getARandomWord(),
@@ -144,7 +150,7 @@ export default class TopPage implements IPage {
             $explanationOverlay.classList.toggle('fade-out');
             $explanation.classList.toggle('fade-in');
             $explanation.classList.toggle('fade-out');
-            this._toggleFilteringWrapper();
+            TopPage._toggleFilteringWrapper();
         });
 
         $explanationOverlay.addEventListener('click', async () => {
@@ -152,14 +158,14 @@ export default class TopPage implements IPage {
             $explanationOverlay.classList.toggle('fade-out');
             $explanation.classList.toggle('fade-in');
             $explanation.classList.toggle('fade-out');
-            this._toggleFilteringWrapper();
+            TopPage._toggleFilteringWrapper();
             await sleep(500);
             $explanationOverlay.classList.toggle('invisible');
             $explanation.classList.toggle('invisible');
         });
     }
 
-    private _toggleFilteringWrapper(): void {
+    private static _toggleFilteringWrapper(): void {
         const $wrapper = document.getElementById('wrapper');
         const $about = document.getElementById('about');
         if (!$wrapper || !$about) return;
@@ -167,19 +173,25 @@ export default class TopPage implements IPage {
         $about.classList.toggle('filtered');
     }
 
+    private static isRoot(): boolean {
+        return (location.pathname?.match(/(\/|(\/index(|(.html))))$/gm)?.length ?? 0) > 0;
+    }
+
     public async exec(): Promise<void> {
         // init dark mode
         this._darkMode.init();
 
         // setup each data
-        const [trackData, photoData, wordData] = (await this.setUpData()) as [
+        const [giphyData, trackData, photoData, wordData] = (await this.setUpData()) as [
+            GiphyPlainObj,
             TrackPlainObj,
             PhotoPlainObj,
             WordPlainObject,
         ];
 
         // update background image
-        this._photo.updateBg(photoData.url);
+        // this._photo.updateBg(photoData.url);
+        this._photo.updateBg(TopPage.isRoot() ? photoData.url : giphyData.src);
 
         // update dom
         this.updateTrackDOM(trackData);

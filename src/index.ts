@@ -6,6 +6,7 @@ import Pusher from 'pusher-js';
 import isEqual from 'lodash.isequal';
 import TopPage from './clients/pages/top';
 import DarkMode from './clients/darkMode';
+import Giphy from './clients/giphy';
 import Photo from './clients/photo';
 import ClickSound from './clients/click-sound';
 import Track from './clients/track';
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // composition root
     const topPage = new TopPage(
         new DarkMode('darkModeToggleButton'),
+        new Giphy(),
         new Photo('bg'),
         new Track(),
         new Word(),
