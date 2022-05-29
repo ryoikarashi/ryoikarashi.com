@@ -32,7 +32,7 @@
             "eslint --fix",
             "jest --passWithNoTests"
         ],
-        "*.{js,ts,tsx,json}": "prettier --write"
+        "*.{js,ts,tsx,json,css,html}": "prettier --write"
     },
     "jest": {
         "moduleFileExtensions": [
