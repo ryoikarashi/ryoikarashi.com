@@ -12,7 +12,7 @@ export class GiphyRepository implements IGiphyRepository {
     }
 
     async getRandom(): Promise<Giphy> {
-        const { data } = await this._client.search('funny simpsons', { limit: this._limit });
+        const { data } = await this._client.search(process.env.GIPHY_SEARCH_TERM ?? '', { limit: this._limit });
         const randomIndex = Math.floor(Math.random() * this._limit);
         const gif = data[randomIndex];
         const src = gif?.images?.original?.url;
