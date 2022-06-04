@@ -12,14 +12,16 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath,
-        filename: '[name].[hash].js',
-        chunkFilename: '[name].[hash].js',
+        filename: '[name].[fullhash].js',
+        chunkFilename: '[name].[fullhash].js',
     },
 
     devtool: 'inline-source-map',
 
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
         compress: true,
         port: 8000,
         proxy: {
@@ -47,7 +49,7 @@ module.exports = {
                     {
                         loader: 'html-loader',
                         options: {
-                            attributes: {
+                            sources: {
                                 list: [
                                     {
                                         tag: 'meta',
@@ -125,7 +127,7 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[name].[hash].[ext]',
+                            name: '[name].[fullhash].[ext]',
                             limit: '10000',
                             publicPath:
                                 process.env.NODE_ENV === 'production'
@@ -142,7 +144,7 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[name].[hash].[ext]',
+                            name: '[name].[fullhash].[ext]',
                             limit: '10000',
                             publicPath:
                                 process.env.NODE_ENV === 'production'
@@ -168,8 +170,8 @@ module.exports = {
             filename: '404.html',
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[hash].css',
-            chunkFilename: '[id].[hash].css',
+            filename: '[name].[fullhash].css',
+            chunkFilename: '[id].[fullhash].css',
         }),
         // new WebpackBundleAnalyzerPlugin(),
         // new FaviconsWebpackPlugin({
@@ -181,7 +183,7 @@ module.exports = {
         //   // Emit all stats of the generated icons
         //   emitStats: false,
         //   // The name of the json containing all favicon information
-        //   statsFilename: 'iconstats-[hash].json',
+        //   statsFilename: 'iconstats-[fullhash].json',
         //   // Generate a cache file with control hashes and
         //   // don't rebuild the favicons until those hashes change
         //   persistentCache: true,
