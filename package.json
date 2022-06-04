@@ -23,6 +23,13 @@
         "postinstall": "netlify-lambda install",
         "prepare": "husky install"
     },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "eslint --fix",
+            "jest --passWithNoTests"
+        ],
+        "*.{js,ts,tsx,json,css,html}": "prettier --write"
+    },
     "jest": {
         "moduleFileExtensions": [
             "ts",
