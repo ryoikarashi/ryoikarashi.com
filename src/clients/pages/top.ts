@@ -81,9 +81,11 @@ export default class TopPage implements IPage {
                 } as TrackPlainObj;
             }
 
-            if (index === 1) {
+            if (index === 2) {
                 return {
                     url: defaultBg,
+                    width: '1200',
+                    height: '1200',
                 } as PhotoPlainObj;
             }
 
@@ -190,8 +192,15 @@ export default class TopPage implements IPage {
         ];
 
         // update background image
-        // this._photo.updateBg(photoData.url);
-        this._photo.updateBg(TopPage.isRoot() ? photoData.url : giphyData.src);
+        if (TopPage.isRoot()) {
+            console.log('giphyData', giphyData);
+            console.log('trackData', trackData);
+            console.log('photoData', photoData);
+            console.log('wordData', wordData);
+            this._photo.setImage(photoData.url, photoData.width, photoData.height);
+        } else {
+            this._photo.setImage(giphyData.src);
+        }
 
         // update dom
         this.updateTrackDOM(trackData);

@@ -11,6 +11,8 @@ import { Token } from '../../Entities/Token/Token';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { RefreshToken } from '../../Entities/Token/RefreshToken';
 import { Url } from '../../Entities/Photo/Url';
+import { Width } from '../../Entities/Photo/Width';
+import { Height } from '../../Entities/Photo/Height';
 
 // create mocks
 jest.mock('axios');
@@ -54,10 +56,10 @@ afterEach(() => {
 
 describe('Test GooglePhotoService', () => {
     describe('getARandomPhotoFromAlbum', () => {
-        const data: Array<Photo> = [new Photo(Url.of('https://example.com/photo'))];
+        const data: Array<Photo> = [new Photo(Url.of('https://example.com/photo'), Width.of('100'), Height.of('100'))];
         const randomPhoto = data[0];
         const invalidData: Array<Photo> = [];
-        const invalidRandomPhoto = new Photo(Url.of(null));
+        const invalidRandomPhoto = new Photo(Url.of(null), Width.of(null), Height.of(null));
 
         it('returns a random photo', async () => {
             MockedGooglePhotosRepository.mockImplementation(() => ({

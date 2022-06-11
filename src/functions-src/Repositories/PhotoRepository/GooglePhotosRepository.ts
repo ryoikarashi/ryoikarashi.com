@@ -5,6 +5,8 @@ import { Photo } from '../../Entities/Photo/Photo';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { Url } from '../../Entities/Photo/Url';
 import { ResponseMediaItemsList } from '../../../types/google-photos';
+import { Width } from '../../Entities/Photo/Width';
+import { Height } from '../../Entities/Photo/Height';
 
 export class GooglePhotosRepository implements IPhotoRepository {
     private readonly _http: AxiosStatic;
@@ -36,10 +38,17 @@ export class GooglePhotosRepository implements IPhotoRepository {
             );
 
             if (!mediaItems) {
-                return [new Photo(Url.of(null))];
+                return [new Photo(Url.of(null), Width.of(null), Height.of(null))];
             }
 
-            return mediaItems.map((mediaItem) => new Photo(Url.of(`${mediaItem.baseUrl}=w1200-h1200-no`)));
+            return mediaItems.map(
+                (mediaItem) =>
+                    new Photo(
+                        Url.of(`${mediaItem.baseUrl}=w1200-h1200-no`),
+                        Width.of(mediaItem.mediaMetadata.width),
+                        Height.of(mediaItem.mediaMetadata.height),
+                    ),
+            );
         } catch (e) {
             const newAccessToken = await callback();
             return await this.getPhotosFromAlbum(albumId, newAccessToken, callback);
