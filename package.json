@@ -11,8 +11,8 @@
         "lint:fix": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
         "clean": "rm -rf ./dist/*",
         "build-functions": "NODE_OPTIONS=--openssl-legacy-provider netlify-lambda build --config webpack.functions.js src/functions/",
-        "build": "yarn run clean && NODE_ENV=development webpack --config webpack.config.js --mode development && yarn run build-functions",
-        "build:prod": "yarn run clean && NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider webpack --config webpack.config.js --mode production && yarn run build-functions",
+        "build": "yarn run clean && NODE_ENV=development webpack --config webpack.config.js && yarn run build-functions",
+        "build:prod": "yarn run clean && NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider webpack --config webpack.config.js && yarn run build-functions",
         "serve": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development netlify-lambda serve --config webpack.functions.js src/functions/",
         "firestore-emulator": "npx firebase emulators:start --only firestore",
         "test": "yarn test:test && yarn test:prod",
@@ -78,6 +78,7 @@
         "eslint": "^8.17.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-loader": "^4.0.2",
+        "favicons": "^6.2.2",
         "favicons-webpack-plugin": "^5.0.2",
         "file-loader": "^6.1.0",
         "firebase": "^9.8.2",
@@ -119,5 +120,6 @@
     },
     "engines": {
         "node": "^17.4.0"
-    }
+    },
+    "devDependencies": {}
 }
