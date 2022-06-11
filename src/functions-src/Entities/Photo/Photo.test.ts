@@ -1,10 +1,14 @@
 import { Photo } from './Photo';
 import { Url } from './Url';
+import { Width } from './Width';
+import { Height } from './Height';
 
 describe('Test Photo Entity', () => {
-    const photo = new Photo(Url.of('https://example.com/a-path-to-photo'));
+    const photo = new Photo(Url.of('https://example.com/a-path-to-photo'), Width.of('100'), Height.of('100'));
 
     const expectedPlainObj = {
+        width: '100',
+        height: '100',
         url: 'https://example.com/a-path-to-photo',
     };
 
@@ -24,7 +28,7 @@ describe('Test Photo Entity', () => {
         expect(photo.url).toStrictEqual(Url.of('https://example.com/a-path-to-photo'));
     });
 
-    const invalidPhoto = new Photo(Url.of(''));
+    const invalidPhoto = new Photo(Url.of(''), Width.of(''), Height.of(''));
 
     it('is an invalid photo', () => {
         expect(invalidPhoto.isValid()).toStrictEqual(false);

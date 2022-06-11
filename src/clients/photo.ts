@@ -12,17 +12,16 @@ export default class Photo {
         return axios.get<PhotoPlainObj>(`/.netlify/functions/get-random-photo`);
     }
 
-    public setBackgroundImage(src: string): void {
+    public setImage(src: string, width?: string, height?: string): void {
         const $bg = document.getElementById(this._bgId);
         if ($bg && src.length) {
             $bg.setAttribute('src', src);
-        }
-    }
-
-    public updateBg(src: string): void {
-        const $bg = document.getElementById(this._bgId);
-        if ($bg && src.length) {
-            $bg.setAttribute('src', src);
+            if (width) {
+                $bg.setAttribute('width', width);
+            }
+            if (height) {
+                $bg.setAttribute('height', height);
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ import { Url } from '../../Entities/Photo/Url';
 import { AlbumId } from '../../Entities/Photo/AlbumId';
 import { AccessToken } from '../../Entities/Token/AccessToken';
 import { ResponseMediaItemsList } from '../../../types/google-photos';
+import { Width } from '../../Entities/Photo/Width';
+import { Height } from '../../Entities/Photo/Height';
 
 // mock http client
 jest.mock('axios');
@@ -63,7 +65,12 @@ describe('Test GooglePhotosRepository', () => {
         nextPageToken: 'next_page_token',
     };
     const photos: Array<Photo> = mediaItemsList.mediaItems.map(
-        (item) => new Photo(Url.of(`${item.baseUrl}=w1200-h1200-no`)),
+        (item) =>
+            new Photo(
+                Url.of(`${item.baseUrl}=w1200-h1200-no`),
+                Width.of(item.mediaMetadata.width),
+                Height.of(item.mediaMetadata.height),
+            ),
     );
     const albumId = AlbumId.of('album_id');
     const accessToken = AccessToken.of('access_token');
