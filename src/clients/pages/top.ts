@@ -193,10 +193,6 @@ export default class TopPage implements IPage {
 
         // update background image
         if (TopPage.isRoot()) {
-            console.log('giphyData', giphyData);
-            console.log('trackData', trackData);
-            console.log('photoData', photoData);
-            console.log('wordData', wordData);
             this._photo.setImage(photoData.url, photoData.width, photoData.height);
         } else {
             this._photo.setImage(giphyData.src);
