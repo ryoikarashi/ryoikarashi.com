@@ -52,7 +52,10 @@ export class SpotifyTrackRepository implements ITrackRepository {
     ): Promise<Track> {
         try {
             const options = {
-                headers: { Authorization: `Bearer ${accessToken.value()}` },
+                headers: {
+                    Authorization: `Bearer ${accessToken.value()}`,
+                    'Accept-Language': 'ja',
+                },
             };
             const { status, data } = await this._http.get<null, AxiosResponse<SpotifyTrack>>(
                 'https://api.spotify.com/v1/me/player/currently-playing',
