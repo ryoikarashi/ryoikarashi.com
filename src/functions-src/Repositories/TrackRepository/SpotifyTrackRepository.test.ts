@@ -187,6 +187,7 @@ describe('Test SpotifyTrackRepository', () => {
             const requestConfig = {
                 headers: {
                     Authorization: `Bearer ${accessToken.value()}`,
+                    'Accept-Language': 'ja',
                 },
             };
             const endpoint = 'https://api.spotify.com/v1/me/player/currently-playing';
