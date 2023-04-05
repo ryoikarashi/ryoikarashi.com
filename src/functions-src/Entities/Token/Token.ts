@@ -1,5 +1,4 @@
-import { RefreshToken } from './RefreshToken';
-import { AccessToken } from './AccessToken';
+import { RefreshToken, AccessToken } from './ValueObjects';
 import { IDomain } from '../IDomain';
 
 export interface TokenPlainObj {

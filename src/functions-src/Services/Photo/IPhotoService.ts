@@ -1,4 +1,4 @@
-import { AlbumId } from '../../Entities/Photo/AlbumId';
+import { AlbumId } from '../../Entities/Photo/ValueObjects';
 import { Photo } from '../../Entities/Photo/Photo';
 
 export interface IPhotoService {

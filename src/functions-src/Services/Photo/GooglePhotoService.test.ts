@@ -5,14 +5,11 @@ import * as GooglePhotoService from './GooglePhotoService';
 import * as GoogleTokenRepository from '../../Repositories/TokenRepository/GoogleTokenRepository';
 import * as TokenService from '../Token/TokenService';
 import { IOAuthConfig } from '../../Repositories/TokenRepository/ITokenRepository';
-import { AlbumId } from '../../Entities/Photo/AlbumId';
+import { AlbumId } from '../../Entities/Photo/ValueObjects';
 import { Photo } from '../../Entities/Photo/Photo';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
-import { Url } from '../../Entities/Photo/Url';
-import { Width } from '../../Entities/Photo/Width';
-import { Height } from '../../Entities/Photo/Height';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
+import { Url, Width, Height } from '../../Entities/Photo/ValueObjects';
 
 // create mocks
 jest.mock('axios');

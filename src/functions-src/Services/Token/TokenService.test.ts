@@ -3,8 +3,7 @@ import axios, { AxiosStatic } from 'axios';
 import { TokenService } from './TokenService';
 import { IOAuthConfig, ITokenRepository } from '../../Repositories/TokenRepository/ITokenRepository';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 
 // valid token
 const accessToken = AccessToken.of('access_token');

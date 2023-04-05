@@ -1,7 +1,7 @@
 import { IWordService } from './IWordService';
 import { Word } from '../../Entities/Word/Word';
 import { WordRepository } from '../../Repositories/WordRepository/WordRepository';
-import { GetRandomWords } from '../../Repositories/WordRepository/ParamterObjects/GetRandomWords';
+import { GetRandomWords } from '../../Repositories/WordRepository/ParameterObjects/GetRandomWords';
 
 export class WordService implements IWordService {
     private readonly _wordRepository: WordRepository;

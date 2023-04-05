@@ -1,5 +1,5 @@
 import { Giphy, GiphyPlainObj } from './Giphy';
-import { Src } from './Src';
+import { Src } from './ValueObjects';
 
 describe('Test Giphy Entity', () => {
     const gif = new Giphy(Src.of('https://example.com/a-path-to-photo'));

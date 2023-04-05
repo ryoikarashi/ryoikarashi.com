@@ -1,12 +1,8 @@
 import { SpotifyService } from './SpotifyService';
 import { Track, TrackPlainObj } from '../../Entities/Track/Track';
-import { Name } from '../../Entities/Track/Name';
-import { Artist } from '../../Entities/Track/Artist';
-import { IsPlaying } from '../../Entities/Track/IsPlaying';
-import { Link } from '../../Entities/Track/Link';
+import { Name, Artist, IsPlaying, Link, Explanation } from '../../Entities/Track/ValueObjects';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 import { ITrackRepository } from '../../Repositories/TrackRepository/ITtrackRepository';
 import { ITokenService } from '../Token/ITokenService';
 
@@ -18,6 +14,7 @@ const playingTrack = new Track(
     [Artist.of('artist')],
     IsPlaying.of(true),
     Link.of('https://example.com/track'),
+    Explanation.of(''),
 );
 
 const notPlayingTrack = new Track(
@@ -25,6 +22,7 @@ const notPlayingTrack = new Track(
     [Artist.of('artist')],
     IsPlaying.of(false),
     Link.of('https://example.com/track'),
+    Explanation.of(''),
 );
 
 class MockSpotifyTrackRepository implements ITrackRepository {

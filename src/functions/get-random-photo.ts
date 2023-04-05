@@ -6,7 +6,7 @@ import { IOAuthConfig } from '../functions-src/Repositories/TokenRepository/ITok
 import { GoogleTokenRepository } from '../functions-src/Repositories/TokenRepository/GoogleTokenRepository';
 import { FirebaseService } from '../functions-src/Services/Firebase/FirebaseService';
 import { GooglePhotosRepository } from '../functions-src/Repositories/PhotoRepository/GooglePhotosRepository';
-import { AlbumId } from '../functions-src/Entities/Photo/AlbumId';
+import { AlbumId } from '../functions-src/Entities/Photo/ValueObjects';
 import { GooglePhotoService } from '../functions-src/Services/Photo/GooglePhotoService';
 import { TokenService } from '../functions-src/Services/Token/TokenService';
 

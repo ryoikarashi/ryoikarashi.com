@@ -1,9 +1,7 @@
 import { IWordRepository } from './IWordRepository';
 import { Word, WordPlainObject } from '../../Entities/Word/Word';
-import { GetRandomWords } from './ParamterObjects/GetRandomWords';
-import { Name } from '../../Entities/Word/Name';
-import { Chapter } from '../../Entities/Word/Chapter';
-import { Explanation } from '../../Entities/Word/Explanation';
+import { GetRandomWords } from './ParameterObjects/GetRandomWords';
+import { Name, Chapter, Explanation } from '../../Entities/Word/ValueObjects';
 
 export class WordRepository implements IWordRepository {
     private readonly _db: FirebaseFirestore.Firestore;

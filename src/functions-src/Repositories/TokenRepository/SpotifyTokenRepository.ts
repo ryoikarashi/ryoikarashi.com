@@ -1,8 +1,7 @@
 import { AxiosStatic } from 'axios';
-import { stringify, stringify as QsStringify } from 'query-string';
+import { stringify } from 'query-string';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class SpotifyTokenRepository extends ITokenRepository {
@@ -23,7 +22,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
 
         const {
             data: { access_token: accessToken, refresh_token: refreshToken },
-        } = await http.post('https://accounts.spotify.com/api/token', QsStringify(params), { headers });
+        } = await http.post('https://accounts.spotify.com/api/token', stringify(params), { headers });
 
         return new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken));
     }

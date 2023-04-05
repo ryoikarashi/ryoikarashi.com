@@ -1,14 +1,14 @@
-import { IValueObject } from '../IValueObject';
+import { IValueObject } from '../../IValueObject';
 
-export class Chapter implements IValueObject<string | null> {
+export class Explanation implements IValueObject<string | null> {
     private readonly _value: string | null;
 
     constructor(value: string | null) {
         this._value = value;
     }
 
-    public static of(value: string | null): Chapter {
-        return new Chapter(value);
+    public static of(value: string | null): Explanation {
+        return new Explanation(value);
     }
 
     isValid(): boolean {

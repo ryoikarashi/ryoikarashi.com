@@ -4,12 +4,14 @@ import { TrackPlainObj } from '../../functions-src/Entities/Track/Track';
 import { PhotoPlainObj } from '../../functions-src/Entities/Photo/Photo';
 import { WordPlainObject } from '../../functions-src/Entities/Word/Word';
 import { GiphyPlainObj } from '../../functions-src/Entities/Giphy/Giphy';
+import { LLMPlainObject } from '../../functions-src/Entities/LLM/LLM';
 import DarkMode from '../darkMode';
 import Giphy from '../giphy';
 import Photo from '../photo';
 import Track from '../track';
-import ClickSound from '../click-sound';
 import Word from '../word';
+import LLM from '../llm';
+import ClickSound from '../click-sound';
 import { sleep } from '../../utils';
 import defaultBg from '../../assets/bg.jpeg';
 
@@ -18,14 +20,16 @@ export default class TopPage implements IPage {
     private readonly _giphy: Giphy;
     private readonly _photo: Photo;
     private readonly _track: Track;
-    private readonly _clickSound: ClickSound;
     private readonly _word: Word;
+    private readonly _clickSound: ClickSound;
+    private readonly _llm: LLM;
     private _currentlyListeningTrack: TrackPlainObj;
     private readonly _trackElementId: string;
     private readonly _bgElementId: string;
     private readonly _loadingElementId: string;
     private readonly _contentElementId: string;
     private readonly _wordElementId: string;
+    private readonly _llmElementId: string;
 
     constructor(
         darkMode: DarkMode,
@@ -34,36 +38,42 @@ export default class TopPage implements IPage {
         track: Track,
         word: Word,
         clickSound: ClickSound,
+        llm: LLM,
         trackElementId: string,
         bgElementId: string,
         loadingElementId: string,
         contentElementId: string,
         wordElementId: string,
+        llmElementId: string,
     ) {
         this._darkMode = darkMode;
         this._giphy = giphy;
         this._photo = photo;
         this._track = track;
-        this._clickSound = clickSound;
         this._word = word;
+        this._clickSound = clickSound;
+        this._llm = llm;
         this._currentlyListeningTrack = {
             artists: [],
             isPlaying: false,
             link: '',
             name: '',
+            explanation: '',
         };
         this._trackElementId = trackElementId;
         this._bgElementId = bgElementId;
         this._loadingElementId = loadingElementId;
         this._contentElementId = contentElementId;
         this._wordElementId = wordElementId;
+        this._llmElementId = llmElementId;
     }
 
     private async setUpData() {
         const results = await Promise.allSettled([
-            this._giphy.getRandom(),
             this._track.getCurrentlyPlaying(),
+            this._giphy.getRandom(),
             this._photo.getARandomPhoto(),
+            this._llm.getCompletion(),
             this._word.getARandomWord(),
         ]);
 
@@ -77,6 +87,7 @@ export default class TopPage implements IPage {
                     isPlaying: false,
                     link: '',
                     name: '',
+                    explanation: '',
                     artists: [],
                 } as TrackPlainObj;
             }
@@ -87,6 +98,12 @@ export default class TopPage implements IPage {
                     width: '1200',
                     height: '1200',
                 } as PhotoPlainObj;
+            }
+
+            if (index === 3) {
+                return {
+                    completion: 'Something went wrong :(',
+                } as LLMPlainObject;
             }
 
             return {
@@ -126,8 +143,15 @@ export default class TopPage implements IPage {
         const $explanationElement = $wordElement.querySelector('#explanation');
         if (!$nameElement || !$explanationElement) return;
 
-        $nameElement.innerHTML = wordData?.name || 'anicca';
-        $explanationElement.innerHTML = wordData?.explanation || 'Inconstant; unsteady; impermanent.';
+        $nameElement.innerHTML = wordData?.name;
+        $explanationElement.innerHTML = wordData?.explanation;
+    }
+
+    public updateLLMDOM(llmData: LLMPlainObject): void {
+        const $llmElement = document.getElementById(this._llmElementId);
+        if (!$llmElement) return;
+
+        $llmElement.innerHTML = llmData?.completion;
     }
 
     private _toggleContent() {
@@ -184,10 +208,11 @@ export default class TopPage implements IPage {
         this._darkMode.init();
 
         // setup each data
-        const [giphyData, trackData, photoData, wordData] = (await this.setUpData()) as [
-            GiphyPlainObj,
+        const [trackData, giphyData, photoData, llmData, wordData] = (await this.setUpData()) as [
             TrackPlainObj,
+            GiphyPlainObj,
             PhotoPlainObj,
+            LLMPlainObject,
             WordPlainObject,
         ];
 
@@ -201,6 +226,7 @@ export default class TopPage implements IPage {
         // update dom
         this.updateTrackDOM(trackData);
         this.updateWordDOM(wordData);
+        this.updateLLMDOM(llmData);
 
         this._toggleWord();
 

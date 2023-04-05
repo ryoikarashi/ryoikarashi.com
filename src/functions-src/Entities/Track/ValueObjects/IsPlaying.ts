@@ -1,4 +1,4 @@
-import { IValueObject } from '../IValueObject';
+import { IValueObject } from '../../IValueObject';
 
 export class IsPlaying implements IValueObject<boolean | null> {
     private readonly _value: boolean | null;

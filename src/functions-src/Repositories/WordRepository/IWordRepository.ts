@@ -1,5 +1,5 @@
 import { Word } from '../../Entities/Word/Word';
-import { GetRandomWords } from './ParamterObjects/GetRandomWords';
+import { GetRandomWords } from './ParameterObjects/GetRandomWords';
 
 export interface IWordRepository {
     // queries

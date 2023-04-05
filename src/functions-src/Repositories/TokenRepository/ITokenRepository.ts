@@ -2,8 +2,7 @@ import { AxiosStatic } from 'axios';
 import { Token } from '../../Entities/Token/Token';
 import * as admin from 'firebase-admin';
 import { getRootCollectionName } from '../../../utils';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 
 export interface IOAuthConfig {
     clientId: string;

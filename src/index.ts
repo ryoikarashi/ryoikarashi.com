@@ -12,6 +12,7 @@ import ClickSound from './clients/click-sound';
 import Track from './clients/track';
 import { TrackPlainObj } from './functions-src/Entities/Track/Track';
 import Word from './clients/word';
+import LLM from './clients/llm';
 
 const pusherSettings = {
     appKey: 'f3f5751318b2c7958521',
@@ -31,11 +32,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         new Track(),
         new Word(),
         new ClickSound('clickSound'),
+        new LLM(),
         'spotify',
         'bg',
         'loading',
         'content',
         'word',
+        'llm',
     );
 
     // initialize top page

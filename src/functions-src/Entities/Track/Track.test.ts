@@ -1,8 +1,5 @@
 import { Track, TrackPlainObj } from './Track';
-import { Name } from './Name';
-import { Artist } from './Artist';
-import { IsPlaying } from './IsPlaying';
-import { Link } from './Link';
+import { Name, Artist, IsPlaying, Link, Explanation } from './ValueObjects';
 
 describe('Test Track Entity', () => {
     const track = new Track(
@@ -10,6 +7,7 @@ describe('Test Track Entity', () => {
         [Artist.of('track_artist')],
         IsPlaying.of(true),
         Link.of('https://example.com'),
+        Explanation.of(''),
     );
 
     const expectedPlainObj: TrackPlainObj = {
@@ -17,6 +15,7 @@ describe('Test Track Entity', () => {
         artists: ['track_artist'],
         isPlaying: true,
         link: 'https://example.com',
+        explanation: '',
     };
 
     it('returns a correct plainObj', () => {
@@ -38,7 +37,13 @@ describe('Test Track Entity', () => {
         expect(track.link).toStrictEqual(Link.of('https://example.com'));
     });
 
-    const invalidTrack = new Track(Name.of(''), [Artist.of('track_artist')], IsPlaying.of(false), Link.of(''));
+    const invalidTrack = new Track(
+        Name.of(''),
+        [Artist.of('track_artist')],
+        IsPlaying.of(false),
+        Link.of(''),
+        Explanation.of(''),
+    );
 
     it('is an invalid track', () => {
         expect(invalidTrack.isValid()).toStrictEqual(false);

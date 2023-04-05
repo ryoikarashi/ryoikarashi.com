@@ -1,12 +1,9 @@
 import axios from 'axios';
 import { GooglePhotosRepository } from './GooglePhotosRepository';
 import { Photo } from '../../Entities/Photo/Photo';
-import { Url } from '../../Entities/Photo/Url';
-import { AlbumId } from '../../Entities/Photo/AlbumId';
-import { AccessToken } from '../../Entities/Token/AccessToken';
+import { AlbumId, Width, Height, Url } from '../../Entities/Photo/ValueObjects';
+import { AccessToken } from '../../Entities/Token/ValueObjects';
 import { ResponseMediaItemsList } from '../../../types/google-photos';
-import { Width } from '../../Entities/Photo/Width';
-import { Height } from '../../Entities/Photo/Height';
 
 // mock http client
 jest.mock('axios');

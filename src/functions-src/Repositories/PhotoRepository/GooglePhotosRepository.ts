@@ -1,12 +1,9 @@
 import { AxiosStatic } from 'axios';
 import { IPhotoRepository } from './IPhotoRepository';
-import { AlbumId } from '../../Entities/Photo/AlbumId';
+import { AlbumId, Height, Width, Url } from '../../Entities/Photo/ValueObjects';
 import { Photo } from '../../Entities/Photo/Photo';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { Url } from '../../Entities/Photo/Url';
+import { AccessToken } from '../../Entities/Token/ValueObjects';
 import { ResponseMediaItemsList } from '../../../types/google-photos';
-import { Width } from '../../Entities/Photo/Width';
-import { Height } from '../../Entities/Photo/Height';
 
 export class GooglePhotosRepository implements IPhotoRepository {
     private readonly _http: AxiosStatic;

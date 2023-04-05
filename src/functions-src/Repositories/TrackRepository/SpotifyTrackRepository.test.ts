@@ -3,11 +3,8 @@ import axios from 'axios';
 import { SpotifyTrackRepository } from './SpotifyTrackRepository';
 import { getRootCollectionName } from '../../../utils';
 import { Track, TrackPlainObj } from '../../Entities/Track/Track';
-import { Link } from '../../Entities/Track/Link';
-import { Name } from '../../Entities/Track/Name';
-import { Artist } from '../../Entities/Track/Artist';
-import { IsPlaying } from '../../Entities/Track/IsPlaying';
-import { AccessToken } from '../../Entities/Token/AccessToken';
+import { Link, Name, Artist, IsPlaying, Explanation } from '../../Entities/Track/ValueObjects';
+import { AccessToken } from '../../Entities/Token/ValueObjects';
 
 // create mocks
 jest.mock('axios');
@@ -38,6 +35,7 @@ describe('Test SpotifyTrackRepository', () => {
         isPlaying: false,
         link: 'https://example.com/track',
         name: 'track name',
+        explanation: '',
     };
 
     const track = new Track(
@@ -45,9 +43,10 @@ describe('Test SpotifyTrackRepository', () => {
         trackPlainObj.artists.map((artist) => Artist.of(artist)),
         IsPlaying.of(trackPlainObj.isPlaying),
         Link.of(trackPlainObj.link),
+        Explanation.of(trackPlainObj.explanation),
     );
 
-    const invalidTrack = new Track(Name.of(null), [], IsPlaying.of(null), Link.of(null));
+    const invalidTrack = new Track(Name.of(null), [], IsPlaying.of(null), Link.of(null), Explanation.of(''));
 
     describe('storeLastPlayedTrack', () => {
         it('creates a new doc for track on firestore', async () => {
@@ -180,14 +179,13 @@ describe('Test SpotifyTrackRepository', () => {
             }));
         });
 
-        it('sends a request to spotify for a currently listening track with appropriate params', async () => {
+        it('sends a request to spotify for retrieving a currently listening track with appropriate params', async () => {
             jest.spyOn(axios, 'get').mockResolvedValue(httpTrackResponse200);
             const firestore = admin.initializeApp().firestore();
             const repository = new SpotifyTrackRepository(firestore, axios, collectionName, docPath);
             const requestConfig = {
                 headers: {
                     Authorization: `Bearer ${accessToken.value()}`,
-                    'Accept-Language': 'ja',
                 },
             };
             const endpoint = 'https://api.spotify.com/v1/me/player/currently-playing';

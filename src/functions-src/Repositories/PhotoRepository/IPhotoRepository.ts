@@ -1,6 +1,6 @@
 import { Photo } from '../../Entities/Photo/Photo';
-import { AlbumId } from '../../Entities/Photo/AlbumId';
-import { AccessToken } from '../../Entities/Token/AccessToken';
+import { AlbumId } from '../../Entities/Photo/ValueObjects';
+import { AccessToken } from '../../Entities/Token/ValueObjects';
 
 export interface IPhotoRepository {
     // queries

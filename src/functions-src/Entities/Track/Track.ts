@@ -1,7 +1,4 @@
-import { Name } from './Name';
-import { Artist } from './Artist';
-import { Link } from './Link';
-import { IsPlaying } from './IsPlaying';
+import { Name, Artist, Link, IsPlaying, Explanation } from './ValueObjects';
 import { IDomain } from '../IDomain';
 
 export interface SpotifyTrack {
@@ -24,6 +21,7 @@ export interface TrackPlainObj {
     artists: string[];
     isPlaying: boolean;
     link: string;
+    explanation: string;
 }
 
 export class Track implements IDomain<TrackPlainObj> {
@@ -31,12 +29,14 @@ export class Track implements IDomain<TrackPlainObj> {
     private readonly _artists;
     private _isPlaying;
     private readonly _link;
+    private _explanation;
 
-    constructor(name: Name, artists: Artist[], isPlaying: IsPlaying, link: Link) {
+    constructor(name: Name, artists: Artist[], isPlaying: IsPlaying, link: Link, explanation: Explanation) {
         this._name = name;
         this._artists = artists;
         this._isPlaying = isPlaying;
         this._link = link;
+        this._explanation = explanation;
     }
 
     public get name(): Name {
@@ -59,6 +59,14 @@ export class Track implements IDomain<TrackPlainObj> {
         return this._link;
     }
 
+    public get explanation(): Explanation {
+        return this._explanation;
+    }
+
+    public set explanation(explanation: Explanation) {
+        this._explanation = explanation;
+    }
+
     isValid(): boolean {
         return this._name.value() !== null && !!this._name.value().length;
     }
@@ -69,6 +77,7 @@ export class Track implements IDomain<TrackPlainObj> {
             artists: this._artists.map((artist) => artist.value()),
             isPlaying: this._isPlaying.value(),
             link: this._link.value(),
+            explanation: this._explanation.value(),
         };
     }
 

@@ -1,11 +1,10 @@
 import * as admin from 'firebase-admin';
 import axios from 'axios';
+import { stringify } from 'query-string';
 import { GoogleTokenRepository } from './GoogleTokenRepository';
 import { HTTPTokenResponse, IOAuthConfig } from './ITokenRepository';
 import { Token } from '../../Entities/Token/Token';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { stringify } from 'query-string';
+import { RefreshToken, AccessToken } from '../../Entities/Token/ValueObjects';
 
 // create mocks
 jest.mock('axios');

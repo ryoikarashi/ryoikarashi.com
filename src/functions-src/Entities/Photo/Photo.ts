@@ -1,7 +1,5 @@
 import { IDomain } from '../IDomain';
-import { Url } from './Url';
-import { Width } from './Width';
-import { Height } from './Height';
+import { Url, Width, Height } from './ValueObjects';
 
 export interface PhotoPlainObj {
     width: string;

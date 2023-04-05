@@ -1,4 +1,4 @@
-import { IValueObject } from '../IValueObject';
+import { IValueObject } from '../../IValueObject';
 
 export class RefreshToken implements IValueObject<string | null> {
     private readonly _value: string | null;

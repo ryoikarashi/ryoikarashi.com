@@ -1,6 +1,5 @@
 import { Token } from './Token';
-import { AccessToken } from './AccessToken';
-import { RefreshToken } from './RefreshToken';
+import { AccessToken, RefreshToken } from './ValueObjects';
 
 describe('Test Token Entity', () => {
     const token = new Token(AccessToken.of('access_token'), RefreshToken.of('refresh_token'));

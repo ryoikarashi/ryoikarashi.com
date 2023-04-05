@@ -1,8 +1,7 @@
 import { AxiosStatic } from 'axios';
 import { ITokenService } from './ITokenService';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 import { IOAuthConfig, ITokenRepository } from '../../Repositories/TokenRepository/ITokenRepository';
 
 export class TokenService implements ITokenService {

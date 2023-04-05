@@ -1,5 +1,5 @@
 import { Track, TrackPlainObj } from '../../Entities/Track/Track';
-import { AccessToken } from '../../Entities/Token/AccessToken';
+import { AccessToken } from '../../Entities/Token/ValueObjects';
 
 export interface HTTPTrackResponse {
     name: string;

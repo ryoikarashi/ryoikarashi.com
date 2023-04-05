@@ -1,7 +1,7 @@
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { IGiphyRepository } from './IGiphyRepository';
 import { Giphy } from '../../Entities/Giphy/Giphy';
-import { Src } from '../../Entities/Giphy/Src';
+import { Src } from '../../Entities/Giphy/ValueObjects';
 
 export class GiphyRepository implements IGiphyRepository {
     private readonly _fallbackSearchLimit = 20;

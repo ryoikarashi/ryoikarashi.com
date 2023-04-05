@@ -1,5 +1,5 @@
 import { IDomain } from '../IDomain';
-import { Src } from './Src';
+import { Src } from './ValueObjects';
 
 export interface GiphyPlainObj {
     src: string;

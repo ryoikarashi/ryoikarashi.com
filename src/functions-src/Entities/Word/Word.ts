@@ -1,7 +1,5 @@
 import { IDomain } from '../IDomain';
-import { Name } from './Name';
-import { Chapter } from './Chapter';
-import { Explanation } from './Explanation';
+import { Name, Chapter, Explanation } from './ValueObjects';
 
 export interface WordPlainObject {
     chapter: string;

@@ -2,8 +2,7 @@ import * as admin from 'firebase-admin';
 import axios, { AxiosStatic } from 'axios';
 import { HTTPTokenResponse, IOAuthConfig, ITokenRepository } from './ITokenRepository';
 import { Token } from '../../Entities/Token/Token';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
-import { AccessToken } from '../../Entities/Token/AccessToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 import { getRootCollectionName } from '../../../utils';
 
 class GenericTokenRepository extends ITokenRepository {

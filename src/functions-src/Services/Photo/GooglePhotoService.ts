@@ -1,11 +1,8 @@
-import { AlbumId } from '../../Entities/Photo/AlbumId';
+import { AlbumId, Url, Width, Height } from '../../Entities/Photo/ValueObjects';
 import { Photo } from '../../Entities/Photo/Photo';
-import { Url } from '../../Entities/Photo/Url';
 import { IPhotoService } from './IPhotoService';
 import { IPhotoRepository } from '../../Repositories/PhotoRepository/IPhotoRepository';
 import { ITokenService } from '../Token/ITokenService';
-import { Width } from '../../Entities/Photo/Width';
-import { Height } from '../../Entities/Photo/Height';
 
 export class GooglePhotoService implements IPhotoService {
     private readonly _photoRepo: IPhotoRepository;

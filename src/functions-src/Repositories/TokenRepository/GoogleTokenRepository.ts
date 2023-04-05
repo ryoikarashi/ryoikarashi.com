@@ -1,8 +1,7 @@
 import { AxiosStatic } from 'axios';
 import { stringify } from 'query-string';
 import { Token } from '../../Entities/Token/Token';
-import { AccessToken } from '../../Entities/Token/AccessToken';
-import { RefreshToken } from '../../Entities/Token/RefreshToken';
+import { AccessToken, RefreshToken } from '../../Entities/Token/ValueObjects';
 import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class GoogleTokenRepository extends ITokenRepository {

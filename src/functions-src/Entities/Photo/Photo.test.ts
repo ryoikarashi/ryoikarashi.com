@@ -1,7 +1,5 @@
 import { Photo } from './Photo';
-import { Url } from './Url';
-import { Width } from './Width';
-import { Height } from './Height';
+import { Url, Width, Height } from './ValueObjects';
 
 describe('Test Photo Entity', () => {
     const photo = new Photo(Url.of('https://example.com/a-path-to-photo'), Width.of('100'), Height.of('100'));
