@@ -1,6 +1,6 @@
-import { AxiosStatic } from 'axios';
+import { type AxiosStatic } from 'axios';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
-import * as admin from 'firebase-admin';
+import type * as admin from 'firebase-admin';
 import { getRootCollectionName } from '@/utils';
 import {
   AccessToken,
@@ -47,8 +47,8 @@ export abstract class ITokenRepository {
   public async getFirstToken(): Promise<Token> {
     const doc = await this._ref.get();
     return new Token(
-      AccessToken.of(doc?.exists ? doc?.data()?.access_token || null : null),
-      RefreshToken.of(doc?.exists ? doc?.data()?.refresh_token || null : null)
+      AccessToken.of(doc?.exists ? doc?.data()?.access_token ?? null : null),
+      RefreshToken.of(doc?.exists ? doc?.data()?.refresh_token ?? null : null)
     );
   }
 

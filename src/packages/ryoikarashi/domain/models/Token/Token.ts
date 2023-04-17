@@ -1,5 +1,5 @@
-import { RefreshToken, AccessToken } from './ValueObjects';
-import { IDomain } from '../IDomain';
+import { type RefreshToken, type AccessToken } from './ValueObjects';
+import { type IDomain } from '../IDomain';
 
 export interface TokenPlainObj {
   accessToken: string;
@@ -25,7 +25,7 @@ export class Token implements IDomain<TokenPlainObj> {
 
   isValid(): boolean {
     return (
-      this._accessToken.value() !== null && !!this._accessToken.value().length
+      this._accessToken.value() !== null && this._accessToken.value().length > 0
     );
   }
 

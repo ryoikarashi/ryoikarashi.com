@@ -1,4 +1,4 @@
-import { IValueObject } from '../../IValueObject';
+import { type IValueObject } from '../../IValueObject';
 
 export class Width implements IValueObject<number | null> {
   private readonly _value: number | null;

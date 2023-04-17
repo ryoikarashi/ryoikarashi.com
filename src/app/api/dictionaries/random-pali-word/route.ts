@@ -5,13 +5,13 @@ import { FirebaseService } from '@/packages/ryoikarashi/application/Firebase/Fir
 import { Word } from '@/packages/ryoikarashi/domain/models';
 
 const db = new FirebaseService({
-  databaseURL: process.env.FIRESTORE_DB_URL || '',
-  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY || '',
-  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || '',
-  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || '',
+  databaseURL: process.env.FIRESTORE_DB_URL ?? '',
+  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY ?? '',
+  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL ?? '',
+  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID ?? '',
 }).init();
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const wordService = new WordService(
       new WordRepository(db, 'pali_dictionary', 'dictionary')

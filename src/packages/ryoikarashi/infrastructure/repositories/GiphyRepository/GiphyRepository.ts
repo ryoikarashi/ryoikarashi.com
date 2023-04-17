@@ -1,5 +1,5 @@
-import { GiphyFetch } from '@giphy/js-fetch-api';
-import { IGiphyRepository } from './IGiphyRepository';
+import { type GiphyFetch } from '@giphy/js-fetch-api';
+import { type IGiphyRepository } from './IGiphyRepository';
 import { Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
 import { Src } from '@/packages/ryoikarashi/domain/models/Giphy/ValueObjects';
 
@@ -26,7 +26,7 @@ export class GiphyRepository implements IGiphyRepository {
     const gif = data[randomIndex];
     const src = gif?.images?.original?.url;
 
-    if (!src) {
+    if (src === undefined) {
       return new Giphy(Src.of(null));
     }
 

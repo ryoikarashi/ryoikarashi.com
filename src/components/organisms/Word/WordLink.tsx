@@ -1,10 +1,10 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { useStore } from '@/stores';
 import { Link } from '@/components/atoms';
 
-export function WordLink({ children }: PropsWithChildren) {
+export function WordLink({ children }: PropsWithChildren): JSX.Element {
   const isModalOpen = useStore((state) => state.isModalOpen);
   const updateModal = useStore((state) => state.updateModal);
 

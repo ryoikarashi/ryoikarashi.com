@@ -1,5 +1,5 @@
 import './globals.css';
-import { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/app/providers';
 
@@ -11,7 +11,11 @@ export const metadata = {
   description: 'Hi there ✋',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   return (
     <html lang='en'>
       <body

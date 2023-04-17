@@ -1,11 +1,11 @@
-import { AxiosStatic } from 'axios';
+import { type AxiosStatic } from 'axios';
 import { stringify } from 'query-string';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
+import { type IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class SpotifyTokenRepository extends ITokenRepository {
   public constructor(
@@ -21,7 +21,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
     config: IOAuthConfig
   ): Promise<Token> {
     const headers = {
-      Authorization: `Basic ${config.basicAuthorizationCode}`,
+      Authorization: `Basic ${config.basicAuthorizationCode ?? ''}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     };
     const params = {
@@ -50,7 +50,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
     config: IOAuthConfig
   ): Promise<Token> {
     const headers = {
-      Authorization: `Basic ${config.basicAuthorizationCode}`,
+      Authorization: `Basic ${config.basicAuthorizationCode ?? ''}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     };
 
@@ -67,7 +67,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
       { headers }
     );
 
-    return Promise.resolve(
+    return await Promise.resolve(
       new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken))
     );
   }

@@ -1,11 +1,12 @@
+import React from 'react';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import { api } from '@/clientApis';
-import { HTMLElementProps } from '@/components/atoms';
+import { type HTMLElementProps } from '@/components/atoms';
 
 export type PhotoProps = HTMLElementProps<HTMLDivElement>;
 
-async function Photo(props: PhotoProps) {
+async function Photo(props: PhotoProps): Promise<JSX.Element> {
   api.photo.random.get.preload();
   const photo = await api.photo.random.get.request();
   const { base64, img } = await getPlaiceholder(photo.url);
@@ -26,7 +27,7 @@ async function Photo(props: PhotoProps) {
   );
 }
 
-function Loading() {
+function Loading(): JSX.Element {
   return (
     // <div className="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-black dark:border-white mx-12">
     <div className='mx-auto w-full max-w-xs border border-black dark:border-white md:max-w-lg lg:max-w-2xl'>

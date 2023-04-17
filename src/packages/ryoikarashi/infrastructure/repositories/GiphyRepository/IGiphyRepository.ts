@@ -1,6 +1,6 @@
-import { Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
+import { type Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
 
 export interface IGiphyRepository {
   // queries
-  getRandom(): Promise<Giphy>;
+  getRandom: () => Promise<Giphy>;
 }

@@ -1,7 +1,5 @@
-import { IDomain } from '../IDomain';
-import { Src } from './ValueObjects';
-
-const test = true;
+import { type IDomain } from '../IDomain';
+import { type Src } from './ValueObjects';
 
 export interface GiphyPlainObj {
   src: string;

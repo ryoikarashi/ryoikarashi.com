@@ -1,13 +1,13 @@
-import { AxiosStatic } from 'axios';
-import { ITokenService } from './ITokenService';
+import { type AxiosStatic } from 'axios';
+import { type ITokenService } from './ITokenService';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 import {
-  IOAuthConfig,
-  ITokenRepository,
+  type IOAuthConfig,
+  type ITokenRepository,
 } from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
 
 export class TokenService implements ITokenService {
@@ -46,9 +46,9 @@ export class TokenService implements ITokenService {
       await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(
         tokenIssuedByAuthorizationCode
       );
-      return Promise.resolve(tokenIssuedByAuthorizationCode);
+      return await Promise.resolve(tokenIssuedByAuthorizationCode);
     } catch (e) {
-      return Promise.resolve(
+      return await Promise.resolve(
         new Token(AccessToken.of(null), RefreshToken.of(null))
       );
     }

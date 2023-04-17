@@ -1,8 +1,8 @@
 import * as admin from 'firebase-admin';
-import { AxiosStatic } from 'axios';
+import { type AxiosStatic } from 'axios';
 import {
-  HTTPTokenResponse,
-  IOAuthConfig,
+  type HTTPTokenResponse,
+  type IOAuthConfig,
   ITokenRepository,
 } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
@@ -13,30 +13,24 @@ import {
 import { getRootCollectionName } from '@/utils';
 
 class GenericTokenRepository extends ITokenRepository {
-  constructor(
-    db: FirebaseFirestore.Firestore,
-    collectionName: string,
-    docPath: string
-  ) {
-    super(db, collectionName, docPath);
-  }
-  getTokenByAuthorizationCode(
+  async getTokenByAuthorizationCode(
     http: AxiosStatic,
     config: IOAuthConfig
   ): Promise<Token> {
-    return Promise.resolve(
+    return await Promise.resolve(
       new Token(
         AccessToken.of('dummy_access_token'),
         RefreshToken.of('dummy_refresh_token')
       )
     );
   }
-  refreshToken(
+
+  async refreshToken(
     http: AxiosStatic,
     expiredToken: Token,
     config: IOAuthConfig
   ): Promise<Token> {
-    return Promise.resolve(
+    return await Promise.resolve(
       new Token(
         AccessToken.of('dummy_new_access_token'),
         RefreshToken.of('dummy_new_refresh_token')

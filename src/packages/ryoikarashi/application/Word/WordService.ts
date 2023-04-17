@@ -1,6 +1,6 @@
-import { IWordService } from './IWordService';
-import { Word } from '@/packages/ryoikarashi/domain/models/Word/Word';
-import { WordRepository } from '@/packages/ryoikarashi/infrastructure/repositories/WordRepository/WordRepository';
+import { type IWordService } from './IWordService';
+import { type Word } from '@/packages/ryoikarashi/domain/models/Word/Word';
+import { type WordRepository } from '@/packages/ryoikarashi/infrastructure/repositories/WordRepository/WordRepository';
 import { GetRandomWords } from '@/packages/ryoikarashi/infrastructure/repositories/WordRepository/ParameterObjects/GetRandomWords';
 
 export class WordService implements IWordService {

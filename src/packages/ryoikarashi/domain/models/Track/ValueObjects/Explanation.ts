@@ -1,4 +1,4 @@
-import { IValueObject } from '../../IValueObject';
+import { type IValueObject } from '../../IValueObject';
 
 export class Explanation implements IValueObject<string> {
   private readonly _value: string;
@@ -11,11 +11,11 @@ export class Explanation implements IValueObject<string> {
     return new Explanation(value);
   }
 
-  public value(): string | '' {
-    return this._value || '';
+  public value(): string {
+    return this._value ?? '';
   }
 
   public isValid(): boolean {
-    return this._value !== null && !!this._value.length;
+    return this._value !== null && this._value.length > 0;
   }
 }

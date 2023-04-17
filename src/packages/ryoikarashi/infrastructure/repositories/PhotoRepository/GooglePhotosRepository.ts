@@ -1,13 +1,13 @@
-import { AxiosStatic } from 'axios';
-import { IPhotoRepository } from './IPhotoRepository';
+import { type AxiosStatic } from 'axios';
+import { type IPhotoRepository } from './IPhotoRepository';
 import {
-  AlbumId,
+  type AlbumId,
   Height,
   Width,
   Url,
 } from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
 import { Photo } from '@/packages/ryoikarashi/domain/models';
-import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { type AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 export interface MediaItem {
   id: string;
@@ -19,7 +19,7 @@ export interface MediaItem {
   mediaMetadata: MediaMetadata;
 }
 
-export type MediaItems = Array<MediaItem>;
+export type MediaItems = MediaItem[];
 
 export interface ResponseMediaItemsList {
   mediaItems: MediaItems;
@@ -53,14 +53,14 @@ export class GooglePhotosRepository implements IPhotoRepository {
     albumId: AlbumId,
     accessToken: AccessToken,
     callback: () => Promise<AccessToken>
-  ): Promise<Array<Photo>> {
+  ): Promise<Photo[]> {
     try {
       const headers = {
         Authorization: `Bearer ${accessToken.value()}`,
         'Content-Type': 'application/json',
       };
       const data = JSON.stringify({
-        pageSize: process.env.GOOGLE_PHOTOS_PAGE_SIZE || '10',
+        pageSize: process.env.GOOGLE_PHOTOS_PAGE_SIZE ?? '10',
         albumId: albumId.value(),
       });
       const {
@@ -71,7 +71,7 @@ export class GooglePhotosRepository implements IPhotoRepository {
         { headers }
       );
 
-      if (!mediaItems) {
+      if (mediaItems === undefined) {
         return [new Photo(Url.of(null), Width.of(null), Height.of(null))];
       }
 

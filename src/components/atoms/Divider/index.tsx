@@ -1,4 +1,10 @@
-import { Direction, HTMLElementProps, None, Size } from '@/components/atoms';
+import React from 'react';
+import type {
+  Direction,
+  HTMLElementProps,
+  None,
+  Size,
+} from '@/components/atoms';
 import { match } from 'ts-pattern';
 
 export type DividerProps = HTMLElementProps<HTMLSpanElement> & {
@@ -13,7 +19,7 @@ export function Divider({
   dividerString,
   className,
   ...rest
-}: DividerProps) {
+}: DividerProps): JSX.Element {
   const gapClass = match([gap, direction])
     .with(['sm', 'horizontal'], () => 'mx-2')
     .with(['sm', 'vertical'], () => 'my-2')

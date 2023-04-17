@@ -1,4 +1,4 @@
 export interface IValueObject<T> {
-  value(): T;
-  isValid(): boolean;
+  value: () => T;
+  isValid: () => boolean;
 }

@@ -1,15 +1,16 @@
+import React from 'react';
 import { TextList } from '@/components/molecules/List/TextList';
 
-type ListItem = {
+interface ListItem {
   label: string;
   url?: string;
-};
+}
 
-export type ListProps = {
-  items: Array<ListItem>;
-};
+export interface ListProps {
+  items: ListItem[];
+}
 
-function List(props: ListProps) {
+function List(props: ListProps): JSX.Element {
   return <TextList {...props} />;
 }
 

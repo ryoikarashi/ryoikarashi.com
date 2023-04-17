@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 import axios from 'axios';
 import { stringify } from 'query-string';
 import { SpotifyTokenRepository } from './SpotifyTokenRepository';
-import { HTTPTokenResponse, IOAuthConfig } from './ITokenRepository';
+import { type HTTPTokenResponse, type IOAuthConfig } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   RefreshToken,
@@ -70,7 +70,7 @@ describe('Test SpotifyTokenRepository', () => {
       };
       const requestConfig = {
         headers: {
-          Authorization: `Basic ${oauthConfig.basicAuthorizationCode}`,
+          Authorization: `Basic ${oauthConfig.basicAuthorizationCode ?? ''}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       };
@@ -133,7 +133,7 @@ describe('Test SpotifyTokenRepository', () => {
       const requestConfig = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Basic ${oauthConfig.basicAuthorizationCode}`,
+          Authorization: `Basic ${oauthConfig.basicAuthorizationCode ?? ''}`,
         },
       };
 

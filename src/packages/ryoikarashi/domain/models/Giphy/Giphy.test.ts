@@ -1,4 +1,4 @@
-import { Giphy, GiphyPlainObj } from './Giphy';
+import { Giphy, type GiphyPlainObj } from './Giphy';
 import { Src } from './ValueObjects';
 
 describe('Test Giphy Entity', () => {

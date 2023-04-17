@@ -4,7 +4,7 @@ import { SpotifyTrackRepository } from './SpotifyTrackRepository';
 import { getRootCollectionName } from '@/utils';
 import {
   Track,
-  TrackPlainObj,
+  type TrackPlainObj,
 } from '@/packages/ryoikarashi/domain/models/Track/Track';
 import {
   Link,
@@ -205,7 +205,8 @@ describe('Test SpotifyTrackRepository', () => {
       data: null,
     };
     const accessToken = AccessToken.of('access_token');
-    const callback = async () => Promise.resolve(accessToken);
+    const callback = async (): Promise<AccessToken> =>
+      await Promise.resolve(accessToken);
 
     beforeEach(() => {
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({

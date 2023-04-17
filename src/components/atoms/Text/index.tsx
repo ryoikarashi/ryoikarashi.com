@@ -1,7 +1,6 @@
+import React, { type PropsWithChildren } from 'react';
 import { match } from 'ts-pattern';
-import { PropsWithChildren } from 'react';
-import { HTMLElementProps, Size } from '@/components/atoms';
-import { Link } from '@/components/atoms';
+import { type HTMLElementProps, type Size, Link } from '@/components/atoms';
 
 export type TextProps = HTMLElementProps<HTMLSpanElement> & {
   size?: Size;
@@ -14,7 +13,7 @@ export function Text({
   link,
   className,
   ...rest
-}: PropsWithChildren<TextProps>) {
+}: PropsWithChildren<TextProps>): JSX.Element {
   const textClass = match(size)
     .with('sm', () => 'text-xs')
     .with('md', () => 'text-base')
@@ -22,9 +21,11 @@ export function Text({
     .with(undefined, () => 'text-base')
     .exhaustive();
 
+  const hasLink = link !== undefined;
+
   return (
     <span {...rest} className={`${textClass} ${className ?? ''}`}>
-      {link ? (
+      {hasLink ? (
         <Link href={link} target='_blank'>
           {children}
         </Link>

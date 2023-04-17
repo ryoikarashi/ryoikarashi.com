@@ -1,4 +1,4 @@
-import { Track, TrackPlainObj } from './Track';
+import { Track, type TrackPlainObj } from './Track';
 import { Name, Artist, IsPlaying, Link, Explanation } from './ValueObjects';
 
 describe('Test Track Entity', () => {

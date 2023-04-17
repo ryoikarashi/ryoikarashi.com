@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createUiSlice, UiState } from './ui';
+import { createUiSlice, type UiState } from './ui';
 
 export type State = UiState;
 

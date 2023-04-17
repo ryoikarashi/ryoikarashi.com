@@ -1,7 +1,8 @@
+import React from 'react';
 import { api } from '@/clientApis';
 import { Link, Text } from '@/components/atoms';
 
-export async function CurrentlyPlaying() {
+export async function CurrentlyPlaying(): Promise<JSX.Element> {
   api.sound.currentlyPlaying.get.preload();
   const track = await api.sound.currentlyPlaying.get.request();
   return (

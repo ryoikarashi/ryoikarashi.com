@@ -1,5 +1,5 @@
-import { IDomain } from '../IDomain';
-import { Name, Chapter, Explanation } from './ValueObjects';
+import { type IDomain } from '../IDomain';
+import { type Name, type Chapter, type Explanation } from './ValueObjects';
 
 export interface WordPlainObject {
   chapter: string;

@@ -1,6 +1,7 @@
+import React from 'react';
 import { List } from '@/components/molecules';
 
-export function Links() {
+export function Links(): JSX.Element {
   return (
     <List.TextList
       size='sm'

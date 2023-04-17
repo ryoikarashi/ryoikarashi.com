@@ -1,6 +1,6 @@
-import { AlbumId } from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
-import { Photo } from '@/packages/ryoikarashi/domain/models/Photo/Photo';
+import { type AlbumId } from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
+import { type Photo } from '@/packages/ryoikarashi/domain/models/Photo/Photo';
 
 export interface IPhotoService {
-  getARandomPhotoFromAlbum(albumId: AlbumId): Promise<Photo>;
+  getARandomPhotoFromAlbum: (albumId: AlbumId) => Promise<Photo>;
 }

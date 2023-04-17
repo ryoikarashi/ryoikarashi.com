@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { ThemeSwitcher } from '@/components/molecules';
 import { PaliWord, Photo, Profile } from '@/components/organisms';
 
-export default function Page() {
+export default function Page(): JSX.Element {
   return (
     <main
       className={`flex max-h-screen min-h-screen flex-col items-center justify-between p-4`}

@@ -1,4 +1,4 @@
-import { IValueObject } from '../../IValueObject';
+import { type IValueObject } from '../../IValueObject';
 
 export class IsPlaying implements IValueObject<boolean | null> {
   private readonly _value: boolean | null;
@@ -12,7 +12,7 @@ export class IsPlaying implements IValueObject<boolean | null> {
   }
 
   public value(): boolean {
-    return !!this._value;
+    return Boolean(this._value);
   }
 
   public isValid(): boolean {

@@ -1,13 +1,15 @@
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 import { SimpleCircleButton } from '@/components/atoms/Button/SimpleCircleButton';
-import { HTMLElementProps } from '@/components/atoms';
+import { type HTMLElementProps } from '@/components/atoms';
 
 export type ButtonProps = HTMLElementProps<HTMLButtonElement> & {
   label?: string;
 };
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonProps): JSX.Element {
   return (
-    <button {...props} className={`${props.className} p-6 outline-none`}>
+    <button {...props} className={twMerge(props.className, 'p-6 outline-none')}>
       {props.children}
     </button>
   );

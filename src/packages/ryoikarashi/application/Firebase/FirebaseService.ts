@@ -23,7 +23,7 @@ export class FirebaseService {
 
   public init(): FirebaseFirestore.Firestore {
     // Initialise firebase admin with the credentials when there is no firebase app
-    if (!admin.apps.length) {
+    if (admin.apps.length === 0) {
       admin.initializeApp({
         databaseURL: this._databaseURL,
         credential: admin.credential.cert({
@@ -38,7 +38,7 @@ export class FirebaseService {
     const db = admin.firestore();
 
     // tweak db settings for local development
-    if (!isProduction && !admin.apps.length) {
+    if (!isProduction && admin.apps.length === 0) {
       db.settings({
         host: this._databaseURL,
         ssl: false,

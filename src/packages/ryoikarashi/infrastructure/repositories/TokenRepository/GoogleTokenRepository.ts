@@ -1,11 +1,11 @@
-import { AxiosStatic } from 'axios';
+import { type AxiosStatic } from 'axios';
 import { stringify } from 'query-string';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
+import { type IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class GoogleTokenRepository extends ITokenRepository {
   public constructor(

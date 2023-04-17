@@ -1,4 +1,4 @@
-import { IValueObject } from '../../IValueObject';
+import { type IValueObject } from '../../IValueObject';
 
 export class AlbumId implements IValueObject<string | null> {
   private readonly _value: string | null;
@@ -12,10 +12,10 @@ export class AlbumId implements IValueObject<string | null> {
   }
 
   isValid(): boolean {
-    return this._value !== null && !!this._value?.length;
+    return this._value !== null && this._value.length > 0;
   }
 
-  value(): string | '' {
-    return this._value || '';
+  value(): string {
+    return this._value ?? '';
   }
 }

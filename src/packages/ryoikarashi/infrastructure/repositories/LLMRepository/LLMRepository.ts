@@ -1,15 +1,15 @@
-import { ILLMRepository } from './ILLMRepository';
+import { type ILLMRepository } from './ILLMRepository';
 import {
   LLM,
-  Client,
-  LLMConfig,
+  type Client,
+  type LLMConfig,
 } from '@/packages/ryoikarashi/domain/models/LLM/LLM';
 import { Completion } from '@/packages/ryoikarashi/domain/models/LLM/ValueObjects';
-import { GetCompletion } from './ParameterObjects/GetCompletion';
+import { type GetCompletion } from './ParameterObjects/GetCompletion';
 
 export class LLMRepository implements ILLMRepository {
-  private _client: Client;
-  private _config: LLMConfig;
+  private readonly _client: Client;
+  private readonly _config: LLMConfig;
 
   constructor(client: Client, config?: LLMConfig) {
     this._client = client;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
   GooglePhotosRepository,
-  ResponseMediaItemsList,
+  type ResponseMediaItemsList,
 } from './GooglePhotosRepository';
 import { Photo } from '@/packages/ryoikarashi/domain/models/Photo/Photo';
 import {
@@ -68,7 +68,7 @@ describe('Test GooglePhotosRepository', () => {
     ],
     nextPageToken: 'next_page_token',
   };
-  const photos: Array<Photo> = mediaItemsList.mediaItems.map(
+  const photos: Photo[] = mediaItemsList.mediaItems.map(
     (item) =>
       new Photo(
         Url.of(`${item.baseUrl}=w1200-h1200-no`),
@@ -78,7 +78,8 @@ describe('Test GooglePhotosRepository', () => {
   );
   const albumId = AlbumId.of('album_id');
   const accessToken = AccessToken.of('access_token');
-  const callback = async () => new AccessToken('new_access_token');
+  const callback = async (): Promise<AccessToken> =>
+    new AccessToken('new_access_token');
 
   describe('getPhotosFromAlbum', () => {
     it('returns an array of photos when api call succeeds', async () => {
@@ -93,11 +94,12 @@ describe('Test GooglePhotosRepository', () => {
     it('throws an exception first and catch the error and return an array of photos', async () => {
       jest
         .spyOn(axios, 'post')
-        .mockImplementationOnce(() =>
-          Promise.reject(new Error('requested access token is expired'))
+        .mockImplementationOnce(
+          async () =>
+            await Promise.reject(new Error('requested access token is expired'))
         )
-        .mockImplementationOnce(() =>
-          Promise.resolve({ data: mediaItemsList })
+        .mockImplementationOnce(
+          async () => await Promise.resolve({ data: mediaItemsList })
         );
       const repository = new GooglePhotosRepository(axios);
       await expect(

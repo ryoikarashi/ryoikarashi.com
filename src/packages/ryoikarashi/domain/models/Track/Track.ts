@@ -1,5 +1,11 @@
-import { Name, Artist, Link, IsPlaying, Explanation } from './ValueObjects';
-import { IDomain } from '../IDomain';
+import {
+  type Name,
+  type Artist,
+  type Link,
+  type IsPlaying,
+  type Explanation,
+} from './ValueObjects';
+import { type IDomain } from '../IDomain';
 
 export type SpotifyTrackType = 'track' | 'episode' | 'ad' | 'unknown';
 
@@ -85,7 +91,7 @@ export class Track implements IDomain<TrackPlainObj> {
   }
 
   isValid(): boolean {
-    return this._name.value() !== null && !!this._name.value().length;
+    return this._name.value() !== null && this._name.value().length > 0;
   }
 
   toPlainObj(): TrackPlainObj {

@@ -1,6 +1,6 @@
-import { Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
-import { IGiphyService } from './IGiphyService';
-import { IGiphyRepository } from '@/packages/ryoikarashi/infrastructure/repositories/GiphyRepository/IGiphyRepository';
+import { type Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
+import { type IGiphyService } from './IGiphyService';
+import { type IGiphyRepository } from '@/packages/ryoikarashi/infrastructure/repositories/GiphyRepository/IGiphyRepository';
 
 export class GiphyService implements IGiphyService {
   private readonly _giphyRepo: IGiphyRepository;

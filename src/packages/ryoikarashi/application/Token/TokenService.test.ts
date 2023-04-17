@@ -1,8 +1,8 @@
 import admin from 'firebase-admin';
-import axios, { AxiosStatic } from 'axios';
+import axios from 'axios';
 import { TokenService } from './TokenService';
 import {
-  IOAuthConfig,
+  type IOAuthConfig,
   ITokenRepository,
 } from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
@@ -28,16 +28,19 @@ const invalidToken = new Token(invalidAccessToken, invalidRefreshToken);
 
 class MockTokenRepository extends ITokenRepository {
   async getFirstToken(): Promise<Token> {
-    return Promise.resolve(token);
+    return await Promise.resolve(token);
   }
+
   async storeAccessTokenAndMaybeRefreshToken(): Promise<void> {
-    Promise.resolve();
+    await Promise.resolve();
   }
+
   async getTokenByAuthorizationCode(): Promise<Token> {
-    return Promise.resolve(newToken);
+    return await Promise.resolve(newToken);
   }
+
   async refreshToken(): Promise<Token> {
-    return Promise.resolve(newToken);
+    return await Promise.resolve(newToken);
   }
 }
 

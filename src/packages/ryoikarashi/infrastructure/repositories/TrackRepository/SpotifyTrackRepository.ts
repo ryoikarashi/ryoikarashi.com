@@ -1,10 +1,10 @@
-import { AxiosResponse, AxiosStatic } from 'axios';
-import * as admin from 'firebase-admin';
-import { ITrackRepository } from './ITtrackRepository';
+import { type AxiosResponse, type AxiosStatic } from 'axios';
+import type * as admin from 'firebase-admin';
+import { type ITrackRepository } from './ITtrackRepository';
 import {
-  SpotifyTrack,
+  type SpotifyTrack,
   Track,
-  TrackPlainObj,
+  type TrackPlainObj,
 } from '@/packages/ryoikarashi/domain/models/Track/Track';
 import {
   Name,
@@ -13,7 +13,7 @@ import {
   Link,
   Explanation,
 } from '@/packages/ryoikarashi/domain/models/Track/ValueObjects';
-import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { type AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 import { getRootCollectionName } from '@/utils';
 
 export class SpotifyTrackRepository implements ITrackRepository {
@@ -40,7 +40,8 @@ export class SpotifyTrackRepository implements ITrackRepository {
 
   public async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
     const doc = await this._ref.get();
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     doc.exists ? await this._ref.update(data) : await this._ref.create(data);
   }
 
@@ -59,14 +60,14 @@ export class SpotifyTrackRepository implements ITrackRepository {
     const data = doc.data() as TrackPlainObj;
 
     const track = new Track(
-      Name.of(data?.name || null),
+      Name.of(data?.name ?? null),
       data?.artists.map((artist) => Artist.of(artist)),
       IsPlaying.of(false),
-      Link.of(data?.link || null),
-      Explanation.of(data?.explanation || '')
+      Link.of(data?.link ?? null),
+      Explanation.of(data?.explanation ?? '')
     );
 
-    return Promise.resolve(track);
+    return await Promise.resolve(track);
   }
 
   public async getCurrentlyListeningTrack(
@@ -89,7 +90,7 @@ export class SpotifyTrackRepository implements ITrackRepository {
         // when listening to a track on spotify
         case 200: {
           if (data.currently_playing_type !== 'track') {
-            return this.getLastPlayedTrack();
+            return await this.getLastPlayedTrack();
           }
 
           const track = new Track(

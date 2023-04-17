@@ -1,6 +1,6 @@
-import { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { match } from 'ts-pattern';
-import { HTMLElementProps, None, Size } from '@/components/atoms';
+import type { HTMLElementProps, None, Size } from '@/components/atoms';
 
 type ParagraphProps = HTMLElementProps<HTMLParagraphElement> & {
   gap?: Size | None;
@@ -11,7 +11,7 @@ export function Paragraph({
   gap,
   className,
   ...rest
-}: PropsWithChildren<ParagraphProps>) {
+}: PropsWithChildren<ParagraphProps>): JSX.Element {
   const gapClass = match(gap)
     .with('sm', () => 'mt-2')
     .with('md', () => 'mt-5')

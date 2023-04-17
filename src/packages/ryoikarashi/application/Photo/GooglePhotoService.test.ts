@@ -4,19 +4,19 @@ import * as GooglePhotosRepository from '@/packages/ryoikarashi/infrastructure/r
 import * as GooglePhotoService from './GooglePhotoService';
 import * as GoogleTokenRepository from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/GoogleTokenRepository';
 import * as TokenService from '../Token/TokenService';
-import { IOAuthConfig } from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
-import { AlbumId } from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
+import { type IOAuthConfig } from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
+import {
+  AlbumId,
+  Url,
+  Width,
+  Height,
+} from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
 import { Photo } from '@/packages/ryoikarashi/domain/models/Photo/Photo';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import {
-  Url,
-  Width,
-  Height,
-} from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
 
 // create mocks
 jest.mock('axios');
@@ -67,7 +67,7 @@ afterEach(() => {
 
 describe('Test GooglePhotoService', () => {
   describe('getARandomPhotoFromAlbum', () => {
-    const data: Array<Photo> = [
+    const data: Photo[] = [
       new Photo(
         Url.of('https://example.com/photo'),
         Width.of(100),
@@ -75,7 +75,7 @@ describe('Test GooglePhotoService', () => {
       ),
     ];
     const randomPhoto = data[0];
-    const invalidData: Array<Photo> = [];
+    const invalidData: Photo[] = [];
     const invalidRandomPhoto = new Photo(
       Url.of(null),
       Width.of(null),

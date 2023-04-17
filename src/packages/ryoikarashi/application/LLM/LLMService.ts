@@ -1,6 +1,6 @@
-import { ILLMService } from './ILLMService';
-import { ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
-import { ILLMRepository } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ILLMRepository';
+import { type ILLMService } from './ILLMService';
+import { type ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
+import { type ILLMRepository } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ILLMRepository';
 import { GetCompletion } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ParameterObjects/GetCompletion';
 import { LLM } from '@/packages/ryoikarashi/domain/models/LLM/LLM';
 import { Completion } from '@/packages/ryoikarashi/domain/models/LLM/ValueObjects';

@@ -1,7 +1,7 @@
 import { SpotifyService } from './SpotifyService';
 import {
   Track,
-  TrackPlainObj,
+  type TrackPlainObj,
 } from '@/packages/ryoikarashi/domain/models/Track/Track';
 import {
   Name,
@@ -15,12 +15,12 @@ import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
-import { ITokenService } from '../Token/ITokenService';
+import { type ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
+import { type ITokenService } from '../Token/ITokenService';
 
-/////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////
 /// Mock SpotifyTrackRepository
-/////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////
 const playingTrack = new Track(
   Name.of('track_name'),
   [Artist.of('artist')],
@@ -38,37 +38,37 @@ const notPlayingTrack = new Track(
 );
 
 class MockSpotifyTrackRepository implements ITrackRepository {
-  getCurrentlyListeningTrack(
+  async getCurrentlyListeningTrack(
     accessToken: AccessToken,
     callback: () => Promise<AccessToken>
   ): Promise<Track> {
-    return Promise.resolve(playingTrack);
+    return await Promise.resolve(playingTrack);
   }
 
-  getLastPlayedTrack(): Promise<Track> {
-    return Promise.resolve(playingTrack);
+  async getLastPlayedTrack(): Promise<Track> {
+    return await Promise.resolve(playingTrack);
   }
 
-  storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
-    return Promise.resolve();
+  async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
+    await Promise.resolve();
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////
 /// Mock TokenService
-/////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////
 const accessToken = AccessToken.of('access_token');
 const refreshToken = RefreshToken.of('refresh_token');
 const token = new Token(accessToken, refreshToken);
 const newAccessToken = AccessToken.of('new_access_token');
 
 class MockTokenService implements ITokenService {
-  getAccessAndRefreshToken(): Promise<Token> {
-    return Promise.resolve(token);
+  async getAccessAndRefreshToken(): Promise<Token> {
+    return await Promise.resolve(token);
   }
 
-  refreshAccessToken(): Promise<AccessToken> {
-    return Promise.resolve(newAccessToken);
+  async refreshAccessToken(): Promise<AccessToken> {
+    return await Promise.resolve(newAccessToken);
   }
 }
 

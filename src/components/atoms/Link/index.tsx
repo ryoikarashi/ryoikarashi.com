@@ -1,7 +1,11 @@
-import React, { AnchorHTMLAttributes, ReactNode, RefAttributes } from 'react';
-import NextLink from 'next/link';
-import { LinkProps as NextLinkProps } from 'next/link';
+import React, {
+  type AnchorHTMLAttributes,
+  type ReactNode,
+  type RefAttributes,
+} from 'react';
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 import { match } from 'ts-pattern';
+import { twMerge } from 'tailwind-merge';
 
 type NLinkProps = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -15,7 +19,7 @@ export type LinkProps = NLinkProps & {
   noUnderline?: boolean;
 };
 
-export function Link({ noUnderline, ...props }: LinkProps) {
+export function Link({ noUnderline, ...props }: LinkProps): JSX.Element {
   const underlineClass = match(noUnderline)
     .with(true, () => 'border-b-0')
     .with(false, () => 'border-b')
@@ -25,7 +29,11 @@ export function Link({ noUnderline, ...props }: LinkProps) {
   return (
     <NextLink
       {...props}
-      className={`p-1 duration-200 ${underlineClass} border-dotted border-black hover:bg-black hover:text-white dark:border-white hover:dark:bg-white hover:dark:text-black ${props.className}`}
+      className={twMerge(
+        props.className,
+        underlineClass,
+        'border-dotted border-black p-1 duration-200 hover:bg-black hover:text-white dark:border-white hover:dark:bg-white hover:dark:text-black'
+      )}
     />
   );
 }

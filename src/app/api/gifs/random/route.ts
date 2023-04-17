@@ -7,7 +7,7 @@ import { Giphy } from '@/packages/ryoikarashi/domain/models';
 // giphy SDK uses fetch API
 global.fetch = fetch;
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const giphyService = new GiphyService(
       new GiphyRepository(new GiphyFetch(process.env.GIPHY_API_KEY ?? ''))

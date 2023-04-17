@@ -1,9 +1,9 @@
-import { IWordRepository } from './IWordRepository';
+import { type IWordRepository } from './IWordRepository';
 import {
   Word,
-  WordPlainObject,
+  type WordPlainObject,
 } from '@/packages/ryoikarashi/domain/models/Word/Word';
-import { GetRandomWords } from './ParameterObjects/GetRandomWords';
+import { type GetRandomWords } from './ParameterObjects/GetRandomWords';
 import {
   Name,
   Chapter,
@@ -25,16 +25,14 @@ export class WordRepository implements IWordRepository {
     this._docPath = docPath;
   }
 
-  public async getRandomWords(
-    getRandomWords: GetRandomWords
-  ): Promise<Array<Word>> {
+  public async getRandomWords(getRandomWords: GetRandomWords): Promise<Word[]> {
     const snapshot = await this._db
       .collection(this._collectionName)
       .doc(this._docPath)
       .get();
     const dictionary = snapshot.data()?.list;
 
-    if (!dictionary) {
+    if (dictionary === undefined) {
       return [new Word(Name.of(null), Chapter.of(null), Explanation.of(null))];
     }
 
@@ -44,9 +42,9 @@ export class WordRepository implements IWordRepository {
       .map(
         (item: WordPlainObject) =>
           new Word(
-            Name.of(item?.name || null),
-            Chapter.of(item?.chapter || null),
-            Explanation.of(item?.explanation || null)
+            Name.of(item?.name ?? null),
+            Chapter.of(item?.chapter ?? null),
+            Explanation.of(item?.explanation ?? null)
           )
       );
   }

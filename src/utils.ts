@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
 const requestClient = axios.create({
   responseType: 'json',
@@ -7,7 +7,7 @@ const requestClient = axios.create({
   },
 });
 
-export function request<TResponse>(
+export async function request<TResponse>(
   url: string,
   config: AxiosRequestConfig = {}
 ): Promise<TResponse> {
@@ -16,9 +16,9 @@ export function request<TResponse>(
       ? 'https://ryoikarashi-com.vercel.app/'
       : 'http://localhost:4000';
 
-  return requestClient(`${baseUrl}${url}`, config)
+  return await requestClient(`${baseUrl}${url}`, config)
     .then((response: AxiosResponse<TResponse>) => response.data)
-    .then((data) => data as TResponse);
+    .then((data) => data);
 }
 
 export const isProduction = process.env.NODE_ENV === 'production';
@@ -34,5 +34,5 @@ export const prependDev = (original: string): string =>
 export const getRootCollectionName = (collectionName: string): string =>
   prependDev(collectionName);
 
-export const sleep = (msec: number) =>
-  new Promise((resolve) => setTimeout(resolve, msec));
+export const sleep = async (msec: number): Promise<unknown> =>
+  await new Promise((resolve) => setTimeout(resolve, msec));

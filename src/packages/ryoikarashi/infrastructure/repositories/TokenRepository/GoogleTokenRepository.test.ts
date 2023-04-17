@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 import axios from 'axios';
 import { stringify } from 'query-string';
 import { GoogleTokenRepository } from './GoogleTokenRepository';
-import { HTTPTokenResponse, IOAuthConfig } from './ITokenRepository';
+import { type HTTPTokenResponse, type IOAuthConfig } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   RefreshToken,

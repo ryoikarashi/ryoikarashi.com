@@ -1,4 +1,4 @@
-import { IValueObject } from '../../IValueObject';
+import { type IValueObject } from '../../IValueObject';
 
 export class Completion implements IValueObject<string> {
   private readonly _value: string;
@@ -16,6 +16,6 @@ export class Completion implements IValueObject<string> {
   }
 
   public isValid(): boolean {
-    return !!this._value.length;
+    return this._value.length > 0;
   }
 }

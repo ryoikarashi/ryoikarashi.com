@@ -9,7 +9,7 @@ export const useThemeToggler = (): [string, () => void] => {
     setMode(resolvedTheme ?? 'dark');
   }, [resolvedTheme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (): void => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 

@@ -1,4 +1,4 @@
-import Pusher, { Options } from 'pusher';
+import Pusher, { type Options } from 'pusher';
 
 export class PusherService {
   private readonly _appId: string;
@@ -20,7 +20,7 @@ export class PusherService {
       appId: this._appId,
       key: this._key,
       secret: this._secret,
-      cluster: this._cluster || '',
+      cluster: this._cluster ?? '',
       useTLS: this._useTLS,
     });
   }
