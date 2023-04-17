@@ -13,7 +13,7 @@ export function request<TResponse>(
 ): Promise<TResponse> {
   const baseUrl =
     process.env.NODE_ENV === 'production'
-      ? 'https://ryoikarashi-kuvqfvvqp-ryoikarashi.vercel.app'
+      ? 'https://ryoikarashi-com.vercel.app/'
       : 'http://localhost:4000';
 
   return requestClient(`${baseUrl}${url}`, config)
