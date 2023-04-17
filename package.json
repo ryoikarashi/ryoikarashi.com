@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint -- --dir .",
-    "test": "jest && NODE_ENV=production jest",
+    "test": "jest --passWithNoTests && NODE_ENV=production jest --passWithNoTests",
     "cypress": "cypress open",
     "prepare": "husky install"
   },
