@@ -1,12 +1,14 @@
 import { cache } from "react";
 import { IClientApi } from "@/clientApis/types";
 import { request } from "@/utils";
-import { TrackPlainObj } from "@/packages/ryoikarashi/domain/models";
+import { Track, TrackPlainObj } from "@/packages/ryoikarashi/domain/models";
 
 export const currentlyPlaying: Pick<IClientApi<TrackPlainObj>, "get"> = {
   get: {
     request: cache(async () => {
-      return request("/api/sounds/currently-playing");
+      return request<TrackPlainObj>("/api/sounds/currently-playing").catch(
+        () => Track.DEFAULT_PLAIN_OBJ
+      );
     }),
     preload: () => {
       void currentlyPlaying.get.request();

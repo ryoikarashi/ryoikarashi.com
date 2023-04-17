@@ -1,5 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
+const requestClient = axios.create({
+  responseType: "json",
+  transitional: {
+    silentJSONParsing: false,
+  },
+});
+
 export function request<TResponse>(
   url: string,
   config: AxiosRequestConfig = {}
@@ -9,7 +16,7 @@ export function request<TResponse>(
       ? "https://ryoikarashi-kuvqfvvqp-ryoikarashi.vercel.app"
       : "http://localhost:4000";
 
-  return axios(`${baseUrl}${url}`, config)
+  return requestClient(`${baseUrl}${url}`, config)
     .then((response: AxiosResponse<TResponse>) => response.data)
     .then((data) => data as TResponse);
 }

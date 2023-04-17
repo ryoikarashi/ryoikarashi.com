@@ -1,6 +1,5 @@
 import { IDomain } from "../IDomain";
 import { Url, Width, Height } from "./ValueObjects";
-import defaultBg from "../../../../../../public/bg.jpeg";
 
 export interface PhotoPlainObj {
   width: number;
@@ -14,7 +13,7 @@ export class Photo implements IDomain<PhotoPlainObj> {
   private readonly _height: Height;
 
   public static DEFAULT_PLAIN_OBJ: PhotoPlainObj = {
-    url: defaultBg.src,
+    url: "/bg.jpeg",
     width: 1200,
     height: 1200,
   };

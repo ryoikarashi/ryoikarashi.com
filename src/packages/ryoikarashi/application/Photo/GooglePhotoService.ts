@@ -8,7 +8,6 @@ import { Photo } from "@/packages/ryoikarashi/domain/models/Photo/Photo";
 import { IPhotoService } from "./IPhotoService";
 import { IPhotoRepository } from "@/packages/ryoikarashi/infrastructure/repositories/PhotoRepository/IPhotoRepository";
 import { ITokenService } from "../Token/ITokenService";
-
 export class GooglePhotoService implements IPhotoService {
   private readonly _photoRepo: IPhotoRepository;
   private readonly _tokenService: ITokenService;
