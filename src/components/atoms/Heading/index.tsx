@@ -1,4 +1,4 @@
-import { HTMLElementProps } from "@/components/atoms";
+import { HTMLElementProps } from '@/components/atoms';
 
 type HeadingProps = HTMLElementProps<HTMLHeadingElement> & {
   title: string;

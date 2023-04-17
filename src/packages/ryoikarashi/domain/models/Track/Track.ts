@@ -1,7 +1,7 @@
-import { Name, Artist, Link, IsPlaying, Explanation } from "./ValueObjects";
-import { IDomain } from "../IDomain";
+import { Name, Artist, Link, IsPlaying, Explanation } from './ValueObjects';
+import { IDomain } from '../IDomain';
 
-export type SpotifyTrackType = "track" | "episode" | "ad" | "unknown";
+export type SpotifyTrackType = 'track' | 'episode' | 'ad' | 'unknown';
 
 export interface SpotifyTrack {
   item: {
@@ -35,11 +35,11 @@ export class Track implements IDomain<TrackPlainObj> {
   private _explanation;
 
   public static DEFAULT_PLAIN_OBJ: TrackPlainObj = {
-    name: "",
+    name: '',
     artists: [],
     isPlaying: false,
-    link: "",
-    explanation: "",
+    link: '',
+    explanation: '',
   };
 
   constructor(
@@ -104,11 +104,11 @@ export class Track implements IDomain<TrackPlainObj> {
 
   toDefaultPlainObj(): TrackPlainObj {
     return {
-      name: "",
+      name: '',
       artists: [],
       isPlaying: false,
-      link: "",
-      explanation: "",
+      link: '',
+      explanation: '',
     };
   }
 }

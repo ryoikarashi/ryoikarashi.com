@@ -1,4 +1,4 @@
-import { TextList } from "@/components/molecules/List/TextList";
+import { TextList } from '@/components/molecules/List/TextList';
 
 type ListItem = {
   label: string;

@@ -1,10 +1,10 @@
-import { Loading as LoadingComponent } from "@/components/atoms";
+import { Loading as LoadingComponent } from '@/components/atoms';
 
 export default function Loading() {
   return (
-    <div className="bg-white dark:bg-black transition duration-500">
-      <div className="flex justify-center fixed inset-0">
-        <div className="w-full min-h-screen flex justify-center items-center">
+    <div className='bg-white transition duration-500 dark:bg-black'>
+      <div className='fixed inset-0 flex justify-center'>
+        <div className='flex min-h-screen w-full items-center justify-center'>
           <LoadingComponent />
         </div>
       </div>

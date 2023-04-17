@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import { HTMLElementProps, Loading, Text } from "@/components/atoms";
-import { Modal } from "@/components/molecules";
-import { WordExplanation } from "./WordExplanation";
-import { WordLink } from "./WordLink";
-import { Word } from "./Word";
+import { Suspense } from 'react';
+import { HTMLElementProps, Loading, Text } from '@/components/atoms';
+import { Modal } from '@/components/molecules';
+import { WordExplanation } from './WordExplanation';
+import { WordLink } from './WordLink';
+import { Word } from './Word';
 
 export type PaliWordProps = HTMLElementProps<HTMLDivElement>;
 
@@ -15,7 +15,7 @@ export function PaliWord(props: PaliWordProps) {
           fallback={
             <Loading.Placeholder
               as={<Text />}
-              className="!inline-block w-[100px]"
+              className='!inline-block w-[100px]'
             />
           }
         >

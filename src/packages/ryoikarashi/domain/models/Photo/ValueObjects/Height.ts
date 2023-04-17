@@ -1,4 +1,4 @@
-import { IValueObject } from "../../IValueObject";
+import { IValueObject } from '../../IValueObject';
 
 export class Height implements IValueObject<number | null> {
   private readonly _value: number | null;

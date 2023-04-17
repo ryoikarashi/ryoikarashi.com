@@ -1,4 +1,4 @@
-import { LLM } from "@/packages/ryoikarashi/domain/models/LLM/LLM";
+import { LLM } from '@/packages/ryoikarashi/domain/models/LLM/LLM';
 
 export interface ILLMService {
   getTrackExplanation(): Promise<LLM>;

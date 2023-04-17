@@ -1,11 +1,11 @@
-import { ILLMRepository } from "./ILLMRepository";
+import { ILLMRepository } from './ILLMRepository';
 import {
   LLM,
   Client,
   LLMConfig,
-} from "@/packages/ryoikarashi/domain/models/LLM/LLM";
-import { Completion } from "@/packages/ryoikarashi/domain/models/LLM/ValueObjects";
-import { GetCompletion } from "./ParameterObjects/GetCompletion";
+} from '@/packages/ryoikarashi/domain/models/LLM/LLM';
+import { Completion } from '@/packages/ryoikarashi/domain/models/LLM/ValueObjects';
+import { GetCompletion } from './ParameterObjects/GetCompletion';
 
 export class LLMRepository implements ILLMRepository {
   private _client: Client;
@@ -21,7 +21,7 @@ export class LLMRepository implements ILLMRepository {
   ): Promise<Completion> {
     const res = await this._client.createChatCompletion(
       {
-        messages: [{ role: "user", content: getCompletion.message }],
+        messages: [{ role: 'user', content: getCompletion.message }],
         model: this._config.model,
         max_tokens: this._config.maxTokens,
       },
@@ -30,6 +30,6 @@ export class LLMRepository implements ILLMRepository {
       }
     );
 
-    return new Completion(res.data.choices[0]?.message?.content ?? "");
+    return new Completion(res.data.choices[0]?.message?.content ?? '');
   }
 }

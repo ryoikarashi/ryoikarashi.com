@@ -1,8 +1,8 @@
 import {
   Track,
   TrackPlainObj,
-} from "@/packages/ryoikarashi/domain/models/Track/Track";
-import { AccessToken } from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Track/Track';
+import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 export interface HTTPTrackResponse {
   name: string;

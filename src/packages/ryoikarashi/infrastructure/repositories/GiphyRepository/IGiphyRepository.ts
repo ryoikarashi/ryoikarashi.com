@@ -1,4 +1,4 @@
-import { Giphy } from "@/packages/ryoikarashi/domain/models/Giphy/Giphy";
+import { Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
 
 export interface IGiphyRepository {
   // queries

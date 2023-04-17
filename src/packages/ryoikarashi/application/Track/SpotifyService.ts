@@ -1,7 +1,7 @@
-import { Track } from "@/packages/ryoikarashi/domain/models/Track/Track";
-import { ITrackService } from "./ITrackService";
-import { ITrackRepository } from "@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository";
-import { ITokenService } from "../Token/ITokenService";
+import { Track } from '@/packages/ryoikarashi/domain/models/Track/Track';
+import { ITrackService } from './ITrackService';
+import { ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
+import { ITokenService } from '../Token/ITokenService';
 
 export class SpotifyService implements ITrackService {
   private readonly _trackRepo: ITrackRepository;

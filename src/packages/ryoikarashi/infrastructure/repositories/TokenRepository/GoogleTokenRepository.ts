@@ -1,11 +1,11 @@
-import { AxiosStatic } from "axios";
-import { stringify } from "query-string";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+import { AxiosStatic } from 'axios';
+import { stringify } from 'query-string';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
-import { IOAuthConfig, ITokenRepository } from "./ITokenRepository";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class GoogleTokenRepository extends ITokenRepository {
   public constructor(
@@ -21,20 +21,20 @@ export class GoogleTokenRepository extends ITokenRepository {
     config: IOAuthConfig
   ): Promise<Token> {
     const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
     const payload = {
       code: config.authorizationCode,
       client_id: config.clientId,
       client_secret: config.clientSecret,
       redirect_uri: config.redirectUri,
-      grant_type: "authorization_code",
+      grant_type: 'authorization_code',
     };
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
-      "https://www.googleapis.com/oauth2/v4/token",
+      'https://www.googleapis.com/oauth2/v4/token',
       stringify(payload),
       { headers }
     );
@@ -51,20 +51,20 @@ export class GoogleTokenRepository extends ITokenRepository {
     config: IOAuthConfig
   ): Promise<Token> {
     const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
 
     const payload = {
       client_id: config.clientId,
       client_secret: config.clientSecret,
       refresh_token: currentToken.refreshToken.value(),
-      grant_type: "refresh_token",
+      grant_type: 'refresh_token',
     };
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
-      "https://www.googleapis.com/oauth2/v4/token",
+      'https://www.googleapis.com/oauth2/v4/token',
       stringify(payload),
       { headers }
     );

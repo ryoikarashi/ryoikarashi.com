@@ -1,13 +1,13 @@
-import { AxiosStatic } from "axios";
-import { IPhotoRepository } from "./IPhotoRepository";
+import { AxiosStatic } from 'axios';
+import { IPhotoRepository } from './IPhotoRepository';
 import {
   AlbumId,
   Height,
   Width,
   Url,
-} from "@/packages/ryoikarashi/domain/models/Photo/ValueObjects";
-import { Photo } from "@/packages/ryoikarashi/domain/models";
-import { AccessToken } from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Photo/ValueObjects';
+import { Photo } from '@/packages/ryoikarashi/domain/models';
+import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 export interface MediaItem {
   id: string;
@@ -57,16 +57,16 @@ export class GooglePhotosRepository implements IPhotoRepository {
     try {
       const headers = {
         Authorization: `Bearer ${accessToken.value()}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       };
       const data = JSON.stringify({
-        pageSize: process.env.GOOGLE_PHOTOS_PAGE_SIZE || "10",
+        pageSize: process.env.GOOGLE_PHOTOS_PAGE_SIZE || '10',
         albumId: albumId.value(),
       });
       const {
         data: { mediaItems },
       } = await this._http.post<ResponseMediaItemsList>(
-        "https://photoslibrary.googleapis.com/v1/mediaItems:search",
+        'https://photoslibrary.googleapis.com/v1/mediaItems:search',
         data,
         { headers }
       );

@@ -1,23 +1,23 @@
-import { Suspense } from "react";
-import { ThemeSwitcher } from "@/components/molecules";
-import { PaliWord, Photo, Profile } from "@/components/organisms";
+import { Suspense } from 'react';
+import { ThemeSwitcher } from '@/components/molecules';
+import { PaliWord, Photo, Profile } from '@/components/organisms';
 
 export default function Page() {
   return (
     <main
-      className={`flex min-h-screen max-h-screen flex-col items-center justify-between p-4`}
+      className={`flex max-h-screen min-h-screen flex-col items-center justify-between p-4`}
     >
-      <div className="w-full flex justify-between">
+      <div className='flex w-full justify-between'>
         <ThemeSwitcher />
-        <PaliWord className="m-3" />
+        <PaliWord className='m-3' />
       </div>
-      <div className="flex grow justify-center items-center w-full">
+      <div className='flex w-full grow items-center justify-center'>
         <Suspense fallback={<Photo.Loading />}>
           {/* @ts-expect-error Server Component */}
           <Photo />
         </Suspense>
       </div>
-      <Profile className="w-full" />
+      <Profile className='w-full' />
     </main>
   );
 }

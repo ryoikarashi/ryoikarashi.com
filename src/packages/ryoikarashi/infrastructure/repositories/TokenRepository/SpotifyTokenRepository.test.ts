@@ -1,17 +1,17 @@
-import * as admin from "firebase-admin";
-import axios from "axios";
-import { stringify } from "query-string";
-import { SpotifyTokenRepository } from "./SpotifyTokenRepository";
-import { HTTPTokenResponse, IOAuthConfig } from "./ITokenRepository";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+import * as admin from 'firebase-admin';
+import axios from 'axios';
+import { stringify } from 'query-string';
+import { SpotifyTokenRepository } from './SpotifyTokenRepository';
+import { HTTPTokenResponse, IOAuthConfig } from './ITokenRepository';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   RefreshToken,
   AccessToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 // create mocks
-jest.mock("axios");
-jest.mock("firebase-admin", () => ({
+jest.mock('axios');
+jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn().mockReturnThis(),
   firestore: jest.fn(() => ({
     collection: jest.fn().mockReturnThis(),
@@ -30,17 +30,17 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Test SpotifyTokenRepository", () => {
+describe('Test SpotifyTokenRepository', () => {
   const oauthConfig: IOAuthConfig = {
-    authorizationCode: "authorization_code",
-    clientId: "client_id",
-    clientSecret: "client_secret",
-    redirectUri: "https://example.com/callback",
+    authorizationCode: 'authorization_code',
+    clientId: 'client_id',
+    clientSecret: 'client_secret',
+    redirectUri: 'https://example.com/callback',
   };
 
   const httpTokenResponse: HTTPTokenResponse = {
-    access_token: "access_token_1",
-    refresh_token: "refresh_token_1",
+    access_token: 'access_token_1',
+    refresh_token: 'refresh_token_1',
   };
 
   const token = new Token(
@@ -48,30 +48,30 @@ describe("Test SpotifyTokenRepository", () => {
     RefreshToken.of(httpTokenResponse.refresh_token)
   );
 
-  const collectionName = "spotify_tokens";
-  const docPath = "ryoikarashi-com";
+  const collectionName = 'spotify_tokens';
+  const docPath = 'ryoikarashi-com';
 
-  describe("getTokenByAuthorizationCode", () => {
-    it("it has been called with appropriate params", async () => {
+  describe('getTokenByAuthorizationCode', () => {
+    it('it has been called with appropriate params', async () => {
       const repository = new SpotifyTokenRepository(
         admin.initializeApp().firestore(),
         collectionName,
         docPath
       );
       jest
-        .spyOn(axios, "post")
+        .spyOn(axios, 'post')
         .mockResolvedValueOnce({ data: httpTokenResponse });
       await repository.getTokenByAuthorizationCode(axios, oauthConfig);
-      const tokenEndpoint = "https://accounts.spotify.com/api/token";
+      const tokenEndpoint = 'https://accounts.spotify.com/api/token';
       const params = {
         code: oauthConfig.authorizationCode,
-        grant_type: "authorization_code",
+        grant_type: 'authorization_code',
         redirect_uri: oauthConfig.redirectUri,
       };
       const requestConfig = {
         headers: {
           Authorization: `Basic ${oauthConfig.basicAuthorizationCode}`,
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       };
 
@@ -83,14 +83,14 @@ describe("Test SpotifyTokenRepository", () => {
       );
     });
 
-    it("returns a valid token", async () => {
+    it('returns a valid token', async () => {
       const repository = new SpotifyTokenRepository(
         admin.initializeApp().firestore(),
         collectionName,
         docPath
       );
       jest
-        .spyOn(axios, "post")
+        .spyOn(axios, 'post')
         .mockResolvedValueOnce({ data: httpTokenResponse });
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
@@ -99,14 +99,14 @@ describe("Test SpotifyTokenRepository", () => {
       ).resolves.toEqual(token);
     });
 
-    it("throws an exception", async () => {
+    it('throws an exception', async () => {
       const db = admin.initializeApp().firestore();
       const repository = new SpotifyTokenRepository(
         db,
         collectionName,
         docPath
       );
-      jest.spyOn(axios, "post").mockRejectedValueOnce(new Error());
+      jest.spyOn(axios, 'post').mockRejectedValueOnce(new Error());
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
       await expect(
@@ -115,24 +115,24 @@ describe("Test SpotifyTokenRepository", () => {
     });
   });
 
-  describe("refreshToken", () => {
+  describe('refreshToken', () => {
     const newHttpTokenResponse = {
-      access_token: "new_access_token",
-      refresh_token: "new_refresh_token",
+      access_token: 'new_access_token',
+      refresh_token: 'new_refresh_token',
     };
     const newToken = new Token(
       AccessToken.of(newHttpTokenResponse.access_token),
       RefreshToken.of(newHttpTokenResponse.refresh_token)
     );
 
-    it("it has been called with appropriate params", async () => {
+    it('it has been called with appropriate params', async () => {
       const params = {
-        grant_type: "refresh_token",
+        grant_type: 'refresh_token',
         refresh_token: httpTokenResponse.refresh_token,
       };
       const requestConfig = {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Basic ${oauthConfig.basicAuthorizationCode}`,
         },
       };
@@ -143,10 +143,10 @@ describe("Test SpotifyTokenRepository", () => {
         docPath
       );
       jest
-        .spyOn(axios, "post")
+        .spyOn(axios, 'post')
         .mockResolvedValueOnce({ data: newHttpTokenResponse });
       await repository.refreshToken(axios, token, oauthConfig);
-      const tokenEndpoint = "https://accounts.spotify.com/api/token";
+      const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
@@ -156,14 +156,14 @@ describe("Test SpotifyTokenRepository", () => {
       );
     });
 
-    it("returns a new token", async () => {
+    it('returns a new token', async () => {
       const repository = new SpotifyTokenRepository(
         admin.initializeApp().firestore(),
         collectionName,
         docPath
       );
       jest
-        .spyOn(axios, "post")
+        .spyOn(axios, 'post')
         .mockResolvedValueOnce({ data: newHttpTokenResponse });
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
       await expect(
@@ -171,13 +171,13 @@ describe("Test SpotifyTokenRepository", () => {
       ).resolves.toEqual(newToken);
     });
 
-    it("throws an exception", async () => {
+    it('throws an exception', async () => {
       const repository = new SpotifyTokenRepository(
         admin.initializeApp().firestore(),
         collectionName,
         docPath
       );
-      jest.spyOn(axios, "post").mockRejectedValueOnce(new Error());
+      jest.spyOn(axios, 'post').mockRejectedValueOnce(new Error());
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
       await expect(

@@ -1,16 +1,16 @@
-import * as admin from "firebase-admin";
-import { AxiosStatic } from "axios";
+import * as admin from 'firebase-admin';
+import { AxiosStatic } from 'axios';
 import {
   HTTPTokenResponse,
   IOAuthConfig,
   ITokenRepository,
-} from "./ITokenRepository";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+} from './ITokenRepository';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
-import { getRootCollectionName } from "@/utils";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { getRootCollectionName } from '@/utils';
 
 class GenericTokenRepository extends ITokenRepository {
   constructor(
@@ -26,8 +26,8 @@ class GenericTokenRepository extends ITokenRepository {
   ): Promise<Token> {
     return Promise.resolve(
       new Token(
-        AccessToken.of("dummy_access_token"),
-        RefreshToken.of("dummy_refresh_token")
+        AccessToken.of('dummy_access_token'),
+        RefreshToken.of('dummy_refresh_token')
       )
     );
   }
@@ -38,16 +38,16 @@ class GenericTokenRepository extends ITokenRepository {
   ): Promise<Token> {
     return Promise.resolve(
       new Token(
-        AccessToken.of("dummy_new_access_token"),
-        RefreshToken.of("dummy_new_refresh_token")
+        AccessToken.of('dummy_new_access_token'),
+        RefreshToken.of('dummy_new_refresh_token')
       )
     );
   }
 }
 
 // create mocks
-jest.mock("axios");
-jest.mock("firebase-admin", () => ({
+jest.mock('axios');
+jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn().mockReturnThis(),
   firestore: jest.fn(() => ({
     collection: jest.fn().mockReturnThis(),
@@ -66,13 +66,13 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Test GenericTokenRepository", () => {
-  const collectionName = "dummy-collection-name";
-  const docPath = "dummy-doc-path";
+describe('Test GenericTokenRepository', () => {
+  const collectionName = 'dummy-collection-name';
+  const docPath = 'dummy-doc-path';
 
   const httpTokenResponse: HTTPTokenResponse = {
-    access_token: "access_token_1",
-    refresh_token: "refresh_token_1",
+    access_token: 'access_token_1',
+    refresh_token: 'refresh_token_1',
   };
 
   const token = new Token(
@@ -82,9 +82,9 @@ describe("Test GenericTokenRepository", () => {
 
   const invalidToken = new Token(AccessToken.of(null), RefreshToken.of(null));
 
-  describe("storeAccessTokenAndMaybeRefreshToken", () => {
-    it("creates a new doc for tokens on firestore", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+  describe('storeAccessTokenAndMaybeRefreshToken', () => {
+    it('creates a new doc for tokens on firestore', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -114,8 +114,8 @@ describe("Test GenericTokenRepository", () => {
       expect(firestore.doc(docPath).update).toHaveBeenCalledTimes(0);
     });
 
-    it("updates an existing doc for tokens on firestore", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+    it('updates an existing doc for tokens on firestore', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -147,9 +147,9 @@ describe("Test GenericTokenRepository", () => {
     });
   });
 
-  describe("getFirstToken", () => {
-    it("returns a valid token", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+  describe('getFirstToken', () => {
+    it('returns a valid token', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -173,8 +173,8 @@ describe("Test GenericTokenRepository", () => {
       expect(firestore.doc(docPath).get).toHaveBeenCalledTimes(1);
     });
 
-    it("returns an invalid token", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+    it('returns an invalid token', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({

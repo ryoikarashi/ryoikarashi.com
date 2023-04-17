@@ -1,9 +1,9 @@
-import { ILLMService } from "./ILLMService";
-import { ITrackRepository } from "@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository";
-import { ILLMRepository } from "@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ILLMRepository";
-import { GetCompletion } from "@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ParameterObjects/GetCompletion";
-import { LLM } from "@/packages/ryoikarashi/domain/models/LLM/LLM";
-import { Completion } from "@/packages/ryoikarashi/domain/models/LLM/ValueObjects";
+import { ILLMService } from './ILLMService';
+import { ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
+import { ILLMRepository } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ILLMRepository';
+import { GetCompletion } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/ParameterObjects/GetCompletion';
+import { LLM } from '@/packages/ryoikarashi/domain/models/LLM/LLM';
+import { Completion } from '@/packages/ryoikarashi/domain/models/LLM/ValueObjects';
 
 export class LLMService implements ILLMService {
   private readonly _llmRepo: ILLMRepository;
@@ -22,7 +22,7 @@ export class LLMService implements ILLMService {
     }
     const prompt = `What does make the song great, ${lastPlayedTrack.name.value()} by ${lastPlayedTrack.artists
       .map((artist) => artist.value())
-      .join(",")}?`;
+      .join(',')}?`;
     const getCompletionParameter = new GetCompletion(prompt);
     const completion = await this._llmRepo.getCompletion(
       getCompletionParameter

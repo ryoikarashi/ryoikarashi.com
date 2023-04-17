@@ -1,5 +1,5 @@
-import { SimpleCircleButton } from "@/components/atoms/Button/SimpleCircleButton";
-import { HTMLElementProps } from "@/components/atoms";
+import { SimpleCircleButton } from '@/components/atoms/Button/SimpleCircleButton';
+import { HTMLElementProps } from '@/components/atoms';
 
 export type ButtonProps = HTMLElementProps<HTMLButtonElement> & {
   label?: string;
@@ -7,7 +7,7 @@ export type ButtonProps = HTMLElementProps<HTMLButtonElement> & {
 
 function Button(props: ButtonProps) {
   return (
-    <button {...props} className={`${props.className} outline-none p-6`}>
+    <button {...props} className={`${props.className} p-6 outline-none`}>
       {props.children}
     </button>
   );

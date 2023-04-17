@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { PropsWithChildren } from "react";
-import { useStore } from "@/stores";
-import { Link } from "@/components/atoms";
+import { PropsWithChildren } from 'react';
+import { useStore } from '@/stores';
+import { Link } from '@/components/atoms';
 
 export function WordLink({ children }: PropsWithChildren) {
   const isModalOpen = useStore((state) => state.isModalOpen);
@@ -11,7 +11,7 @@ export function WordLink({ children }: PropsWithChildren) {
   return (
     <>
       <Link
-        href=""
+        href=''
         noUnderline
         onClick={() => {
           updateModal(!isModalOpen);

@@ -1,5 +1,5 @@
 describe('Todo', () => {
-    it('should be true', () => {
-        expect(true);
-    });
+  it('should be true', () => {
+    expect(true);
+  });
 });

@@ -1,4 +1,4 @@
-export * from "./ThemeSwitcher";
-import List from "./List";
+export * from './ThemeSwitcher';
+import List from './List';
 export { List };
-export * from "./Modal";
+export * from './Modal';

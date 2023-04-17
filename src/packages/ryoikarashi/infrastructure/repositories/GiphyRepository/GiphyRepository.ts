@@ -1,11 +1,11 @@
-import { GiphyFetch } from "@giphy/js-fetch-api";
-import { IGiphyRepository } from "./IGiphyRepository";
-import { Giphy } from "@/packages/ryoikarashi/domain/models/Giphy/Giphy";
-import { Src } from "@/packages/ryoikarashi/domain/models/Giphy/ValueObjects";
+import { GiphyFetch } from '@giphy/js-fetch-api';
+import { IGiphyRepository } from './IGiphyRepository';
+import { Giphy } from '@/packages/ryoikarashi/domain/models/Giphy/Giphy';
+import { Src } from '@/packages/ryoikarashi/domain/models/Giphy/ValueObjects';
 
 export class GiphyRepository implements IGiphyRepository {
   private readonly _fallbackSearchLimit = 20;
-  private readonly _fallbackSearchTerm = "funny kids";
+  private readonly _fallbackSearchTerm = 'funny kids';
   private readonly _client: GiphyFetch;
 
   constructor(client: GiphyFetch) {

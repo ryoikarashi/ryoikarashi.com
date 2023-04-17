@@ -1,23 +1,23 @@
-import * as admin from "firebase-admin";
-import axios from "axios";
-import { SpotifyTrackRepository } from "./SpotifyTrackRepository";
-import { getRootCollectionName } from "@/utils";
+import * as admin from 'firebase-admin';
+import axios from 'axios';
+import { SpotifyTrackRepository } from './SpotifyTrackRepository';
+import { getRootCollectionName } from '@/utils';
 import {
   Track,
   TrackPlainObj,
-} from "@/packages/ryoikarashi/domain/models/Track/Track";
+} from '@/packages/ryoikarashi/domain/models/Track/Track';
 import {
   Link,
   Name,
   Artist,
   IsPlaying,
   Explanation,
-} from "@/packages/ryoikarashi/domain/models/Track/ValueObjects";
-import { AccessToken } from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Track/ValueObjects';
+import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 // create mocks
-jest.mock("axios");
-jest.mock("firebase-admin", () => ({
+jest.mock('axios');
+jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn().mockReturnThis(),
   firestore: jest.fn(() => ({
     collection: jest.fn().mockReturnThis(),
@@ -35,16 +35,16 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Test SpotifyTrackRepository", () => {
-  const collectionName = "spotify_last_listening_track";
-  const docPath = "ryoikarashi-com";
+describe('Test SpotifyTrackRepository', () => {
+  const collectionName = 'spotify_last_listening_track';
+  const docPath = 'ryoikarashi-com';
 
   const trackPlainObj: TrackPlainObj = {
-    artists: ["artist"],
+    artists: ['artist'],
     isPlaying: false,
-    link: "https://example.com/track",
-    name: "track name",
-    explanation: "",
+    link: 'https://example.com/track',
+    name: 'track name',
+    explanation: '',
   };
 
   const track = new Track(
@@ -60,12 +60,12 @@ describe("Test SpotifyTrackRepository", () => {
     [],
     IsPlaying.of(null),
     Link.of(null),
-    Explanation.of("")
+    Explanation.of('')
   );
 
-  describe("storeLastPlayedTrack", () => {
-    it("creates a new doc for track on firestore", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+  describe('storeLastPlayedTrack', () => {
+    it('creates a new doc for track on firestore', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -95,8 +95,8 @@ describe("Test SpotifyTrackRepository", () => {
       expect(firestore.doc(docPath).update).toHaveBeenCalledTimes(0);
     });
 
-    it("updates an existing doc for track on firestore", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+    it('updates an existing doc for track on firestore', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -127,9 +127,9 @@ describe("Test SpotifyTrackRepository", () => {
     });
   });
 
-  describe("getLastPlayedTrack", () => {
-    it("returns a valid track", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+  describe('getLastPlayedTrack', () => {
+    it('returns a valid track', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -155,8 +155,8 @@ describe("Test SpotifyTrackRepository", () => {
       expect(firestore.doc(docPath).get).toHaveBeenCalledTimes(1);
     });
 
-    it("returns an invalid track", async () => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+    it('returns an invalid track', async () => {
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -186,7 +186,7 @@ describe("Test SpotifyTrackRepository", () => {
     });
   });
 
-  describe("getCurrentlyListeningTrack", () => {
+  describe('getCurrentlyListeningTrack', () => {
     const httpTrackResponse200 = {
       status: 200,
       data: {
@@ -204,11 +204,11 @@ describe("Test SpotifyTrackRepository", () => {
       status: 204,
       data: null,
     };
-    const accessToken = AccessToken.of("access_token");
+    const accessToken = AccessToken.of('access_token');
     const callback = async () => Promise.resolve(accessToken);
 
     beforeEach(() => {
-      jest.spyOn(admin, "firestore").mockImplementation((): any => ({
+      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -220,8 +220,8 @@ describe("Test SpotifyTrackRepository", () => {
       }));
     });
 
-    it("sends a request to spotify for retrieving a currently listening track with appropriate params", async () => {
-      jest.spyOn(axios, "get").mockResolvedValue(httpTrackResponse200);
+    it('sends a request to spotify for retrieving a currently listening track with appropriate params', async () => {
+      jest.spyOn(axios, 'get').mockResolvedValue(httpTrackResponse200);
       const firestore = admin.initializeApp().firestore();
       const repository = new SpotifyTrackRepository(
         firestore,
@@ -234,7 +234,7 @@ describe("Test SpotifyTrackRepository", () => {
           Authorization: `Bearer ${accessToken.value()}`,
         },
       };
-      const endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
+      const endpoint = 'https://api.spotify.com/v1/me/player/currently-playing';
 
       await expect(
         repository.getCurrentlyListeningTrack(accessToken, callback)
@@ -246,8 +246,8 @@ describe("Test SpotifyTrackRepository", () => {
       );
     });
 
-    it("returns a valid track", async () => {
-      jest.spyOn(axios, "get").mockResolvedValue(httpTrackResponse200);
+    it('returns a valid track', async () => {
+      jest.spyOn(axios, 'get').mockResolvedValue(httpTrackResponse200);
       const firestore = admin.initializeApp().firestore();
       const repository = new SpotifyTrackRepository(
         firestore,
@@ -261,8 +261,8 @@ describe("Test SpotifyTrackRepository", () => {
       ).resolves.toEqual(track);
     });
 
-    it("returns a last played track", async () => {
-      jest.spyOn(axios, "get").mockResolvedValue(httpTrackResponse204);
+    it('returns a last played track', async () => {
+      jest.spyOn(axios, 'get').mockResolvedValue(httpTrackResponse204);
       const firestore = admin.initializeApp().firestore();
       const repository = new SpotifyTrackRepository(
         firestore,
@@ -276,9 +276,9 @@ describe("Test SpotifyTrackRepository", () => {
       ).resolves.toEqual(track);
     });
 
-    it("refreshes a token and stores the track and returns a token", async () => {
+    it('refreshes a token and stores the track and returns a token', async () => {
       jest
-        .spyOn(axios, "get")
+        .spyOn(axios, 'get')
         .mockRejectedValueOnce(new Error())
         .mockResolvedValueOnce(httpTrackResponse200);
       const firestore = admin.initializeApp().firestore();

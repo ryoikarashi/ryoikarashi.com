@@ -1,40 +1,40 @@
-import { Photo } from "./Photo";
-import { Url, Width, Height } from "./ValueObjects";
+import { Photo } from './Photo';
+import { Url, Width, Height } from './ValueObjects';
 
-describe("Test Photo Entity", () => {
+describe('Test Photo Entity', () => {
   const photo = new Photo(
-    Url.of("https://example.com/a-path-to-photo"),
+    Url.of('https://example.com/a-path-to-photo'),
     Width.of(100),
     Height.of(100)
   );
 
   const expectedPlainObj = {
-    width: "100",
-    height: "100",
-    url: "https://example.com/a-path-to-photo",
+    width: '100',
+    height: '100',
+    url: 'https://example.com/a-path-to-photo',
   };
 
-  it("returns a correct plainObj", () => {
+  it('returns a correct plainObj', () => {
     expect(photo.toPlainObj()).toStrictEqual(expectedPlainObj);
   });
 
-  it("returns a correct JSON stringified plainObj", () => {
+  it('returns a correct JSON stringified plainObj', () => {
     expect(photo.toJson()).toStrictEqual(JSON.stringify(expectedPlainObj));
   });
 
-  it("is a valid token", () => {
+  it('is a valid token', () => {
     expect(photo.isValid()).toStrictEqual(true);
   });
 
-  it("returns a corresponding value object", () => {
+  it('returns a corresponding value object', () => {
     expect(photo.url).toStrictEqual(
-      Url.of("https://example.com/a-path-to-photo")
+      Url.of('https://example.com/a-path-to-photo')
     );
   });
 
-  const invalidPhoto = new Photo(Url.of(""), Width.of(0), Height.of(0));
+  const invalidPhoto = new Photo(Url.of(''), Width.of(0), Height.of(0));
 
-  it("is an invalid photo", () => {
+  it('is an invalid photo', () => {
     expect(invalidPhoto.isValid()).toStrictEqual(false);
   });
 });

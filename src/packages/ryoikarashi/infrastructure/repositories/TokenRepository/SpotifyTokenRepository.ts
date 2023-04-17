@@ -1,11 +1,11 @@
-import { AxiosStatic } from "axios";
-import { stringify } from "query-string";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+import { AxiosStatic } from 'axios';
+import { stringify } from 'query-string';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
-import { IOAuthConfig, ITokenRepository } from "./ITokenRepository";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { IOAuthConfig, ITokenRepository } from './ITokenRepository';
 
 export class SpotifyTokenRepository extends ITokenRepository {
   public constructor(
@@ -22,10 +22,10 @@ export class SpotifyTokenRepository extends ITokenRepository {
   ): Promise<Token> {
     const headers = {
       Authorization: `Basic ${config.basicAuthorizationCode}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
     const params = {
-      grant_type: "authorization_code",
+      grant_type: 'authorization_code',
       code: config.authorizationCode,
       redirect_uri: config.redirectUri,
     };
@@ -33,7 +33,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
-      "https://accounts.spotify.com/api/token",
+      'https://accounts.spotify.com/api/token',
       stringify(params),
       { headers }
     );
@@ -51,18 +51,18 @@ export class SpotifyTokenRepository extends ITokenRepository {
   ): Promise<Token> {
     const headers = {
       Authorization: `Basic ${config.basicAuthorizationCode}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
 
     const payload = {
-      grant_type: "refresh_token",
+      grant_type: 'refresh_token',
       refresh_token: expiredToken.refreshToken.value(),
     };
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
-      "https://accounts.spotify.com/api/token",
+      'https://accounts.spotify.com/api/token',
       stringify(payload),
       { headers }
     );

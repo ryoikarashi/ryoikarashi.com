@@ -1,14 +1,14 @@
-import { AxiosStatic } from "axios";
-import { ITokenService } from "./ITokenService";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+import { AxiosStatic } from 'axios';
+import { ITokenService } from './ITokenService';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 import {
   IOAuthConfig,
   ITokenRepository,
-} from "@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository";
+} from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
 
 export class TokenService implements ITokenService {
   private readonly _http: AxiosStatic;

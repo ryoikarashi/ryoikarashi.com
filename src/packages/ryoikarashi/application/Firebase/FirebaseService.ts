@@ -1,5 +1,5 @@
-import admin from "firebase-admin";
-import { isProduction } from "@/utils";
+import admin from 'firebase-admin';
+import { isProduction } from '@/utils';
 
 export interface FirebaseAdminAppConfig {
   databaseURL: string;
@@ -27,7 +27,7 @@ export class FirebaseService {
       admin.initializeApp({
         databaseURL: this._databaseURL,
         credential: admin.credential.cert({
-          privateKey: this._privateKey.replace(/\\n/g, "\n"), // without this replacing leads to a malformed token
+          privateKey: this._privateKey.replace(/\\n/g, '\n'), // without this replacing leads to a malformed token
           clientEmail: this._clientEmail,
           projectId: this._projectId,
         }),

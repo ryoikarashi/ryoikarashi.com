@@ -1,11 +1,11 @@
-import { AxiosStatic } from "axios";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
-import * as admin from "firebase-admin";
-import { getRootCollectionName } from "@/utils";
+import { AxiosStatic } from 'axios';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
+import * as admin from 'firebase-admin';
+import { getRootCollectionName } from '@/utils';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
 
 export interface IOAuthConfig {
   clientId: string;

@@ -1,1 +1,1 @@
-export * from "./useThemeToggler";
+export * from './useThemeToggler';

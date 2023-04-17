@@ -1,22 +1,22 @@
-import { NextResponse } from "next/server";
-import axios from "axios";
-import { Configuration, OpenAIApi } from "openai";
-import { LLM, LLMConfig } from "@/packages/ryoikarashi/domain/models";
-import { FirebaseService } from "@/packages/ryoikarashi/application/Firebase/FirebaseService";
-import { SpotifyTrackRepository } from "@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/SpotifyTrackRepository";
-import { LLMRepository } from "@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/LLMRepository";
-import { LLMService } from "@/packages/ryoikarashi/application/LLM/LLMService";
+import { NextResponse } from 'next/server';
+import axios from 'axios';
+import { Configuration, OpenAIApi } from 'openai';
+import { LLM, LLMConfig } from '@/packages/ryoikarashi/domain/models';
+import { FirebaseService } from '@/packages/ryoikarashi/application/Firebase/FirebaseService';
+import { SpotifyTrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/SpotifyTrackRepository';
+import { LLMRepository } from '@/packages/ryoikarashi/infrastructure/repositories/LLMRepository/LLMRepository';
+import { LLMService } from '@/packages/ryoikarashi/application/LLM/LLMService';
 
 const db = new FirebaseService({
-  databaseURL: process.env.FIRESTORE_DB_URL || "",
-  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY || "",
-  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || "",
-  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || "",
+  databaseURL: process.env.FIRESTORE_DB_URL || '',
+  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY || '',
+  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || '',
+  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || '',
 }).init();
 
 const llmClient = new OpenAIApi(
   new Configuration({
-    apiKey: process.env.OPENAI_API_KEY || "",
+    apiKey: process.env.OPENAI_API_KEY || '',
   })
 );
 
@@ -33,8 +33,8 @@ export async function GET() {
       new SpotifyTrackRepository(
         db,
         axios,
-        "spotify_last_listening_track",
-        "ryoikarashi-com"
+        'spotify_last_listening_track',
+        'ryoikarashi-com'
       )
     );
     const llm = await llmService.getTrackExplanation();
@@ -44,4 +44,4 @@ export async function GET() {
   }
 }
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';

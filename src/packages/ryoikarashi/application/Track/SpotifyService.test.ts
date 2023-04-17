@@ -1,40 +1,40 @@
-import { SpotifyService } from "./SpotifyService";
+import { SpotifyService } from './SpotifyService';
 import {
   Track,
   TrackPlainObj,
-} from "@/packages/ryoikarashi/domain/models/Track/Track";
+} from '@/packages/ryoikarashi/domain/models/Track/Track';
 import {
   Name,
   Artist,
   IsPlaying,
   Link,
   Explanation,
-} from "@/packages/ryoikarashi/domain/models/Track/ValueObjects";
-import { Token } from "@/packages/ryoikarashi/domain/models/Token/Token";
+} from '@/packages/ryoikarashi/domain/models/Track/ValueObjects';
+import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
   RefreshToken,
-} from "@/packages/ryoikarashi/domain/models/Token/ValueObjects";
-import { ITrackRepository } from "@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository";
-import { ITokenService } from "../Token/ITokenService";
+} from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { ITrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/ITtrackRepository';
+import { ITokenService } from '../Token/ITokenService';
 
 /////////////////////////////////////////////////////////////////////
 /// Mock SpotifyTrackRepository
 /////////////////////////////////////////////////////////////////////
 const playingTrack = new Track(
-  Name.of("track_name"),
-  [Artist.of("artist")],
+  Name.of('track_name'),
+  [Artist.of('artist')],
   IsPlaying.of(true),
-  Link.of("https://example.com/track"),
-  Explanation.of("")
+  Link.of('https://example.com/track'),
+  Explanation.of('')
 );
 
 const notPlayingTrack = new Track(
-  Name.of("track_name"),
-  [Artist.of("artist")],
+  Name.of('track_name'),
+  [Artist.of('artist')],
   IsPlaying.of(false),
-  Link.of("https://example.com/track"),
-  Explanation.of("")
+  Link.of('https://example.com/track'),
+  Explanation.of('')
 );
 
 class MockSpotifyTrackRepository implements ITrackRepository {
@@ -57,10 +57,10 @@ class MockSpotifyTrackRepository implements ITrackRepository {
 /////////////////////////////////////////////////////////////////////
 /// Mock TokenService
 /////////////////////////////////////////////////////////////////////
-const accessToken = AccessToken.of("access_token");
-const refreshToken = RefreshToken.of("refresh_token");
+const accessToken = AccessToken.of('access_token');
+const refreshToken = RefreshToken.of('refresh_token');
 const token = new Token(accessToken, refreshToken);
-const newAccessToken = AccessToken.of("new_access_token");
+const newAccessToken = AccessToken.of('new_access_token');
 
 class MockTokenService implements ITokenService {
   getAccessAndRefreshToken(): Promise<Token> {
@@ -77,18 +77,18 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Test SpotifyService", () => {
-  describe("getCurrentlyListeningTrack", () => {
+describe('Test SpotifyService', () => {
+  describe('getCurrentlyListeningTrack', () => {
     const tokenService = new MockTokenService();
     const trackRepository = new MockSpotifyTrackRepository();
     const service = new SpotifyService(trackRepository, tokenService);
 
-    it("returns a track which is being played", async () => {
+    it('returns a track which is being played', async () => {
       const mockGetAccessAndRefreshToken = jest
-        .spyOn(tokenService, "getAccessAndRefreshToken")
+        .spyOn(tokenService, 'getAccessAndRefreshToken')
         .mockResolvedValue(token);
       const mockGetCurrentlyListeningTrack = jest
-        .spyOn(trackRepository, "getCurrentlyListeningTrack")
+        .spyOn(trackRepository, 'getCurrentlyListeningTrack')
         .mockResolvedValue(playingTrack);
 
       await expect(service.getCurrentlyListeningTrack()).resolves.toEqual(
@@ -102,12 +102,12 @@ describe("Test SpotifyService", () => {
       );
     });
 
-    it("returns a track which is NOT being played", async () => {
+    it('returns a track which is NOT being played', async () => {
       const mockGetAccessAndRefreshToken = jest
-        .spyOn(tokenService, "getAccessAndRefreshToken")
+        .spyOn(tokenService, 'getAccessAndRefreshToken')
         .mockResolvedValue(token);
       const mockGetCurrentlyListeningTrack = jest
-        .spyOn(trackRepository, "getCurrentlyListeningTrack")
+        .spyOn(trackRepository, 'getCurrentlyListeningTrack')
         .mockResolvedValue(notPlayingTrack);
 
       await expect(service.getCurrentlyListeningTrack()).resolves.toEqual(

@@ -1,14 +1,14 @@
-import { IWordRepository } from "./IWordRepository";
+import { IWordRepository } from './IWordRepository';
 import {
   Word,
   WordPlainObject,
-} from "@/packages/ryoikarashi/domain/models/Word/Word";
-import { GetRandomWords } from "./ParameterObjects/GetRandomWords";
+} from '@/packages/ryoikarashi/domain/models/Word/Word';
+import { GetRandomWords } from './ParameterObjects/GetRandomWords';
 import {
   Name,
   Chapter,
   Explanation,
-} from "@/packages/ryoikarashi/domain/models/Word/ValueObjects";
+} from '@/packages/ryoikarashi/domain/models/Word/ValueObjects';
 
 export class WordRepository implements IWordRepository {
   private readonly _db: FirebaseFirestore.Firestore;

@@ -1,5 +1,5 @@
-import { api } from "@/clientApis";
-import { Text } from "@/components/atoms";
+import { api } from '@/clientApis';
+import { Text } from '@/components/atoms';
 
 export async function WordExplanation() {
   api.dictionary.randomPaliWord.get.preload();
