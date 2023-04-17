@@ -6,7 +6,7 @@ export function request<TResponse>(
 ): Promise<TResponse> {
   const baseUrl =
     process.env.NODE_ENV === "production"
-      ? "https://ryoikarashi.com"
+      ? "https://ryoikarashi-kuvqfvvqp-ryoikarashi.vercel.app"
       : "http://localhost:4000";
 
   return axios(`${baseUrl}${url}`, config)
