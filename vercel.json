@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/sounds/currently-playing",
+      "schedule": "* * * * *"
+    }
+  ]
+}
