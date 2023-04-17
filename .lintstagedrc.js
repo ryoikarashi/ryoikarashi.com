@@ -10,6 +10,12 @@ const buildPrettierCommand = (filenames) =>
     .map((f) => path.relative(process.cwd(), f))
     .join(' ')}`;
 
+const buildTestCommand = 'yarn test';
+
 module.exports = {
-  '*.{js,jsx,ts,tsx}': [buildEslintCommand, buildPrettierCommand],
+  '*.{js,jsx,ts,tsx}': [
+    buildEslintCommand,
+    buildPrettierCommand,
+    buildTestCommand,
+  ],
 };

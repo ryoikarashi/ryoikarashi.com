@@ -25,15 +25,20 @@ jest.mock('firebase-admin', () => ({
   firestore: jest.fn(),
 }));
 
-jest.mock('../../Repositories/TokenRepository/GoogleTokenRepository');
+jest.mock(
+  '../../infrastructure/repositories/TokenRepository/GoogleTokenRepository'
+);
 const MockedGoogleTokenRepository =
   GoogleTokenRepository.GoogleTokenRepository as jest.Mock;
 
-jest.mock('../../Repositories/PhotoRepository/GooglePhotosRepository', () => ({
-  GooglePhotosRepository: jest.fn(() => ({
-    getPhotosFromAlbum: jest.fn(),
-  })),
-}));
+jest.mock(
+  '../../infrastructure/repositories/PhotoRepository/GooglePhotosRepository',
+  () => ({
+    GooglePhotosRepository: jest.fn(() => ({
+      getPhotosFromAlbum: jest.fn(),
+    })),
+  })
+);
 const MockedGooglePhotosRepository =
   GooglePhotosRepository.GooglePhotosRepository as jest.Mock;
 

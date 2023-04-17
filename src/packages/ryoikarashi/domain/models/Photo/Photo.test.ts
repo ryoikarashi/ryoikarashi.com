@@ -9,8 +9,8 @@ describe('Test Photo Entity', () => {
   );
 
   const expectedPlainObj = {
-    width: '100',
-    height: '100',
+    width: 100,
+    height: 100,
     url: 'https://example.com/a-path-to-photo',
   };
 
