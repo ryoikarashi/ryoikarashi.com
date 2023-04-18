@@ -1,3 +1,4 @@
+import 'server-only';
 import { cache } from 'react';
 import { type IClientApi } from '@/clientApis/types';
 import { request } from '@/utils';

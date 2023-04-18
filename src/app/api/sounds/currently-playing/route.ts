@@ -54,11 +54,6 @@ export async function GET(): Promise<NextResponse> {
     );
 
     const track = await spotify.getCurrentlyListeningTrack();
-    console.log('(((((((((((((((((((((((((((((((((((((');
-    console.log('(((((((((((((((((((((((((((((((((((((');
-    console.log('(((((((((((((((((((((((((((((((((((((');
-    console.log('(((((((((((((((((((((((((((((((((((((');
-    console.log('track', track);
 
     await pusher.trigger(
       'spotify',
@@ -68,11 +63,6 @@ export async function GET(): Promise<NextResponse> {
 
     return NextResponse.json(track.toPlainObj());
   } catch (err) {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log(err);
     return NextResponse.json(Track.DEFAULT_PLAIN_OBJ);
   }
 }
