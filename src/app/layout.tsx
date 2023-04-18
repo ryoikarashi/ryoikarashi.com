@@ -4,6 +4,7 @@ import { type Metadata } from 'next';
 import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/app/providers';
 import { Analytics } from '@vercel/analytics/react';
+import { twMerge } from 'tailwind-merge';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,9 +22,13 @@ export default function RootLayout({
   children: ReactNode;
 }): JSX.Element {
   return (
-    <html lang='en'>
+    <html lang='en' className='h-full'>
       <body
-        className={`transition duration-300 ${englishFont.className} ${japaneseFont.className} bg-white dark:bg-black`}
+        className={twMerge(
+          'h-full overflow-hidden bg-white transition duration-300 dark:bg-black',
+          englishFont.className,
+          japaneseFont.className
+        )}
       >
         <Providers>{children}</Providers>
         <Analytics />

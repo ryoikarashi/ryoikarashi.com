@@ -14,7 +14,7 @@ export function Modal(props: PropsWithChildren): JSX.Element {
         onClose={() => {
           updateModal(false);
         }}
-        className='fixed inset-0 mx-auto flex max-h-screen min-h-screen max-w-3xl items-center justify-center'
+        className='fixed inset-0 mx-auto flex h-full max-w-3xl items-center justify-center'
       >
         <Transition.Child
           as={Fragment}
