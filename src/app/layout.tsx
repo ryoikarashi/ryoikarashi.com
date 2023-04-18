@@ -23,6 +23,20 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang='en' className='h-full'>
+      <head>
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: light)'
+          key='light-mode'
+          content='#fff'
+        />
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: dark)'
+          key='dark-mode'
+          content='#333'
+        />
+      </head>
       <body
         className={twMerge(
           'h-full overflow-hidden bg-white transition duration-300 dark:bg-black',
