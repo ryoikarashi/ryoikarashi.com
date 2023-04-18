@@ -69,7 +69,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
 
     return new Token(
       AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? null)
+      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
     );
   }
 }

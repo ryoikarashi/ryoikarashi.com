@@ -47,7 +47,7 @@ export class GoogleTokenRepository extends ITokenRepository {
 
   public async refreshToken(
     http: AxiosStatic,
-    currentToken: Token,
+    expiredToken: Token,
     config: IOAuthConfig
   ): Promise<Token> {
     const headers = {
@@ -57,7 +57,7 @@ export class GoogleTokenRepository extends ITokenRepository {
     const payload = {
       client_id: config.clientId,
       client_secret: config.clientSecret,
-      refresh_token: currentToken.refreshToken.value(),
+      refresh_token: expiredToken.refreshToken.value(),
       grant_type: 'refresh_token',
     };
 
@@ -71,7 +71,7 @@ export class GoogleTokenRepository extends ITokenRepository {
 
     return new Token(
       AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? null)
+      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
     );
   }
 }
