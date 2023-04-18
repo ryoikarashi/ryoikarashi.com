@@ -11,12 +11,7 @@ export async function request<TResponse>(
   url: string,
   config: AxiosRequestConfig = {}
 ): Promise<TResponse> {
-  const baseUrl =
-    process.env.NODE_ENV === 'production'
-      ? 'https://ryoikarashi-com.vercel.app/'
-      : 'http://localhost:4000';
-
-  return await requestClient(`${baseUrl}${url}`, config)
+  return await requestClient(url, config)
     .then((response: AxiosResponse<TResponse>) => response.data)
     .then((data) => data);
 }
