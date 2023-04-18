@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint -- --dir .",
+    "check-types": "tsc --project tsconfig.json",
     "test": "jest --passWithNoTests && NODE_ENV=production jest --passWithNoTests",
     "cypress": "cypress open",
     "prepare": "husky install"
