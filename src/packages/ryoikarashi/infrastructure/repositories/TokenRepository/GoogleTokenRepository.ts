@@ -40,8 +40,8 @@ export class GoogleTokenRepository extends ITokenRepository {
     );
 
     return new Token(
-      AccessToken.of(accessToken),
-      RefreshToken.of(refreshToken)
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 
@@ -70,8 +70,8 @@ export class GoogleTokenRepository extends ITokenRepository {
     );
 
     return new Token(
-      AccessToken.of(accessToken),
-      RefreshToken.of(refreshToken)
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 }

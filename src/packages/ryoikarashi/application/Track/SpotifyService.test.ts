@@ -42,11 +42,11 @@ class MockSpotifyTrackRepository implements ITrackRepository {
     accessToken: AccessToken,
     callback: () => Promise<AccessToken>
   ): Promise<Track> {
-    return await Promise.resolve(playingTrack);
+    return playingTrack;
   }
 
   async getLastPlayedTrack(): Promise<Track> {
-    return await Promise.resolve(playingTrack);
+    return playingTrack;
   }
 
   async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
@@ -64,11 +64,11 @@ const newAccessToken = AccessToken.of('new_access_token');
 
 class MockTokenService implements ITokenService {
   async getAccessAndRefreshToken(): Promise<Token> {
-    return await Promise.resolve(token);
+    return token;
   }
 
   async refreshAccessToken(): Promise<AccessToken> {
-    return await Promise.resolve(newAccessToken);
+    return newAccessToken;
   }
 }
 

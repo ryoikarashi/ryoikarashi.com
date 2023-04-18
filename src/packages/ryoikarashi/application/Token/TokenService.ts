@@ -46,11 +46,10 @@ export class TokenService implements ITokenService {
       await this._tokenRepo.storeAccessTokenAndMaybeRefreshToken(
         tokenIssuedByAuthorizationCode
       );
-      return await Promise.resolve(tokenIssuedByAuthorizationCode);
+
+      return tokenIssuedByAuthorizationCode;
     } catch (e) {
-      return await Promise.resolve(
-        new Token(AccessToken.of(null), RefreshToken.of(null))
-      );
+      return new Token(AccessToken.of(null), RefreshToken.of(null));
     }
   }
 

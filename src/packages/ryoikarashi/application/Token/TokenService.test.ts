@@ -28,7 +28,7 @@ const invalidToken = new Token(invalidAccessToken, invalidRefreshToken);
 
 class MockTokenRepository extends ITokenRepository {
   async getFirstToken(): Promise<Token> {
-    return await Promise.resolve(token);
+    return token;
   }
 
   async storeAccessTokenAndMaybeRefreshToken(): Promise<void> {
@@ -36,11 +36,11 @@ class MockTokenRepository extends ITokenRepository {
   }
 
   async getTokenByAuthorizationCode(): Promise<Token> {
-    return await Promise.resolve(newToken);
+    return newToken;
   }
 
   async refreshToken(): Promise<Token> {
-    return await Promise.resolve(newToken);
+    return newToken;
   }
 }
 

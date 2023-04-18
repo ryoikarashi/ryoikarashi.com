@@ -17,11 +17,9 @@ class GenericTokenRepository extends ITokenRepository {
     http: AxiosStatic,
     config: IOAuthConfig
   ): Promise<Token> {
-    return await Promise.resolve(
-      new Token(
-        AccessToken.of('dummy_access_token'),
-        RefreshToken.of('dummy_refresh_token')
-      )
+    return new Token(
+      AccessToken.of('dummy_access_token'),
+      RefreshToken.of('dummy_refresh_token')
     );
   }
 
@@ -30,11 +28,9 @@ class GenericTokenRepository extends ITokenRepository {
     expiredToken: Token,
     config: IOAuthConfig
   ): Promise<Token> {
-    return await Promise.resolve(
-      new Token(
-        AccessToken.of('dummy_new_access_token'),
-        RefreshToken.of('dummy_new_refresh_token')
-      )
+    return new Token(
+      AccessToken.of('dummy_new_access_token'),
+      RefreshToken.of('dummy_new_refresh_token')
     );
   }
 }

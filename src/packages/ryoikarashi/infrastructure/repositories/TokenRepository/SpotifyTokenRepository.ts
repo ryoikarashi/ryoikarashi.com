@@ -39,8 +39,8 @@ export class SpotifyTokenRepository extends ITokenRepository {
     );
 
     return new Token(
-      AccessToken.of(accessToken),
-      RefreshToken.of(refreshToken)
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 
@@ -67,8 +67,9 @@ export class SpotifyTokenRepository extends ITokenRepository {
       { headers }
     );
 
-    return await Promise.resolve(
-      new Token(AccessToken.of(accessToken), RefreshToken.of(refreshToken))
+    return new Token(
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 }
