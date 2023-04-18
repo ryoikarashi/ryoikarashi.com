@@ -4,6 +4,8 @@ import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/app/providers';
 import { Analytics } from '@vercel/analytics/react';
 
+export const dynamic = 'force-dynamic';
+
 const japaneseFont = Noto_Sans_JP({ weight: '300', subsets: ['latin'] });
 const englishFont = Josefin_Sans({ weight: '300', subsets: ['latin'] });
 
