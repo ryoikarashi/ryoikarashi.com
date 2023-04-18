@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { ThemeSwitcher } from '@/components/molecules';
 import { PaliWord, Photo, Profile } from '@/components/organisms';
 
@@ -12,10 +12,7 @@ export default function Page(): JSX.Element {
         <PaliWord className='m-3' />
       </div>
       <div className='flex w-full grow items-center justify-center'>
-        <Suspense fallback={<Photo.Loading />}>
-          {/* @ts-expect-error Server Component */}
-          <Photo />
-        </Suspense>
+        <Photo />
       </div>
       <Profile className='w-full' />
     </main>

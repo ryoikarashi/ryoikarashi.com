@@ -1,35 +1,31 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import { api } from '@/clientApis';
 import { type HTMLElementProps } from '@/components/atoms';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
-export type PhotoProps = HTMLElementProps<HTMLDivElement>;
-
-async function Photo(props: PhotoProps): Promise<JSX.Element> {
+async function DynamicPhoto(): Promise<JSX.Element> {
   api.photo.random.get.preload();
   const photo = await api.photo.random.get.request();
   const { base64, img } = await getPlaiceholder(photo.url);
 
   return (
-    <div {...props}>
-      <Image
-        className={`mx-auto max-w-xs border border-black dark:border-white md:max-w-lg lg:max-w-2xl`}
-        src={img.src}
-        height={img.height}
-        width={img.width}
-        priority={true}
-        placeholder='blur'
-        blurDataURL={base64}
-        alt=''
-      />
-    </div>
+    <Image
+      className={`mx-auto max-w-xs border border-black dark:border-white md:max-w-lg lg:max-w-2xl`}
+      src={img.src}
+      height={img.height}
+      width={img.width}
+      priority={true}
+      placeholder='blur'
+      blurDataURL={base64}
+      alt=''
+    />
   );
 }
 
 function Loading(): JSX.Element {
   return (
-    // <div className="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto border border-black dark:border-white mx-12">
     <div className='mx-auto w-full max-w-xs border border-black dark:border-white md:max-w-lg lg:max-w-2xl'>
       <div className='relative'>
         <div className='bg-dark/10 aspect-video w-full animate-pulse dark:bg-white/10'></div>
@@ -38,6 +34,16 @@ function Loading(): JSX.Element {
   );
 }
 
-Photo.Loading = Loading;
-
-export default Photo;
+export type PhotoProps = HTMLElementProps<HTMLDivElement>;
+export function Photo(props: PhotoProps): JSX.Element {
+  return (
+    <div {...props}>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary errorComponent={() => <div>error</div>}>
+          {/* @ts-expect-error Server Component */}
+          <DynamicPhoto />
+        </ErrorBoundary>
+      </Suspense>
+    </div>
+  );
+}

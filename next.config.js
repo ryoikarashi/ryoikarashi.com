@@ -1,7 +1,7 @@
 const { withPlaiceholder } = require('@plaiceholder/next');
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withPlaiceholder({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
@@ -13,6 +13,6 @@ const nextConfig = withPlaiceholder({
   eslint: {
     dirs: ['app', 'clientApis', 'components', 'hooks', 'packages', 'stores'],
   },
-});
+};
 
-module.exports = nextConfig;
+module.exports = withPlaiceholder(nextConfig);

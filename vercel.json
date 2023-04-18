@@ -1,0 +1,9 @@
+{
+  "regions": ["kix1"],
+  "crons": [
+    {
+      "path": "/api/sounds/currently-listening",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
