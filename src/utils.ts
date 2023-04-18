@@ -7,14 +7,19 @@ const requestClient = axios.create({
   },
 });
 
+export const getAppUrl = (): string =>
+  isProduction ? 'https://ryoikarashi-com.vercel.app' : 'http://localhost:4000';
+
+export const getAbsoluteHref = (path: string): string => {
+  const url = new URL(path, getAppUrl());
+  return url.href;
+};
+
 export async function request<TResponse>(
   url: string,
   config: AxiosRequestConfig = {}
 ): Promise<TResponse> {
-  const baseUrl =
-    process.env.NODE_ENV === 'production'
-      ? 'https://ryoikarashi-com.vercel.app/'
-      : 'http://localhost:4000';
+  const baseUrl = getAppUrl();
 
   return await requestClient(`${baseUrl}${url}`, config)
     .then((response: AxiosResponse<TResponse>) => response.data)
