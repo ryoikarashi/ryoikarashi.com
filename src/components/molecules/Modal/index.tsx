@@ -37,7 +37,9 @@ export function Modal(props: PropsWithChildren): JSX.Element {
           leaveFrom='opacity-100'
           leaveTo='opacity-0'
         >
-          <Dialog.Panel>{props.children}</Dialog.Panel>
+          <Dialog.Panel className='w-10/12 text-center'>
+            {props.children}
+          </Dialog.Panel>
         </Transition.Child>
       </Dialog>
     </Transition>
