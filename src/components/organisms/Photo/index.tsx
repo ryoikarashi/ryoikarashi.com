@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import { api } from '@/clientApis';
 import { type HTMLElementProps } from '@/components/atoms';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
 async function DynamicPhoto(): Promise<JSX.Element> {
   api.photo.random.get.preload();
@@ -39,10 +38,8 @@ export function Photo(props: PhotoProps): JSX.Element {
   return (
     <div {...props}>
       <Suspense fallback={<Loading />}>
-        <ErrorBoundary errorComponent={() => <div>error</div>}>
-          {/* @ts-expect-error Server Component */}
-          <DynamicPhoto />
-        </ErrorBoundary>
+        {/* @ts-expect-error Server Component */}
+        <DynamicPhoto />
       </Suspense>
     </div>
   );
