@@ -14,6 +14,14 @@ const englishFont = Josefin_Sans({ weight: '300', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'RYO IKARASHI',
   description: 'Hi there ✋',
+  openGraph: {
+    title: 'RYO IKARASHI',
+    description: 'Hi there ✋',
+    url: 'https://ryoikarashi.com',
+    siteName: 'RYO IKARASHI',
+    type: 'website',
+    images: ['/bg.jpeg'],
+  },
 };
 
 export default function RootLayout({
