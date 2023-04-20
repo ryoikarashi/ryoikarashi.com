@@ -1,3 +1,0 @@
-[build]
-functions = "./functions"
-command = "yarn test && yarn build:prod"

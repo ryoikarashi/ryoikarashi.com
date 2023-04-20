@@ -1,29 +1,53 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: 'class',
-    future: {
-        removeDeprecatedGapUtilities: true,
-        purgeLayersByDefault: true,
-    },
-    content: ['./src/**/*.{html,js,ts}'],
-    theme: {
-        extend: {
-            colors: {
-                black: '#111111',
-            },
-            backgroundOpacity: {
-                10: '0.1',
-            },
-            maxWidth: {
-                '1/2': '50%',
-                '9/10': '90%',
-            },
+  mode: 'jit',
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      animation: {
+        dotsDark: 'dotsDark 1s steps(5, end) infinite',
+        dotsLight: 'dotsLight 1s steps(5, end) infinite',
+      },
+      keyframes: {
+        dotsDark: {
+          '0%, 20%': {
+            color: '#333',
+            'text-shadow': '0.25em 0 0 #333, 0.5em 0 0 #333',
+          },
+          '40%': {
+            color: '#333',
+            'text-shadow': '0.25em 0 0 #333, 0.5em 0 0 #333',
+          },
+          '60%': {
+            'text-shadow': '0.25em 0 0 #fff, 0.5em 0 0 #333',
+          },
+          '80%, 100%': {
+            'text-shadow': '0.25em 0 0 #fff, 0.5em 0 0 #fff',
+          },
         },
+        dotsLight: {
+          '0%, 20%': {
+            color: '#fff',
+            'text-shadow': '0.25em 0 0 #fff, 0.5em 0 0 #fff',
+          },
+          '40%': {
+            color: '#fff',
+            'text-shadow': '0.25em 0 0 #fff, 0.5em 0 0 #fff',
+          },
+          '60%': {
+            'text-shadow': '0.25em 0 0 #333, 0.5em 0 0 #fff',
+          },
+          '80%, 100%': {
+            'text-shadow': '0.25em 0 0 #333, 0.5em 0 0 #333',
+          },
+        },
+      },
     },
-    variants: {
-        backgroundColor: ['hover'],
-        textColor: ['hover'],
-        transitionProperty: ['responsive', 'hover', 'focus'],
-        maxWidth: ['responsive', 'hover', 'focus'],
+    colors: {
+      black: '#111',
+      white: '#fff',
     },
-    plugins: [],
+  },
+  plugins: [],
 };
