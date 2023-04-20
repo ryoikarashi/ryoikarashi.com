@@ -1,7 +1,7 @@
 import { type AxiosStatic } from 'axios';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import type * as admin from 'firebase-admin';
-import { getRootCollectionName } from '@/utils';
+import { getRootCollectionName } from '@/libs/utils';
 import {
   AccessToken,
   RefreshToken,

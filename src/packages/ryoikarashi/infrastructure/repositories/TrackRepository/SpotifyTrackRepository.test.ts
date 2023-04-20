@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import axios from 'axios';
 import { SpotifyTrackRepository } from './SpotifyTrackRepository';
-import { getRootCollectionName } from '@/utils';
+import { getRootCollectionName } from '@/libs/utils';
 import {
   Track,
   type TrackPlainObj,

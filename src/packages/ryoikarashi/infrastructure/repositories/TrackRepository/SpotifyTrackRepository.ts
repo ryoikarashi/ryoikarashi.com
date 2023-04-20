@@ -14,7 +14,7 @@ import {
   Explanation,
 } from '@/packages/ryoikarashi/domain/models/Track/ValueObjects';
 import { type AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { getRootCollectionName } from '@/utils';
+import { getRootCollectionName } from '@/libs/utils';
 
 export class SpotifyTrackRepository implements ITrackRepository {
   private readonly _db: FirebaseFirestore.Firestore;

@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
-import { type HTMLElementProps, Loading, Paragraph } from '@/components/atoms';
-import { CurrentlyPlaying } from './currently-playing';
+import React from 'react';
+import { type HTMLElementProps, Paragraph } from '@/components/atoms';
 import { Links } from './links';
 import { Introduction } from './introduction';
+import { CurrentlyPlaying } from '@/components/organisms/CurrentlyPlaying';
 
 export type ProfileProps = HTMLElementProps<HTMLDivElement>;
 
@@ -18,10 +18,7 @@ export function Profile(props: ProfileProps): JSX.Element {
       </Paragraph>
 
       <Paragraph gap='sm'>
-        <Suspense fallback={<Loading.Placeholder className='mt-4' />}>
-          {/* @ts-expect-error Server Component */}
-          <CurrentlyPlaying />
-        </Suspense>
+        <CurrentlyPlaying />
       </Paragraph>
     </div>
   );

@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
-import { api } from '@/clientApis';
 import { type HTMLElementProps } from '@/components/atoms';
+import { getRandomPhoto, preloadRandomPhoto } from '@/clientApis/photo';
 
 async function DynamicPhoto(): Promise<JSX.Element> {
-  api.photo.random.get.preload();
-  const photo = await api.photo.random.get.request();
+  preloadRandomPhoto();
+  const photo = await getRandomPhoto();
   const { base64, img } = await getPlaiceholder(photo.url);
 
   return (
@@ -27,7 +27,7 @@ function Loading(): JSX.Element {
   return (
     <div className='mx-auto w-screen max-w-xs border border-black dark:border-white md:max-w-lg lg:max-w-2xl'>
       <div className='relative'>
-        <div className='bg-dark/10 aspect-video w-full animate-pulse dark:bg-white/10'></div>
+        <div className='bg-dark/10 aspect-[5/3] w-full animate-pulse dark:bg-white/10'></div>
       </div>
     </div>
   );

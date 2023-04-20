@@ -2,7 +2,7 @@ import './globals.css';
 import React, { type ReactNode } from 'react';
 import { type Metadata } from 'next';
 import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
-import { Providers } from '@/app/providers';
+import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { twMerge } from 'tailwind-merge';
 
@@ -22,14 +22,8 @@ export default function RootLayout({
   children: ReactNode;
 }): JSX.Element {
   return (
-    <html lang='en' className='h-full'>
+    <html lang='en' className='h-full' suppressHydrationWarning>
       <head>
-        <meta
-          name='theme-color'
-          media='(prefers-color-scheme: light)'
-          key='light-mode'
-          content='#fff'
-        />
         <meta
           name='theme-color'
           media='(prefers-color-scheme: dark)'

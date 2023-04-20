@@ -7,3 +7,4 @@ export * from './Divider';
 export * from './Paragraph';
 export * from './Text';
 export * from './Link';
+export * from './ErrorBoundary';

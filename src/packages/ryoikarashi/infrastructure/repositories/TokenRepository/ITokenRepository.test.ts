@@ -10,7 +10,7 @@ import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { getRootCollectionName } from '@/utils';
+import { getRootCollectionName } from '@/libs/utils';
 
 class GenericTokenRepository extends ITokenRepository {
   async getTokenByAuthorizationCode(

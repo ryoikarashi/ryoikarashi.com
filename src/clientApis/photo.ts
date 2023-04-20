@@ -1,22 +1,18 @@
 import 'server-only';
 import { cache } from 'react';
-import { type IClientApi } from '@/clientApis/types';
-import { request } from '@/utils';
+import { request } from '@/libs/utils';
 import {
   Photo,
   type PhotoPlainObj,
 } from '@/packages/ryoikarashi/domain/models';
 
-export const random: Pick<IClientApi<PhotoPlainObj>, 'get'> = {
-  get: {
-    request: cache(
-      async () =>
-        await request<PhotoPlainObj>('/api/photos/random').catch(
-          () => Photo.DEFAULT_PLAIN_OBJ
-        )
-    ),
-    preload: () => {
-      void random.get.request();
-    },
-  },
+export const getRandomPhoto = cache(
+  async () =>
+    await request<PhotoPlainObj>('/api/photos/random').catch(
+      () => Photo.DEFAULT_PLAIN_OBJ
+    )
+);
+
+export const preloadRandomPhoto = (): void => {
+  void getRandomPhoto();
 };

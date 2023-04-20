@@ -1,22 +1,25 @@
-import 'server-only';
 import { cache } from 'react';
-import { type IClientApi } from '@/clientApis/types';
-import { request } from '@/utils';
+import { request } from '@/libs/utils';
 import {
   Track,
   type TrackPlainObj,
 } from '@/packages/ryoikarashi/domain/models';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 
-export const currentlyPlaying: Pick<IClientApi<TrackPlainObj>, 'get'> = {
-  get: {
-    request: cache(
-      async () =>
-        await request<TrackPlainObj>('/api/sounds/currently-playing').catch(
-          () => Track.DEFAULT_PLAIN_OBJ
-        )
-    ),
-    preload: () => {
-      void currentlyPlaying.get.request();
-    },
-  },
+export const getCurrentlyPlaying = cache(
+  async () =>
+    await request<TrackPlainObj>('/api/sounds/currently-playing').catch(
+      () => Track.DEFAULT_PLAIN_OBJ
+    )
+);
+
+export const preloadCurrentlyPlaying = (): void => {
+  void getCurrentlyPlaying();
 };
+
+export function useGetCurrentlyPlaying(): UseQueryResult<TrackPlainObj> {
+  return useQuery<TrackPlainObj>({
+    queryKey: ['@sounds/currently-playing'],
+    queryFn: getCurrentlyPlaying,
+  });
+}

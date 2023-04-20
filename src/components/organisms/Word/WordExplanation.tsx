@@ -1,9 +1,12 @@
 import React from 'react';
-import { api } from '@/clientApis';
 import { Text } from '@/components/atoms';
+import {
+  getRandomPaliWord,
+  preloadRandomPaliWord,
+} from '@/clientApis/dictionary';
 
 export async function WordExplanation(): Promise<JSX.Element> {
-  api.dictionary.randomPaliWord.get.preload();
-  const word = await api.dictionary.randomPaliWord.get.request();
+  preloadRandomPaliWord();
+  const word = await getRandomPaliWord();
   return <Text>{word.explanation}</Text>;
 }

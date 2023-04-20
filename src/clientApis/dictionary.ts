@@ -1,22 +1,17 @@
 import 'server-only';
 import { cache } from 'react';
-import { type IClientApi } from '@/clientApis/types';
-import { request } from '@/utils';
+import { request } from '@/libs/utils';
 import {
   Word,
   type WordPlainObject,
 } from '@/packages/ryoikarashi/domain/models';
 
-export const randomPaliWord: Pick<IClientApi<WordPlainObject>, 'get'> = {
-  get: {
-    request: cache(
-      async () =>
-        await request<WordPlainObject>(
-          '/api/dictionaries/random-pali-word'
-        ).catch(() => Word.DEFAULT_PLAIN_OBJ)
-    ),
-    preload: () => {
-      void randomPaliWord.get.request();
-    },
-  },
+export const getRandomPaliWord = cache(
+  async () =>
+    await request<WordPlainObject>('/api/dictionaries/pali/random').catch(
+      () => Word.DEFAULT_PLAIN_OBJ
+    )
+);
+export const preloadRandomPaliWord = (): void => {
+  void getRandomPaliWord();
 };

@@ -11,7 +11,15 @@ const nextConfig = {
     domains: ['lh3.googleusercontent.com'],
   },
   eslint: {
-    dirs: ['app', 'clientApis', 'components', 'hooks', 'packages', 'stores'],
+    dirs: [
+      'app',
+      'clientApis',
+      'components',
+      'hooks',
+      'packages',
+      'stores',
+      'libs',
+    ],
   },
 };
 

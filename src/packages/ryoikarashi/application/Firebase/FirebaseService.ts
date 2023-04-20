@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import { isProduction } from '@/utils';
+import { isProduction } from '@/libs/utils';
 
 export interface FirebaseAdminAppConfig {
   databaseURL: string;
