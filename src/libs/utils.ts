@@ -8,7 +8,7 @@ const requestClient = axios.create({
 });
 
 export const getAppUrl = (): string =>
-  isProduction ? 'https://ryoikarashi-com.vercel.app' : 'http://localhost:4000';
+  isProduction ? 'https://ryoikarashi.com' : 'http://localhost:4000';
 
 export const getAbsoluteHref = (path: string): string => {
   const url = new URL(path, getAppUrl());
