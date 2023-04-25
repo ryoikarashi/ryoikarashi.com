@@ -26,7 +26,7 @@ export class LLM implements IDomain<LLMPlainObject> {
 
   public static DEFAULT_CONFIG: LLMConfig = {
     maxTokens: 4000,
-    model: 'davinci-3.5-turbo',
+    model: 'gpt-3.5-turbo',
     timeout: 100000,
   };
 

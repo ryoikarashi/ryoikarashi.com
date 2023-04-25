@@ -16,6 +16,7 @@ const db = new FirebaseService({
 
 const llmClient = new OpenAIApi(
   new Configuration({
+    organization: process.env.OPENAI_ORGANIZATION_ID ?? '',
     apiKey: process.env.OPENAI_API_KEY ?? '',
   })
 );
@@ -23,7 +24,7 @@ const llmClient = new OpenAIApi(
 const llmConfig: LLMConfig = {
   maxTokens: Number(process.env.LLM_MAX_TOKENS ?? LLM.DEFAULT_CONFIG.maxTokens),
   timeout: Number(process.env.LLM_TIMEOUT ?? LLM.DEFAULT_CONFIG.timeout),
-  model: process.env.LLM_MAX_MODEL ?? LLM.DEFAULT_CONFIG.model,
+  model: process.env.LLM_MODEL ?? LLM.DEFAULT_CONFIG.model,
 };
 
 export async function GET(): Promise<NextResponse> {

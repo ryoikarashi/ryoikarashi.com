@@ -20,7 +20,7 @@ export class LLMService implements ILLMService {
     if (lastPlayedTrack.explanation.isValid()) {
       return new LLM(new Completion(lastPlayedTrack.explanation.value()));
     }
-    const prompt = `What does make the song great, ${lastPlayedTrack.name.value()} by ${lastPlayedTrack.artists
+    const prompt = `What does make the song great, '${lastPlayedTrack.name.value()}' by ${lastPlayedTrack.artists
       .map((artist) => artist.value())
       .join(',')}?`;
     const getCompletionParameter = new GetCompletion(prompt);
