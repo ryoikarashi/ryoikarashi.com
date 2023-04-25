@@ -27,6 +27,7 @@ const nextConfig = {
       {
         source: '/api/:path*',
         headers: [
+          { key: 'Content-Type', value: 'application/json' },
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           {
             key: 'Access-Control-Allow-Origin',
