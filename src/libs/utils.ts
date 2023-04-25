@@ -7,8 +7,7 @@ const requestClient = axios.create({
   },
 });
 
-export const getAppUrl = (): string =>
-  isProduction ? 'https://ryoikarashi.com' : 'http://localhost:4000';
+export const getAppUrl = (): string => process.env.NEXT_PUBLIC_APP_URL ?? '';
 
 export const getAbsoluteHref = (path: string): string => {
   const url = new URL(path, getAppUrl());
