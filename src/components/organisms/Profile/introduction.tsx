@@ -8,7 +8,8 @@ export function Introduction(): JSX.Element {
       <Text size='sm' link='https://me.ryoikarashi.com'>
         Ryo Ikarashi
       </Text>
-      , a freelance software developer based in Kyoto, Japan.
+      ,<br className={'md:hidden'} /> a freelance software developer based in
+      Kyoto, Japan.
     </Text>
   );
 }

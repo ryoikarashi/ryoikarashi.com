@@ -17,7 +17,7 @@ export function Profile(props: ProfileProps): JSX.Element {
         <Links />
       </Paragraph>
 
-      <Paragraph gap='sm'>
+      <Paragraph gap='sm' className='max-w-[380px]'>
         <CurrentlyPlaying />
       </Paragraph>
     </div>

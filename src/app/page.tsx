@@ -11,10 +11,12 @@ export default function Page(): JSX.Element {
         <ThemeSwitcher />
         <PaliWord className='m-3' />
       </div>
-      <div className='flex w-full grow items-center justify-center'>
-        <Photo />
+      <div className='flex w-full grow flex-col items-center justify-center'>
+        <Photo.Frame>
+          <Photo.Image />
+        </Photo.Frame>
       </div>
-      <Profile className='w-full' />
+      <Profile className='flex w-full flex-col' />
     </main>
   );
 }
