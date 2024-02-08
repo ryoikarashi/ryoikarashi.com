@@ -10,7 +10,7 @@ function Placeholder(props: PlaceholderProps): JSX.Element {
       {...props}
       className={twMerge(
         props.className,
-        'block h-7 w-[380px] max-w-full animate-pulse bg-black/10 dark:bg-white/10'
+        'block h-8 w-[380px] max-w-full animate-pulse bg-black/10 dark:bg-white/10'
       )}
     ></span>
   );

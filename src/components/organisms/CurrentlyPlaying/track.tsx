@@ -17,7 +17,7 @@ function Marquee({
   children: ReactNode;
 }): JSX.Element {
   return isPlaying ? (
-    <ReactMarquee speed={20} pauseOnHover={true}>
+    <ReactMarquee speed={20} pauseOnHover={true} className='z-0'>
       {children}
     </ReactMarquee>
   ) : (
@@ -27,7 +27,7 @@ function Marquee({
 
 export function Track({ track }: CurrentlyPlayingProps): JSX.Element {
   return (
-    <div className='flex items-center justify-center'>
+    <div className='flex items-center'>
       <div className='mr-2 shrink-0'>
         <Text size='sm' className='mr-1'>
           ♫
@@ -47,6 +47,7 @@ export function Track({ track }: CurrentlyPlayingProps): JSX.Element {
           </Text>
           <Text size='sm'>
             {track.artists.map((artist) => artist).join(', ')}
+            <span className='mx-2'>{'//'}</span>
           </Text>
         </Marquee>
       </Link>
