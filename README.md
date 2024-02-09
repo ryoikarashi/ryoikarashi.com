@@ -1,1 +1,1 @@
-![Home](https://user-images.githubusercontent.com/5750408/233376434-ba275435-4e06-490c-bd4a-a6e149e80927.png)
+![Home](https://github.com/ryoikarashi/ryoikarashi.com/assets/5750408/783bd933-3f8c-4ac9-8bbd-65c42f837248)
