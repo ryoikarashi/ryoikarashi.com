@@ -1,7 +1,7 @@
 import './globals.css';
 import React, { type ReactNode } from 'react';
 import { type Metadata } from 'next';
-import { Josefin_Sans } from 'next/font/google';
+import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { twMerge } from 'tailwind-merge';
@@ -9,6 +9,7 @@ import { isProduction } from '@/libs';
 
 export const dynamic = 'force-dynamic';
 
+const japaneseFont = Noto_Sans_JP({ weight: '300', subsets: ['latin'] });
 const englishFont = Josefin_Sans({ weight: '300', subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -45,7 +46,8 @@ export default function RootLayout({
       <body
         className={twMerge(
           'h-full overflow-hidden bg-white transition duration-300 dark:bg-black',
-          englishFont.className
+          englishFont.className,
+          japaneseFont.className
         )}
       >
         <Providers>{children}</Providers>
