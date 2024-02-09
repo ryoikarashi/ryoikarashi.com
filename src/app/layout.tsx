@@ -7,6 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { twMerge } from 'tailwind-merge';
 import { isProduction } from '@/libs';
 
+export const dynamic = 'force-dynamic';
+
 const englishFont = Josefin_Sans({ weight: '300', subsets: ['latin'] });
 
 export const metadata: Metadata = {
