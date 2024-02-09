@@ -41,7 +41,7 @@ export class Track implements IDomain<TrackPlainObj> {
   private _explanation;
 
   public static DEFAULT_PLAIN_OBJ: TrackPlainObj = {
-    name: '',
+    name: 'No music playing right now. ',
     artists: [],
     isPlaying: false,
     link: '',
@@ -106,15 +106,5 @@ export class Track implements IDomain<TrackPlainObj> {
 
   toJson(): string {
     return JSON.stringify(this.toPlainObj());
-  }
-
-  toDefaultPlainObj(): TrackPlainObj {
-    return {
-      name: '',
-      artists: [],
-      isPlaying: false,
-      link: '',
-      explanation: '',
-    };
   }
 }
