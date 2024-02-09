@@ -13,6 +13,7 @@ export function Paragraph({
   ...rest
 }: PropsWithChildren<ParagraphProps>): JSX.Element {
   const gapClass = match(gap)
+    .with('xs', () => 'mt-1')
     .with('sm', () => 'mt-2')
     .with('md', () => 'mt-5')
     .with('lg', () => 'mt-10')

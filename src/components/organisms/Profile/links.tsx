@@ -4,7 +4,7 @@ import { List } from '@/components/molecules';
 export function Links(): JSX.Element {
   return (
     <List.TextList
-      size='sm'
+      size='xs'
       items={[
         { label: 'Sarara Software', url: 'https://sarara.software' },
         { label: 'Code', url: 'https://github.com/ryoikarashi' },

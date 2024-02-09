@@ -16,7 +16,9 @@ export function TextList({ items, size }: TextListProps): JSX.Element {
             <Text link={item.url} size={size}>
               {item.label}
             </Text>
-            {isLast ? null : <Divider dividerString='/' gap='sm' />}
+            {isLast ? null : (
+              <Divider dividerString='/' gap='sm' className='relative top-1' />
+            )}
           </Fragment>
         );
       })}

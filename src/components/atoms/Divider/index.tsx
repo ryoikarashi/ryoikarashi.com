@@ -21,6 +21,9 @@ export function Divider({
   ...rest
 }: DividerProps): JSX.Element {
   const gapClass = match([gap, direction])
+    .with(['xs', 'horizontal'], () => 'mx-1')
+    .with(['xs', 'vertical'], () => 'my-1')
+    .with(['xs', undefined], () => 'mx-1')
     .with(['sm', 'horizontal'], () => 'mx-2')
     .with(['sm', 'vertical'], () => 'my-2')
     .with(['sm', undefined], () => 'mx-2')
