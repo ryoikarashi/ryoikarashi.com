@@ -4,6 +4,9 @@ import React, { type ReactNode } from 'react';
 import ReactMarquee from 'react-fast-marquee';
 import { type TrackPlainObj } from '@/packages/ryoikarashi/domain/models';
 import { Link, Text } from '@/components/atoms';
+import { useStore } from '@/stores';
+import { useChannel, useEvent } from '@harelpls/use-pusher';
+import isEqual from 'lodash.isequal';
 
 export interface CurrentlyPlayingProps {
   track: TrackPlainObj;
@@ -30,7 +33,7 @@ function Marquee({
   );
 }
 
-export function Track({ track }: CurrentlyPlayingProps): JSX.Element {
+function TrackContent({ track }: CurrentlyPlayingProps): JSX.Element {
   return (
     <div className='flex items-center'>
       <div className='shrink-0'>
@@ -64,5 +67,31 @@ export function Track({ track }: CurrentlyPlayingProps): JSX.Element {
         </Marquee>
       </Link>
     </div>
+  );
+}
+
+export function Track({
+  initialTrack,
+}: {
+  initialTrack: TrackPlainObj;
+}): JSX.Element {
+  const track = useStore((state) => state.currentlyPlayingTrack);
+  const updateTrack = useStore((state) => state.updateCurrentlyPlayingTrack);
+
+  const channel = useChannel('spotify');
+  useEvent<TrackPlainObj>(
+    channel,
+    'fetch-currently-listening-track',
+    (newTrack) => {
+      if (newTrack !== undefined && !isEqual(track, newTrack)) {
+        updateTrack(newTrack);
+      }
+    }
+  );
+
+  return initialTrack !== undefined ? (
+    <TrackContent track={track ?? initialTrack} />
+  ) : (
+    <></>
   );
 }

@@ -6,6 +6,7 @@ export function CurrentlyPlaying(): JSX.Element {
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loading.Placeholder />}>
+        {/* @ts-expect-error Server Component */}
         <FetchTrack />
       </Suspense>
     </ErrorBoundary>

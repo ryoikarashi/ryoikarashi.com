@@ -4,7 +4,6 @@ import {
   Track,
   type TrackPlainObj,
 } from '@/packages/ryoikarashi/domain/models';
-import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 
 export const getCurrentlyPlaying = cache(
   async () =>
@@ -16,10 +15,3 @@ export const getCurrentlyPlaying = cache(
 export const preloadCurrentlyPlaying = (): void => {
   void getCurrentlyPlaying();
 };
-
-export function useGetCurrentlyPlaying(): UseQueryResult<TrackPlainObj> {
-  return useQuery<TrackPlainObj>({
-    queryKey: ['@sounds/currently-playing'],
-    queryFn: getCurrentlyPlaying,
-  });
-}
