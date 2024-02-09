@@ -19,7 +19,7 @@ export class LLMRepository implements ILLMRepository {
   public async getCompletion(
     getCompletion: GetCompletion
   ): Promise<Completion> {
-    const res = await this._client.createChatCompletion(
+    const res = await this._client.chat.completions.create(
       {
         messages: [{ role: 'user', content: getCompletion.message }],
         model: this._config.model,
@@ -30,6 +30,6 @@ export class LLMRepository implements ILLMRepository {
       }
     );
 
-    return new Completion(res.data.choices[0]?.message?.content ?? '');
+    return new Completion(res.choices[0]?.message?.content ?? '');
   }
 }

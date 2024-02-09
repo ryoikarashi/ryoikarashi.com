@@ -3,17 +3,22 @@ import NextImage from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import { type HTMLElementProps } from '@/components/atoms';
 import { getRandomPhoto, preloadRandomPhoto } from '@/clientApis/photo';
+import { getImageBuffer } from '@/libs/image';
 
 async function DynamicPhoto(): Promise<JSX.Element> {
   preloadRandomPhoto();
   const photo = await getRandomPhoto();
-  const { base64, img } = await getPlaiceholder(photo.url);
+  const imageBuffer = await getImageBuffer(photo.url);
+  const {
+    base64,
+    metadata: { width, height },
+  } = await getPlaiceholder(imageBuffer);
 
   return (
     <NextImage
-      src={img.src}
-      height={img.height}
-      width={img.width}
+      src={photo.url}
+      height={height}
+      width={width}
       priority={true}
       placeholder='blur'
       blurDataURL={base64}
@@ -43,7 +48,6 @@ export function Image(props: PhotoProps): JSX.Element {
       }`}
     >
       <Suspense fallback={<Loading />}>
-        {/* @ts-expect-error Server Component */}
         <DynamicPhoto />
       </Suspense>
     </div>

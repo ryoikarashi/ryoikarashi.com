@@ -1,5 +1,5 @@
 import { type AxiosStatic } from 'axios';
-import { stringify } from 'query-string';
+import qs from 'query-string';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
@@ -34,13 +34,13 @@ export class SpotifyTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
       'https://accounts.spotify.com/api/token',
-      stringify(params),
+      qs.stringify(params),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? null)
+      AccessToken.of(`${accessToken}` ?? null),
+      RefreshToken.of(`${refreshToken}` ?? null)
     );
   }
 
@@ -63,13 +63,13 @@ export class SpotifyTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
       'https://accounts.spotify.com/api/token',
-      stringify(payload),
+      qs.stringify(payload),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
+      AccessToken.of(`${accessToken}` ?? null),
+      RefreshToken.of(`${refreshToken}` ?? expiredToken.refreshToken.value())
     );
   }
 }

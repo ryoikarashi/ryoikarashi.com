@@ -14,13 +14,11 @@ export function PaliWord(props: PaliWordProps): JSX.Element {
         <Suspense
           fallback={<Loading.Placeholder className='!inline-block w-[100px]' />}
         >
-          {/* @ts-expect-error Server Component */}
           <Word />
         </Suspense>
       </WordLink>
       <Modal>
         <Suspense fallback={<Loading.Placeholder />}>
-          {/* @ts-expect-error Server Component */}
           <WordExplanation />
         </Suspense>
       </Modal>

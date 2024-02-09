@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 import { LLM, type LLMConfig } from '@/packages/ryoikarashi/domain/models';
 import { FirebaseService } from '@/packages/ryoikarashi/application/Firebase/FirebaseService';
 import { SpotifyTrackRepository } from '@/packages/ryoikarashi/infrastructure/repositories/TrackRepository/SpotifyTrackRepository';
@@ -14,12 +14,10 @@ const db = new FirebaseService({
   projectId: process.env.FIREBASE_ADMIN_PROJECT_ID ?? '',
 }).init();
 
-const llmClient = new OpenAIApi(
-  new Configuration({
-    organization: process.env.OPENAI_ORGANIZATION_ID ?? '',
-    apiKey: process.env.OPENAI_API_KEY ?? '',
-  })
-);
+const llmClient = new OpenAI({
+  organization: process.env.OPENAI_ORGANIZATION_ID ?? '',
+  apiKey: process.env.OPENAI_API_KEY ?? '',
+});
 
 const llmConfig: LLMConfig = {
   maxTokens: Number(process.env.LLM_MAX_TOKENS ?? LLM.DEFAULT_CONFIG.maxTokens),

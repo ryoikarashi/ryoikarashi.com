@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 import axios from 'axios';
-import { stringify } from 'query-string';
+import qs from 'query-string';
 import { GoogleTokenRepository } from './GoogleTokenRepository';
 import { type HTTPTokenResponse, type IOAuthConfig } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
@@ -77,9 +77,10 @@ describe('Test GoogleTokenRepository', () => {
       };
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        stringify(params),
+        qs.stringify(params),
         requestConfig
       );
     });
@@ -147,9 +148,10 @@ describe('Test GoogleTokenRepository', () => {
       const tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        stringify(params),
+        qs.stringify(params),
         requestConfig
       );
     });

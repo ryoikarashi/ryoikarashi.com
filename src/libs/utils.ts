@@ -4,6 +4,8 @@ const requestClient = axios.create({
   responseType: 'json',
   transitional: {
     silentJSONParsing: false,
+    forcedJSONParsing: true,
+    clarifyTimeoutError: false,
   },
 });
 

@@ -1,5 +1,5 @@
 import { type AxiosStatic } from 'axios';
-import { stringify } from 'query-string';
+import qs from 'query-string';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
@@ -35,13 +35,13 @@ export class GoogleTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
       'https://www.googleapis.com/oauth2/v4/token',
-      stringify(payload),
+      qs.stringify(payload),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? null)
+      AccessToken.of(`${accessToken}` ?? null),
+      RefreshToken.of(`${refreshToken}` ?? null)
     );
   }
 
@@ -65,13 +65,13 @@ export class GoogleTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post(
       'https://www.googleapis.com/oauth2/v4/token',
-      stringify(payload),
+      qs.stringify(payload),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(accessToken ?? null),
-      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
+      AccessToken.of(`${accessToken}` ?? null),
+      RefreshToken.of(`${refreshToken}` ?? expiredToken.refreshToken.value())
     );
   }
 }

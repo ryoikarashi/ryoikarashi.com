@@ -1,7 +1,7 @@
-import { type OpenAIApi } from 'openai';
+import type OpenAI from 'openai';
 import { type Completion } from './ValueObjects';
 import { type IDomain } from '../IDomain';
-export type Client = OpenAIApi;
+export type Client = OpenAI;
 
 export interface LLMPlainObject {
   completion: string;
