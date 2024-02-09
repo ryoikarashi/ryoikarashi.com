@@ -5,6 +5,7 @@ import { Noto_Sans_JP, Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { twMerge } from 'tailwind-merge';
+import { isProduction } from '@/libs';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,6 +13,9 @@ const japaneseFont = Noto_Sans_JP({ weight: '300', subsets: ['latin'] });
 const englishFont = Josefin_Sans({ weight: '300', subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    isProduction ? 'https://ryoikarashi.com' : 'http://localhost:4000'
+  ),
   title: 'RYO IKARASHI',
   description: 'Hi there ✋',
   openGraph: {

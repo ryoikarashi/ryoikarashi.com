@@ -15,7 +15,8 @@ export function Text({
   ...rest
 }: PropsWithChildren<TextProps>): JSX.Element {
   const textClass = match(size)
-    .with('sm', () => 'text-xs')
+    .with('xs', () => 'text-xs')
+    .with('sm', () => 'text-sm')
     .with('md', () => 'text-base')
     .with('lg', () => 'text-lg')
     .with(undefined, () => 'text-base')

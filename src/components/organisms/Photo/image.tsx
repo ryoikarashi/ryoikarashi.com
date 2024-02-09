@@ -18,13 +18,7 @@ async function DynamicPhoto(): Promise<JSX.Element> {
       placeholder='blur'
       blurDataURL={base64}
       alt=''
-      style={{
-        objectFit: 'contain',
-        position: 'relative',
-        width: '100%',
-        height: 'revert-layer',
-        maxHeight: 'revert-layer',
-      }}
+      style={{ height: '100%' }}
     />
   );
 }
