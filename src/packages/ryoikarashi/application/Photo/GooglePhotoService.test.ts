@@ -4,7 +4,10 @@ import * as GooglePhotosRepository from '@/packages/ryoikarashi/infrastructure/r
 import * as GooglePhotoService from './GooglePhotoService';
 import * as GoogleTokenRepository from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/GoogleTokenRepository';
 import * as TokenService from '../Token/TokenService';
-import { type IOAuthConfig } from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
+import {
+  type IOAuthConfig,
+  type ITokenRepository,
+} from '@/packages/ryoikarashi/infrastructure/repositories/TokenRepository/ITokenRepository';
 import {
   AlbumId,
   Url,
@@ -17,6 +20,7 @@ import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
+import { type IPhotoRepository } from '@/packages/ryoikarashi/infrastructure/repositories/PhotoRepository/IPhotoRepository';
 
 // create mocks
 jest.mock('axios');
@@ -29,7 +33,7 @@ jest.mock(
   '../../infrastructure/repositories/TokenRepository/GoogleTokenRepository'
 );
 const MockedGoogleTokenRepository =
-  GoogleTokenRepository.GoogleTokenRepository as jest.Mock;
+  GoogleTokenRepository.GoogleTokenRepository as jest.Mock<ITokenRepository>;
 
 jest.mock(
   '../../infrastructure/repositories/PhotoRepository/GooglePhotosRepository',
@@ -40,7 +44,9 @@ jest.mock(
   })
 );
 const MockedGooglePhotosRepository =
-  GooglePhotosRepository.GooglePhotosRepository as jest.Mock;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  GooglePhotosRepository.GooglePhotosRepository as jest.Mock<IPhotoRepository>;
 
 jest.mock('../Token/TokenService', () => ({
   TokenService: jest.fn(() => ({
@@ -89,7 +95,7 @@ describe('Test GooglePhotoService', () => {
 
     it('returns a random photo', async () => {
       MockedGooglePhotosRepository.mockImplementation(() => ({
-        getPhotosFromAlbum: () => data,
+        getPhotosFromAlbum: async (albumId, accessToken, callback) => data,
       }));
       const service = new GooglePhotoService.GooglePhotoService(
         new MockedGooglePhotosRepository(axios),
@@ -111,7 +117,8 @@ describe('Test GooglePhotoService', () => {
 
     it('returns a invalid photo', async () => {
       MockedGooglePhotosRepository.mockImplementation(() => ({
-        getPhotosFromAlbum: () => invalidData,
+        getPhotosFromAlbum: async (albumId, accessToken, callback) =>
+          invalidData,
       }));
       const service = new GooglePhotoService.GooglePhotoService(
         new MockedGooglePhotosRepository(axios),

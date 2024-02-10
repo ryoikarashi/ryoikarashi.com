@@ -66,14 +66,20 @@ describe('Test GenericTokenRepository', () => {
   };
 
   const token = new Token(
-    AccessToken.of(httpTokenResponse.access_token),
-    RefreshToken.of(httpTokenResponse.refresh_token)
+    AccessToken.of(httpTokenResponse.access_token ?? ''),
+    RefreshToken.of(httpTokenResponse.refresh_token ?? '')
   );
 
   const invalidToken = new Token(AccessToken.of(null), RefreshToken.of(null));
 
+  const invalidHttpTokenResponse: HTTPTokenResponse = {
+    access_token: null,
+    refresh_token: null,
+  };
+
   describe('storeAccessTokenAndMaybeRefreshToken', () => {
     it('creates a new doc for tokens on firestore', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -105,6 +111,7 @@ describe('Test GenericTokenRepository', () => {
     });
 
     it('updates an existing doc for tokens on firestore', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -139,6 +146,7 @@ describe('Test GenericTokenRepository', () => {
 
   describe('getFirstToken', () => {
     it('returns a valid token', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -164,11 +172,12 @@ describe('Test GenericTokenRepository', () => {
     });
 
     it('returns an invalid token', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
-          data: jest.fn(() => httpTokenResponse),
+          data: jest.fn(() => invalidHttpTokenResponse),
           exists: false,
         })),
       }));

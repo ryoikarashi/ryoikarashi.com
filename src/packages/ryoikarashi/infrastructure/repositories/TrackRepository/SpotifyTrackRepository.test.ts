@@ -65,6 +65,7 @@ describe('Test SpotifyTrackRepository', () => {
 
   describe('storeLastPlayedTrack', () => {
     it('creates a new doc for track on firestore', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -96,6 +97,7 @@ describe('Test SpotifyTrackRepository', () => {
     });
 
     it('updates an existing doc for track on firestore', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -129,6 +131,7 @@ describe('Test SpotifyTrackRepository', () => {
 
   describe('getLastPlayedTrack', () => {
     it('returns a valid track', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -156,6 +159,7 @@ describe('Test SpotifyTrackRepository', () => {
     });
 
     it('returns an invalid track', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
@@ -209,6 +213,7 @@ describe('Test SpotifyTrackRepository', () => {
       await Promise.resolve(accessToken);
 
     beforeEach(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),

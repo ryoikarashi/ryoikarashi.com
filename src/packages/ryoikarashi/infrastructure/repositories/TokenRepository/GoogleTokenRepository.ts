@@ -5,7 +5,11 @@ import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { type IOAuthConfig, ITokenRepository } from './ITokenRepository';
+import {
+  type HTTPTokenResponse,
+  type IOAuthConfig,
+  ITokenRepository,
+} from './ITokenRepository';
 
 export class GoogleTokenRepository extends ITokenRepository {
   public constructor(
@@ -33,15 +37,17 @@ export class GoogleTokenRepository extends ITokenRepository {
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
-    } = await http.post(
+    } = await http.post<HTTPTokenResponse>(
       'https://www.googleapis.com/oauth2/v4/token',
       qs.stringify(payload),
-      { headers }
+      {
+        headers,
+      }
     );
 
     return new Token(
-      AccessToken.of(`${accessToken}` ?? null),
-      RefreshToken.of(`${refreshToken}` ?? null)
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 
@@ -63,15 +69,15 @@ export class GoogleTokenRepository extends ITokenRepository {
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
-    } = await http.post(
+    } = await http.post<HTTPTokenResponse>(
       'https://www.googleapis.com/oauth2/v4/token',
       qs.stringify(payload),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(`${accessToken}` ?? null),
-      RefreshToken.of(`${refreshToken}` ?? expiredToken.refreshToken.value())
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
     );
   }
 }

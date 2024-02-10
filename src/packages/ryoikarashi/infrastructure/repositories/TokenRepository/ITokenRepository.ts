@@ -16,8 +16,8 @@ export interface IOAuthConfig {
 }
 
 export interface HTTPTokenResponse {
-  access_token: string | null;
-  refresh_token: string | null;
+  access_token?: string | null;
+  refresh_token?: string | null;
 }
 
 export abstract class ITokenRepository {
@@ -46,9 +46,13 @@ export abstract class ITokenRepository {
 
   public async getFirstToken(): Promise<Token> {
     const doc = await this._ref.get();
+    const data = doc.data() as
+      | undefined
+      | null
+      | { access_token: string; refresh_token: string };
     return new Token(
-      AccessToken.of(doc?.exists ? doc?.data()?.access_token ?? null : null),
-      RefreshToken.of(doc?.exists ? doc?.data()?.refresh_token ?? null : null)
+      AccessToken.of(data?.access_token ?? null),
+      RefreshToken.of(data?.refresh_token ?? null)
     );
   }
 

@@ -5,7 +5,11 @@ import {
   AccessToken,
   RefreshToken,
 } from '@/packages/ryoikarashi/domain/models/Token/ValueObjects';
-import { type IOAuthConfig, ITokenRepository } from './ITokenRepository';
+import {
+  type HTTPTokenResponse,
+  type IOAuthConfig,
+  ITokenRepository,
+} from './ITokenRepository';
 
 export class SpotifyTokenRepository extends ITokenRepository {
   public constructor(
@@ -32,15 +36,15 @@ export class SpotifyTokenRepository extends ITokenRepository {
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
-    } = await http.post(
+    } = await http.post<HTTPTokenResponse>(
       'https://accounts.spotify.com/api/token',
       qs.stringify(params),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(`${accessToken}` ?? null),
-      RefreshToken.of(`${refreshToken}` ?? null)
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? null)
     );
   }
 
@@ -61,15 +65,15 @@ export class SpotifyTokenRepository extends ITokenRepository {
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
-    } = await http.post(
+    } = await http.post<HTTPTokenResponse>(
       'https://accounts.spotify.com/api/token',
       qs.stringify(payload),
       { headers }
     );
 
     return new Token(
-      AccessToken.of(`${accessToken}` ?? null),
-      RefreshToken.of(`${refreshToken}` ?? expiredToken.refreshToken.value())
+      AccessToken.of(accessToken ?? null),
+      RefreshToken.of(refreshToken ?? expiredToken.refreshToken.value())
     );
   }
 }

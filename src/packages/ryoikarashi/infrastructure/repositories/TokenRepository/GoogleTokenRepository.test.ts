@@ -44,8 +44,8 @@ describe('Test GoogleTokenRepository', () => {
   };
 
   const token = new Token(
-    AccessToken.of(httpTokenResponse.access_token),
-    RefreshToken.of(httpTokenResponse.refresh_token)
+    AccessToken.of(httpTokenResponse.access_token ?? ''),
+    RefreshToken.of(httpTokenResponse.refresh_token ?? '')
   );
 
   const collectionName = 'google_tokens';

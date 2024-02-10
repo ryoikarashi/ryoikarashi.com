@@ -8,7 +8,17 @@
     "standard-with-typescript",
     "prettier"
   ],
+  "overrides": [
+    {
+      "files": ["*.test.ts","*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/unbound-method": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["coverage/**/*.js"],
   "parserOptions": {
+    "allowJs": true,
     "ecmaVersion": "latest",
     "tsconfigRootDir": ".",
     "project": ["./tsconfig.json"],
