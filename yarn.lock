@@ -2487,15 +2487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/query-string@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "@types/query-string@npm:6.3.0"
-  dependencies:
-    query-string: "npm:*"
-  checksum: 10c0/57901848165463e125ca22fbfbafa2032f9e39a79e2de02a0dae1071c3d6741322c2c8eaee5a8e82e6401f79cf75f6524c5a880a7e382dbac39e19f73908b1c1
-  languageName: node
-  linkType: hard
-
 "@types/range-parser@npm:*":
   version: 1.2.4
   resolution: "@types/range-parser@npm:1.2.4"
@@ -10899,17 +10890,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:*":
-  version: 8.1.0
-  resolution: "query-string@npm:8.1.0"
-  dependencies:
-    decode-uri-component: "npm:^0.4.1"
-    filter-obj: "npm:^5.1.0"
-    split-on-first: "npm:^3.0.0"
-  checksum: 10c0/36247633651c7a2aaf84a5e0f9917dea5a514259fda7d49f88e47d698439709539d541506787d13e3543545539e8924cdae5df26e85520485d905332902d0220
-  languageName: node
-  linkType: hard
-
 "query-string@npm:8.2.0":
   version: 8.2.0
   resolution: "query-string@npm:8.2.0"
@@ -11410,7 +11390,6 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@types/lodash.isequal": "npm:^4.5.8"
     "@types/node": "npm:20.11.17"
-    "@types/query-string": "npm:^6.3.0"
     "@types/react": "npm:18.2.55"
     "@types/react-dom": "npm:18.2.19"
     "@types/react-no-ssr": "npm:^1.1.7"
