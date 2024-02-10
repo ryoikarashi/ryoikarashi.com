@@ -29,6 +29,7 @@ export function Link({ noUnderline, ...props }: LinkProps): JSX.Element {
   return (
     <NextLink
       {...props}
+      replace={true}
       className={twMerge(
         props.className,
         underlineClass,
