@@ -4,7 +4,7 @@ import typeScriptESLint from '@typescript-eslint/eslint-plugin';
 import typeScriptESLintParser from '@typescript-eslint/parser';
 import nextPlugin from '@next/eslint-plugin-next';
 import reactESLint from 'eslint-plugin-react';
-import hooksESLint from 'eslint-plugin-react-hooks'
+import hooksESLint from 'eslint-plugin-react-hooks';
 import importESLint from 'eslint-plugin-import';
 import prettierESLint from 'eslint-plugin-prettier/recommended';
 import unusedImportsESLint from 'eslint-plugin-unused-imports';
@@ -16,7 +16,7 @@ export default [
   ...compat.extends('standard-with-typescript'),
   prettierESLint,
   {
-    files: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       parser: typeScriptESLintParser,
       parserOptions: {
@@ -46,35 +46,38 @@ export default [
   },
   // a workaround for import-plugin errors ref: https://github.com/import-js/eslint-plugin-import/issues/2556#issuecomment-1419518561
   {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     languageOptions: {
       parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
     },
     plugins: { import: importESLint },
     settings: {
-      "import/parsers": {
-        espree: [".js", ".cjs", ".mjs", ".jsx"],
+      'import/parsers': {
+        espree: ['.js', '.jsx'],
       },
-      "import/resolver": {
+      'import/resolver': {
         typescript: true,
-        node: true,
+        node: {
+          extensions: ['.js', '.jsx'],
+        },
       },
     },
     rules: {
-      ...importESLint.configs["recommended"].rules,
+      ...importESLint.configs.recommended.rules,
     },
   },
   {
-    files: ["**/*.test.{ts,tsx}"],
+    files: ['**/*.test.{ts,tsx}'],
     languageOptions: {
       globals: {
-        ...globals.jest
+        ...globals.jest,
       },
     },
   },
   {
-    ignores: ['.next/**/*.ts', 'coverage/*', 'next-env.d.ts'],
+    ignores: ['.next/*', 'coverage/*', 'next-env.d.ts', '.yarn/*'],
   },
 ];

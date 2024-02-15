@@ -6,10 +6,10 @@ const nextConfig = {
   swcMinify: true,
   // ref: https://github.com/vercel/next.js/issues/40183#issuecomment-1572600785
   transpilePackages: [
-    "query-string",
-    "decode-uri-component",
-    "filter-obj",
-    "split-on-first",
+    'query-string',
+    'decode-uri-component',
+    'filter-obj',
+    'split-on-first',
   ],
   experimental: {
     esmExternals: true,
@@ -52,7 +52,8 @@ const nextConfig = {
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           {
             key: 'Access-Control-Allow-Origin',
-            value: process.env.NODE_ENV === 'production' ? 'ryoikarashi.com' : '*',
+            value:
+              process.env.NODE_ENV === 'production' ? 'ryoikarashi.com' : '*',
           },
           {
             key: 'Access-Control-Allow-Methods',
