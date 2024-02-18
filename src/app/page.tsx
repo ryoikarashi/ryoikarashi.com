@@ -11,7 +11,7 @@ export default function Page(): JSX.Element {
         <ThemeSwitcher />
         <PaliWord className='m-3' />
       </div>
-      <div className='flex w-full grow flex-col items-center justify-center'>
+      <div className='flex w-full grow flex-col items-center justify-center overflow-hidden'>
         <Photo.Frame>
           <Photo.Image />
         </Photo.Frame>
