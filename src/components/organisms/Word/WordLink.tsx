@@ -13,7 +13,8 @@ export function WordLink({ children }: PropsWithChildren): JSX.Element {
       <Link
         href=''
         noUnderline
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           updateModal(!isModalOpen);
         }}
       >

@@ -1,19 +1,21 @@
 'use client';
 
-import React, { Fragment, type PropsWithChildren } from 'react';
+import React, { Fragment, type PropsWithChildren, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useStore } from '@/stores';
 
 export function Modal(props: PropsWithChildren): JSX.Element {
   const isModalOpen = useStore((state) => state.isModalOpen);
   const updateModal = useStore((state) => state.updateModal);
+  const ref = useRef(null);
 
   return (
-    <Transition show={isModalOpen} as={Fragment}>
+    <Transition show={isModalOpen} as={Fragment} ref={ref}>
       <Dialog
         onClose={() => {
           updateModal(false);
         }}
+        initialFocus={ref}
         className='fixed inset-0 mx-auto flex h-full max-w-3xl items-center justify-center'
       >
         <Transition.Child
