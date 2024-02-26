@@ -2052,21 +2052,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.22.2":
-  version: 5.22.2
-  resolution: "@tanstack/query-core@npm:5.22.2"
-  checksum: 10c0/78bd7a70f99c0f8a4d158f061aa5008ab7866cffdccb1b0d61ac89a0821fa016dfb321d9dd04939ad5e2efcd9a0d07a295cc33b538e0c9fd0520c418294d30d3
+"@tanstack/query-core@npm:5.24.1":
+  version: 5.24.1
+  resolution: "@tanstack/query-core@npm:5.24.1"
+  checksum: 10c0/b1d0363096dde7a7b021c0565b9d7f2678d5348225d2fec74f8ee97fb2c294a8de1030a6c2ceb24ffd08daecf006ec17550f1db97c74f817d4fab33295e852ef
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.22.2":
-  version: 5.22.2
-  resolution: "@tanstack/react-query@npm:5.22.2"
+"@tanstack/react-query@npm:^5.24.1":
+  version: 5.24.1
+  resolution: "@tanstack/react-query@npm:5.24.1"
   dependencies:
-    "@tanstack/query-core": "npm:5.22.2"
+    "@tanstack/query-core": "npm:5.24.1"
   peerDependencies:
     react: ^18.0.0
-  checksum: 10c0/fa5ae61aba4f0d9636f616fa7aaa278f2f96063c1943a4a2c2f33d44dd7de85aaf1d14127a9fc5616799bee64dba8e90e633edffad964ee25f6e37fa9295300d
+  checksum: 10c0/2c22e0e4fea282d77e8a54d9118b555d831ab51ec5eec2f5291a32ebd722967b8b3d41b9a8ceea7044decc3d0435c33161ebe82e6dd509277418d371a268a8f7
   languageName: node
   linkType: hard
 
@@ -4324,15 +4324,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromium-bidi@npm:0.5.9":
-  version: 0.5.9
-  resolution: "chromium-bidi@npm:0.5.9"
+"chromium-bidi@npm:0.5.10":
+  version: 0.5.10
+  resolution: "chromium-bidi@npm:0.5.10"
   dependencies:
     mitt: "npm:3.0.1"
     urlpattern-polyfill: "npm:10.0.0"
   peerDependencies:
     devtools-protocol: "*"
-  checksum: 10c0/01271448dce7cc3b670701d53f9c924401e1ff668e135f2eacd3fb033aa23b6044687212204de16be3d0aef01f9ffade3d0dc40fa12294d02a314228099fea79
+  checksum: 10c0/a0987e3899a664ff62506950c6b109ca1d6aab72083ccbd728a6fc83e79ef250221ccfa9a015cc137887edc1a6c49931818c1ae7ba39444355a0aded690056ee
   languageName: node
   linkType: hard
 
@@ -11083,30 +11083,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:22.2.0":
-  version: 22.2.0
-  resolution: "puppeteer-core@npm:22.2.0"
+"puppeteer-core@npm:22.3.0":
+  version: 22.3.0
+  resolution: "puppeteer-core@npm:22.3.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.1.0"
-    chromium-bidi: "npm:0.5.9"
+    chromium-bidi: "npm:0.5.10"
     cross-fetch: "npm:4.0.0"
     debug: "npm:4.3.4"
     devtools-protocol: "npm:0.0.1249869"
     ws: "npm:8.16.0"
-  checksum: 10c0/457936d018c23d47cb76787b360dc385d790dfba34e463475053b0f20a6c70bb8af12ae2b937420608ce9260ee5d002483f901667be37b7f761ecf6d77280eec
+  checksum: 10c0/92ae977f8ab3096328947956a79ec3e2d5ee1c64f878f2b04f8decfa9602083550c315f4eee41d7dec44cf19abd923a74c4e52ae82ab310be14dd24af34032b0
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^22.2.0":
-  version: 22.2.0
-  resolution: "puppeteer@npm:22.2.0"
+"puppeteer@npm:^22.3.0":
+  version: 22.3.0
+  resolution: "puppeteer@npm:22.3.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.1.0"
     cosmiconfig: "npm:9.0.0"
-    puppeteer-core: "npm:22.2.0"
+    puppeteer-core: "npm:22.3.0"
   bin:
     puppeteer: lib/esm/puppeteer/node/cli.js
-  checksum: 10c0/c93dd6a774c762c3b8c371f498dbb5a8ed5e234d2feab5e94a0c66f490170f9779e21e26a4c9996f85e8336c22ea164be444c3f12bb7b0a612fa9f42a4394afb
+  checksum: 10c0/84b3916f2e09c0f491e75b6d6e36dd506bf050e5d970f432b08603d6d13ffb7e0675bfbacc0213436075b8f37bab829034f251c4377ce322657311b573502ab9
   languageName: node
   linkType: hard
 
@@ -11160,14 +11160,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:8.2.0":
-  version: 8.2.0
-  resolution: "query-string@npm:8.2.0"
+"query-string@npm:9.0.0":
+  version: 9.0.0
+  resolution: "query-string@npm:9.0.0"
   dependencies:
     decode-uri-component: "npm:^0.4.1"
     filter-obj: "npm:^5.1.0"
     split-on-first: "npm:^3.0.0"
-  checksum: 10c0/ad78256d5464ec80a4c5723c5f134ec4aa341fcc71e1458d2b4d4663aa441c0b0bbe7dcdda60e7f09e81969fd725fb7d6f9ba4e77fd621e11ce4c3ecfb9cdec0
+  checksum: 10c0/6b4f2f08e5ab288088a2e5b0671be7ffb9c2de57fa12e54d8e352ce5f278a1a96235d8b8d467b8f7fea3e200f7afb7062244ac0113f291e4d6a98caeb44f235b
   languageName: node
   linkType: hard
 
@@ -11657,7 +11657,7 @@ __metadata:
     "@headlessui/react": "npm:^1.7.18"
     "@next/eslint-plugin-next": "npm:^14.1.0"
     "@plaiceholder/next": "npm:^3.0.0"
-    "@tanstack/react-query": "npm:^5.22.2"
+    "@tanstack/react-query": "npm:^5.24.1"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^14.2.1"
     "@types/eslint__js": "npm:^8.42.3"
@@ -11704,10 +11704,10 @@ __metadata:
     postcss: "npm:8.4.35"
     prettier: "npm:^3.2.5"
     prettier-plugin-tailwindcss: "npm:^0.5.11"
-    puppeteer: "npm:^22.2.0"
+    puppeteer: "npm:^22.3.0"
     pusher: "npm:^5.2.0"
     pusher-js: "npm:^8.4.0-rc2"
-    query-string: "npm:8.2.0"
+    query-string: "npm:9.0.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-error-boundary: "npm:^4.0.12"
