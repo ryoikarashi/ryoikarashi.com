@@ -6,14 +6,14 @@ export function Links(): JSX.Element {
     <List.TextList
       size='xs'
       items={[
-        { label: 'Sarara Software', url: 'https://sarara.software' },
+        { label: 'Works', url: 'https://sarara.software' },
         { label: 'Code', url: 'https://github.com/ryoikarashi' },
         { label: 'Music', url: 'https://soundcloud.com/ryo_ikarashi' },
         {
           label: 'Photos',
           url: 'https://photos.app.goo.gl/E1ReiRfaKaBrfQCw8',
         },
-        { label: 'Memo', url: 'https://m.ryoikarashi.com' },
+        { label: 'Memos', url: 'https://m.ryoikarashi.com' },
         { label: 'Email', url: 'mailto:me@ryoikarashi.com' },
       ]}
     />
