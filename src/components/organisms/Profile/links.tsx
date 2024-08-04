@@ -13,6 +13,7 @@ export function Links(): JSX.Element {
           label: 'Photos',
           url: 'https://photos.app.goo.gl/E1ReiRfaKaBrfQCw8',
         },
+        { label: 'Memorandums', url: 'https://m.ryoikarashi.com' },
         { label: 'Email', url: 'mailto:me@ryoikarashi.com' },
       ]}
     />
