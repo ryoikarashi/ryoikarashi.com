@@ -1,4 +1,4 @@
-import { type AxiosStatic } from 'axios';
+import { type AxiosStatic, isAxiosError } from 'axios';
 import { type IPhotoRepository } from './IPhotoRepository';
 import {
   type AlbumId,
@@ -84,8 +84,22 @@ export class GooglePhotosRepository implements IPhotoRepository {
           )
       );
     } catch (e) {
-      const newAccessToken = await callback();
-      return await this.getPhotosFromAlbum(albumId, newAccessToken, callback);
+      console.error(e);
+      if (isAxiosError(e) && e.response?.status === 401) {
+        console.log('Refreshing access token.');
+        try {
+          const newAccessToken = await callback();
+          return await this.getPhotosFromAlbum(
+            albumId,
+            newAccessToken,
+            callback
+          );
+        } catch (err) {
+          console.error('Failed refreshing access token.', err);
+          return [];
+        }
+      }
+      return [];
     }
   }
 }

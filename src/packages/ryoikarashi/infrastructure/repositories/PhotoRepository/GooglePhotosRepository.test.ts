@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosHeaders, isAxiosError } from 'axios';
 import {
   GooglePhotosRepository,
   type ResponseMediaItemsList,
@@ -14,6 +14,9 @@ import { AccessToken } from '@/packages/ryoikarashi/domain/models/Token/ValueObj
 
 // mock http client
 jest.mock('axios');
+(isAxiosError as jest.MockedFunction<typeof isAxiosError>).mockReturnValue(
+  true
+);
 
 // restore all mocks
 afterEach(() => {
@@ -94,10 +97,20 @@ describe('Test GooglePhotosRepository', () => {
     it('throws an exception first and catch the error and return an array of photos', async () => {
       jest
         .spyOn(axios, 'post')
-        .mockImplementationOnce(
-          async () =>
-            await Promise.reject(new Error('requested access token is expired'))
-        )
+        .mockImplementationOnce(() => {
+          const axiosError = new AxiosError('Unauthorized', '401');
+          axiosError.response = {
+            status: 401,
+            data: {},
+            statusText: 'Unauthorized',
+            config: {
+              url: '',
+              headers: new AxiosHeaders(),
+            },
+            headers: {},
+          };
+          throw axiosError;
+        })
         .mockImplementationOnce(
           async () => await Promise.resolve({ data: mediaItemsList })
         );

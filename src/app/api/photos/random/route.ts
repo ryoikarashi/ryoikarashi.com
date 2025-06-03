@@ -38,6 +38,7 @@ export async function GET(): Promise<NextResponse> {
     );
     return NextResponse.json(photo.toPlainObj());
   } catch (err) {
+    console.error(err);
     return NextResponse.json(Photo.DEFAULT_PLAIN_OBJ);
   }
 }

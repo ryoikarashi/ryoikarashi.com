@@ -23,9 +23,7 @@ export class GooglePhotoService implements IPhotoService {
     const photos = await this._photoRepo.getPhotosFromAlbum(
       albumId,
       token.accessToken,
-      async () => {
-        return await this._tokenService.refreshAccessToken();
-      }
+      this._tokenService.refreshAccessToken
     );
     const randomIndex = Math.floor(Math.random() * photos.length);
     const randomPhoto = photos?.[randomIndex];
