@@ -96,10 +96,10 @@ export class GooglePhotosRepository implements IPhotoRepository {
           );
         } catch (err) {
           console.error('Failed refreshing access token.', err);
-          return [];
+          return [new Photo(Url.of(null), Width.of(null), Height.of(null))];
         }
       }
-      return [];
+      return [new Photo(Url.of(null), Width.of(null), Height.of(null))];
     }
   }
 }
