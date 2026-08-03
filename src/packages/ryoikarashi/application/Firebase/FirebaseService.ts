@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+import { cert, getApps, initializeApp } from 'firebase-admin/app';
+import { getFirestore, type Firestore } from 'firebase-admin/firestore';
 import { isProduction } from '@/libs/utils';
 
 export interface FirebaseAdminAppConfig {
@@ -21,24 +22,23 @@ export class FirebaseService {
     this._projectId = params.projectId;
   }
 
-  public init(): FirebaseFirestore.Firestore {
-    // Initialise firebase admin with the credentials when there is no firebase app
-    if (admin.apps.length === 0) {
-      admin.initializeApp({
+  public init(): Firestore {
+    const hadNoApp = getApps().length === 0;
+
+    if (hadNoApp) {
+      initializeApp({
         databaseURL: this._databaseURL,
-        credential: admin.credential.cert({
-          privateKey: this._privateKey.replace(/\\n/g, '\n'), // without this replacing leads to a malformed token
+        credential: cert({
+          privateKey: this._privateKey.replace(/\\n/g, '\n'),
           clientEmail: this._clientEmail,
           projectId: this._projectId,
         }),
       });
     }
 
-    // create a firestore db instance
-    const db = admin.firestore();
+    const db = getFirestore();
 
-    // tweak db settings for local development
-    if (!isProduction && admin.apps.length === 0) {
+    if (!isProduction && hadNoApp) {
       db.settings({
         host: this._databaseURL,
         ssl: false,

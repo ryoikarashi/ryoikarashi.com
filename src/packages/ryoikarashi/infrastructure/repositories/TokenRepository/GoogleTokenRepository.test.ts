@@ -1,6 +1,5 @@
 import * as admin from 'firebase-admin';
 import axios from 'axios';
-import qs from 'query-string';
 import { GoogleTokenRepository } from './GoogleTokenRepository';
 import { type HTTPTokenResponse, type IOAuthConfig } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
@@ -54,7 +53,9 @@ describe('Test GoogleTokenRepository', () => {
   describe('getTokenByAuthorizationCode', () => {
     it('it has been called with appropriate params', async () => {
       const repository = new GoogleTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -77,17 +78,19 @@ describe('Test GoogleTokenRepository', () => {
       };
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        qs.stringify(params),
+        new URLSearchParams(params).toString(),
         requestConfig
       );
     });
 
     it('returns a valid token', async () => {
       const repository = new GoogleTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -102,7 +105,9 @@ describe('Test GoogleTokenRepository', () => {
     });
 
     it('throws an exception', async () => {
-      const db = admin.initializeApp().firestore();
+      const db = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new GoogleTokenRepository(db, collectionName, docPath);
       jest.spyOn(axios, 'post').mockRejectedValueOnce(new Error());
 
@@ -127,8 +132,8 @@ describe('Test GoogleTokenRepository', () => {
       const params = {
         client_id: oauthConfig.clientId,
         client_secret: oauthConfig.clientSecret,
+        refresh_token: httpTokenResponse.refresh_token ?? '',
         grant_type: 'refresh_token',
-        refresh_token: httpTokenResponse.refresh_token,
       };
       const requestConfig = {
         headers: {
@@ -137,7 +142,9 @@ describe('Test GoogleTokenRepository', () => {
       };
 
       const repository = new GoogleTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -148,17 +155,19 @@ describe('Test GoogleTokenRepository', () => {
       const tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        qs.stringify(params),
+        new URLSearchParams(params).toString(),
         requestConfig
       );
     });
 
     it('returns a new token', async () => {
       const repository = new GoogleTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -173,7 +182,9 @@ describe('Test GoogleTokenRepository', () => {
 
     it('throws an exception', async () => {
       const repository = new GoogleTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );

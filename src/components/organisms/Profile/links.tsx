@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { List } from '@/components/molecules';
 
 export function Links(): JSX.Element {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Text } from '@/components/atoms';
 import {
   getRandomPaliWord,

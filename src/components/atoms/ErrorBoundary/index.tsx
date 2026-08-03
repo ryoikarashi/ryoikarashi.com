@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type JSX } from 'react';
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
 
 function ErrorComponent(): JSX.Element {

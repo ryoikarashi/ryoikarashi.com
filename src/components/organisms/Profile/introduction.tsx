@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Text } from '@/components/atoms';
 
 export function Introduction(): JSX.Element {

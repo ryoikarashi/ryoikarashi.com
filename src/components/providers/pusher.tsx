@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type JSX } from 'react';
 import { PusherProvider as _PusherProvider } from '@harelpls/use-pusher';
 
 const config = {

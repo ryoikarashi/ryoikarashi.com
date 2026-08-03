@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type JSX } from 'react';
 import { match } from 'ts-pattern';
 import { type HTMLElementProps, type Size, Link } from '@/components/atoms';
 
@@ -27,7 +27,7 @@ export function Text({
   return (
     <span {...rest} className={`${textClass} ${className ?? ''}`}>
       {hasLink ? (
-        <Link href={link} target='_blank'>
+        <Link href={link} target='_blank' rel='noreferrer'>
           {children}
         </Link>
       ) : (

@@ -1,5 +1,6 @@
 import React, {
   type AnchorHTMLAttributes,
+  type JSX,
   type ReactNode,
   type RefAttributes,
 } from 'react';
@@ -32,7 +33,7 @@ export function Link({ noUnderline, ...props }: LinkProps): JSX.Element {
       className={twMerge(
         props.className,
         underlineClass,
-        'border-dotted border-black p-1 duration-200 hover:bg-black hover:text-white dark:border-white hover:dark:bg-white hover:dark:text-black'
+        'border-dotted border-black p-1 duration-200 hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black'
       )}
     />
   );

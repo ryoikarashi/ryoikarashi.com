@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, type JSX } from 'react';
 import { type HTMLElementProps, Loading } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
 import { WordExplanation } from './WordExplanation';
@@ -12,7 +12,7 @@ export function PaliWord(props: PaliWordProps): JSX.Element {
     <div {...props}>
       <WordLink>
         <Suspense
-          fallback={<Loading.Placeholder className='!inline-block w-[100px]' />}
+          fallback={<Loading.Placeholder className='inline-block! w-[100px]' />}
         >
           <Word />
         </Suspense>

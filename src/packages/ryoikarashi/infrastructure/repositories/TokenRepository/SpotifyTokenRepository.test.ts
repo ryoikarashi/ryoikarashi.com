@@ -1,6 +1,5 @@
 import * as admin from 'firebase-admin';
 import axios from 'axios';
-import qs from 'query-string';
 import { SpotifyTokenRepository } from './SpotifyTokenRepository';
 import { type HTTPTokenResponse, type IOAuthConfig } from './ITokenRepository';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
@@ -54,7 +53,9 @@ describe('Test SpotifyTokenRepository', () => {
   describe('getTokenByAuthorizationCode', () => {
     it('it has been called with appropriate params', async () => {
       const repository = new SpotifyTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -64,8 +65,8 @@ describe('Test SpotifyTokenRepository', () => {
       await repository.getTokenByAuthorizationCode(axios, oauthConfig);
       const tokenEndpoint = 'https://accounts.spotify.com/api/token';
       const params = {
-        code: oauthConfig.authorizationCode,
         grant_type: 'authorization_code',
+        code: oauthConfig.authorizationCode,
         redirect_uri: oauthConfig.redirectUri,
       };
       const requestConfig = {
@@ -76,17 +77,19 @@ describe('Test SpotifyTokenRepository', () => {
       };
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        qs.stringify(params),
+        new URLSearchParams(params).toString(),
         requestConfig
       );
     });
 
     it('returns a valid token', async () => {
       const repository = new SpotifyTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -101,7 +104,9 @@ describe('Test SpotifyTokenRepository', () => {
     });
 
     it('throws an exception', async () => {
-      const db = admin.initializeApp().firestore();
+      const db = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new SpotifyTokenRepository(
         db,
         collectionName,
@@ -129,7 +134,7 @@ describe('Test SpotifyTokenRepository', () => {
     it('it has been called with appropriate params', async () => {
       const params = {
         grant_type: 'refresh_token',
-        refresh_token: httpTokenResponse.refresh_token,
+        refresh_token: httpTokenResponse.refresh_token ?? '',
       };
       const requestConfig = {
         headers: {
@@ -139,7 +144,9 @@ describe('Test SpotifyTokenRepository', () => {
       };
 
       const repository = new SpotifyTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -150,17 +157,19 @@ describe('Test SpotifyTokenRepository', () => {
       const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 
       expect(admin.initializeApp).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+
       expect(axios.post).toHaveBeenCalledWith(
         tokenEndpoint,
-        qs.stringify(params),
+        new URLSearchParams(params).toString(),
         requestConfig
       );
     });
 
     it('returns a new token', async () => {
       const repository = new SpotifyTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );
@@ -175,7 +184,9 @@ describe('Test SpotifyTokenRepository', () => {
 
     it('throws an exception', async () => {
       const repository = new SpotifyTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         collectionName,
         docPath
       );

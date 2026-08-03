@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, type JSX } from 'react';
 import { Divider, Text, type Size } from '@/components/atoms';
 import { type ListProps } from '@/components/molecules/List/index';
 
@@ -8,7 +8,7 @@ export type TextListProps = ListProps & {
 
 export function TextList({ items, size }: TextListProps): JSX.Element {
   return (
-    <Fragment>
+    <>
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         return (
@@ -22,6 +22,6 @@ export function TextList({ items, size }: TextListProps): JSX.Element {
           </Fragment>
         );
       })}
-    </Fragment>
+    </>
   );
 }

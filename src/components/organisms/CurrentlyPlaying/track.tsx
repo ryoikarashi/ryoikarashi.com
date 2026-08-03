@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode, type JSX } from 'react';
 import ReactMarquee from 'react-fast-marquee';
 import { type TrackPlainObj } from '@/packages/ryoikarashi/domain/models';
 import { Link, Text } from '@/components/atoms';
@@ -20,12 +20,7 @@ function Marquee({
   children: ReactNode;
 }): JSX.Element {
   return isPlaying ? (
-    <ReactMarquee
-      speed={20}
-      pauseOnHover={true}
-      className='z-0'
-      autoFill={true}
-    >
+    <ReactMarquee speed={20} pauseOnHover className='z-0' autoFill>
       {children}
     </ReactMarquee>
   ) : (
@@ -54,6 +49,7 @@ function TrackContent({ track }: CurrentlyPlayingProps): JSX.Element {
         className={`block overflow-hidden text-ellipsis whitespace-nowrap lg:overflow-visible ${
           track.isPlaying ? 'max-w-full md:max-w-[350px]' : ''
         }`}
+        rel='noreferrer'
       >
         <Marquee isPlaying={track.isPlaying}>
           <Text size='xs'>{track.name}</Text>

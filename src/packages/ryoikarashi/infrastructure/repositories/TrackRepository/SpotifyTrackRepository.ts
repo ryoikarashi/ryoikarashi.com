@@ -1,5 +1,9 @@
-import { type AxiosResponse, type AxiosStatic } from 'axios';
-import type * as admin from 'firebase-admin';
+import { type AxiosResponse, type AxiosStatic, isAxiosError } from 'axios';
+import {
+  type DocumentData,
+  type DocumentReference,
+  type Firestore,
+} from 'firebase-admin/firestore';
 import { type ITrackRepository } from './ITtrackRepository';
 import {
   type SpotifyTrack,
@@ -17,14 +21,14 @@ import { type AccessToken } from '@/packages/ryoikarashi/domain/models/Token/Val
 import { getRootCollectionName } from '@/libs/utils';
 
 export class SpotifyTrackRepository implements ITrackRepository {
-  private readonly _db: FirebaseFirestore.Firestore;
+  private readonly _db: Firestore;
   private readonly _http: AxiosStatic;
   private readonly _collectionName: string;
   private readonly _docPath: string;
-  private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
+  private readonly _ref: DocumentReference<DocumentData>;
 
   constructor(
-    db: FirebaseFirestore.Firestore,
+    db: Firestore,
     http: AxiosStatic,
     collectionName: string,
     docPath: string
@@ -40,8 +44,6 @@ export class SpotifyTrackRepository implements ITrackRepository {
 
   public async storeLastPlayedTrack(data: TrackPlainObj): Promise<void> {
     const doc = await this._ref.get();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     doc.exists ? await this._ref.update(data) : await this._ref.create(data);
   }
 
@@ -110,9 +112,19 @@ export class SpotifyTrackRepository implements ITrackRepository {
         }
       }
     } catch (e) {
+      console.error(e);
       // when having an expired access token (unauthorized request)
-      const accessToken = await callback();
-      return await this.getCurrentlyListeningTrack(accessToken, callback);
+      if (isAxiosError(e) && e.response?.status === 401) {
+        console.log('Refreshing access token.');
+        try {
+          const accessToken = await callback();
+          return await this.getCurrentlyListeningTrack(accessToken, callback);
+        } catch (err) {
+          console.error('Failed refreshing access token.', err);
+          return await this.getLastPlayedTrack();
+        }
+      }
+      return await this.getLastPlayedTrack();
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type JSX } from 'react';
 import { match } from 'ts-pattern';
 import type { HTMLElementProps, None, Size } from '@/components/atoms';
 

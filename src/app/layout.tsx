@@ -1,5 +1,5 @@
 import './globals.css';
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode, type JSX } from 'react';
 import { type Metadata } from 'next';
 import { Josefin_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers';

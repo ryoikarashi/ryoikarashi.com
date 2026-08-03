@@ -1,5 +1,5 @@
 import { type AxiosStatic } from 'axios';
-import qs from 'query-string';
+import { type Firestore } from 'firebase-admin/firestore';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
@@ -12,11 +12,7 @@ import {
 } from './ITokenRepository';
 
 export class GoogleTokenRepository extends ITokenRepository {
-  public constructor(
-    db: FirebaseFirestore.Firestore,
-    collectionName: string,
-    docPath: string
-  ) {
+  public constructor(db: Firestore, collectionName: string, docPath: string) {
     super(db, collectionName, docPath);
   }
 
@@ -39,7 +35,7 @@ export class GoogleTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post<HTTPTokenResponse>(
       'https://www.googleapis.com/oauth2/v4/token',
-      qs.stringify(payload),
+      new URLSearchParams(payload).toString(),
       {
         headers,
       }
@@ -63,7 +59,7 @@ export class GoogleTokenRepository extends ITokenRepository {
     const payload = {
       client_id: config.clientId,
       client_secret: config.clientSecret,
-      refresh_token: expiredToken.refreshToken.value(),
+      refresh_token: expiredToken.refreshToken.value() ?? '',
       grant_type: 'refresh_token',
     };
 
@@ -71,7 +67,7 @@ export class GoogleTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post<HTTPTokenResponse>(
       'https://www.googleapis.com/oauth2/v4/token',
-      qs.stringify(payload),
+      new URLSearchParams(payload).toString(),
       { headers }
     );
 

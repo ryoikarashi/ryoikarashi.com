@@ -44,7 +44,6 @@ jest.mock(
   })
 );
 const MockedGooglePhotosRepository =
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   GooglePhotosRepository.GooglePhotosRepository as jest.Mock<IPhotoRepository>;
 
@@ -102,7 +101,9 @@ describe('Test GooglePhotoService', () => {
         new MockedTokenService(
           axios,
           new MockedGoogleTokenRepository(
-            admin.initializeApp().firestore(),
+            (
+              admin.initializeApp() as unknown as { firestore: () => any }
+            ).firestore(),
             'test',
             'test'
           ),
@@ -125,7 +126,9 @@ describe('Test GooglePhotoService', () => {
         new MockedTokenService(
           axios,
           new MockedGoogleTokenRepository(
-            admin.initializeApp().firestore(),
+            (
+              admin.initializeApp() as unknown as { firestore: () => any }
+            ).firestore(),
             'test',
             'test'
           ),

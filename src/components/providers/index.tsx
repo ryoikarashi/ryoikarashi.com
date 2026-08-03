@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type JSX } from 'react';
 import { ThemeProvider } from './theme';
 import { PusherProvider } from './pusher';
 import { QueryClientProvider } from './query-client';

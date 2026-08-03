@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { type HTMLElementProps, Paragraph } from '@/components/atoms';
 import { Links } from './links';
 import { Introduction } from './introduction';

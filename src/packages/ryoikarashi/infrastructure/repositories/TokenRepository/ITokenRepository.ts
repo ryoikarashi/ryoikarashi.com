@@ -1,6 +1,10 @@
 import { type AxiosStatic } from 'axios';
+import {
+  type DocumentData,
+  type DocumentReference,
+  type Firestore,
+} from 'firebase-admin/firestore';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
-import type * as admin from 'firebase-admin';
 import { getRootCollectionName } from '@/libs/utils';
 import {
   AccessToken,
@@ -21,13 +25,9 @@ export interface HTTPTokenResponse {
 }
 
 export abstract class ITokenRepository {
-  private readonly _ref: admin.firestore.DocumentReference<FirebaseFirestore.DocumentData>;
+  private readonly _ref: DocumentReference<DocumentData>;
 
-  public constructor(
-    db: FirebaseFirestore.Firestore,
-    collectionName: string,
-    docPath: string
-  ) {
+  public constructor(db: Firestore, collectionName: string, docPath: string) {
     this._ref = db
       .collection(getRootCollectionName(collectionName))
       .doc(docPath);
@@ -47,9 +47,7 @@ export abstract class ITokenRepository {
   public async getFirstToken(): Promise<Token> {
     const doc = await this._ref.get();
     const data = doc.data() as
-      | undefined
-      | null
-      | { access_token: string; refresh_token: string };
+      undefined | null | { access_token: string; refresh_token: string };
     return new Token(
       AccessToken.of(data?.access_token ?? null),
       RefreshToken.of(data?.refresh_token ?? null)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { type HTMLElementProps, Text } from '@/components/atoms';
 import { twMerge } from 'tailwind-merge';
 
@@ -12,14 +12,14 @@ function Placeholder(props: PlaceholderProps): JSX.Element {
         props.className,
         'block h-8 w-[380px] max-w-full animate-pulse bg-black/10 dark:bg-white/10'
       )}
-    ></span>
+    />
   );
 }
 
 function Loading(): JSX.Element {
   return (
     <Text>
-      <span className="text-black after:animate-dotsLight after:content-['.'] dark:text-white dark:after:animate-dotsDark">
+      <span className="after:animate-dotsLight dark:after:animate-dotsDark text-black after:content-['.'] dark:text-white">
         Loading
       </span>
     </Text>

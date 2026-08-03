@@ -74,7 +74,9 @@ describe('Test TokenService', () => {
   describe('getAccessAndRefreshToken', () => {
     it('returns an existing token', async () => {
       const MockTokenRepositoryInstance = new MockTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         'test',
         'test'
       );
@@ -102,7 +104,9 @@ describe('Test TokenService', () => {
 
     it('returns a newly issued token', async () => {
       const MockTokenRepositoryInstance = new MockTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         'test',
         'test'
       );
@@ -147,7 +151,9 @@ describe('Test TokenService', () => {
 
     it('returns an invalid token due to an exception', async () => {
       const MockTokenRepositoryInstance = new MockTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         'test',
         'test'
       );
@@ -170,7 +176,9 @@ describe('Test TokenService', () => {
   describe('refreshAccessToken', () => {
     it('it returns a new token', async () => {
       const MockTokenRepositoryInstance = new MockTokenRepository(
-        admin.initializeApp().firestore(),
+        (
+          admin.initializeApp() as unknown as { firestore: () => any }
+        ).firestore(),
         'test',
         'test'
       );

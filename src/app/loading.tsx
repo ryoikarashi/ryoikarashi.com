@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Loading as LoadingComponent } from '@/components/atoms';
 
 export default function Loading(): JSX.Element {

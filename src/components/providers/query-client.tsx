@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, useState } from 'react';
+import React, { type PropsWithChildren, useState, type JSX } from 'react';
 import { QueryClientProvider as RQQueryClientProvider } from '@tanstack/react-query';
 import { getQueryClient } from '@/libs';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { ThemeSwitcher } from '@/components/molecules';
 import { PaliWord, Photo, Profile } from '@/components/organisms';
 

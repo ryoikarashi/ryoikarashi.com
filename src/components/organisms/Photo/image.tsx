@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, type JSX } from 'react';
 import NextImage from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import { type HTMLElementProps } from '@/components/atoms';
@@ -19,7 +19,7 @@ async function DynamicPhoto(): Promise<JSX.Element> {
       src={photo.url}
       height={height}
       width={width}
-      priority={true}
+      priority
       placeholder='blur'
       blurDataURL={base64}
       alt=''
@@ -32,7 +32,7 @@ function Loading(): JSX.Element {
   return (
     <div className='flex w-full max-w-[1000px] items-center justify-center'>
       <div className='relative w-full'>
-        <div className='aspect-[5/3] w-full animate-pulse bg-black/10 dark:bg-white/10' />
+        <div className='aspect-5/3 w-full animate-pulse bg-black/10 dark:bg-white/10' />
       </div>
     </div>
   );

@@ -79,8 +79,7 @@ describe('Test GenericTokenRepository', () => {
 
   describe('storeAccessTokenAndMaybeRefreshToken', () => {
     it('creates a new doc for tokens on firestore', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
+      jest.spyOn(admin as any, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -90,7 +89,9 @@ describe('Test GenericTokenRepository', () => {
         update: jest.fn(),
         create: jest.fn(),
       }));
-      const firestore = admin.initializeApp().firestore();
+      const firestore = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new GenericTokenRepository(
         firestore,
         collectionName,
@@ -111,8 +112,7 @@ describe('Test GenericTokenRepository', () => {
     });
 
     it('updates an existing doc for tokens on firestore', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
+      jest.spyOn(admin as any, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -122,7 +122,9 @@ describe('Test GenericTokenRepository', () => {
         update: jest.fn(),
         create: jest.fn(),
       }));
-      const firestore = admin.initializeApp().firestore();
+      const firestore = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new GenericTokenRepository(
         firestore,
         collectionName,
@@ -146,8 +148,7 @@ describe('Test GenericTokenRepository', () => {
 
   describe('getFirstToken', () => {
     it('returns a valid token', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
+      jest.spyOn(admin as any, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -155,7 +156,9 @@ describe('Test GenericTokenRepository', () => {
           exists: true,
         })),
       }));
-      const firestore = admin.initializeApp().firestore();
+      const firestore = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new GenericTokenRepository(
         firestore,
         collectionName,
@@ -172,8 +175,7 @@ describe('Test GenericTokenRepository', () => {
     });
 
     it('returns an invalid token', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jest.spyOn(admin, 'firestore').mockImplementation((): any => ({
+      jest.spyOn(admin as any, 'firestore').mockImplementation((): any => ({
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockReturnThis(),
         get: jest.fn(() => ({
@@ -181,7 +183,9 @@ describe('Test GenericTokenRepository', () => {
           exists: false,
         })),
       }));
-      const firestore = admin.initializeApp().firestore();
+      const firestore = (
+        admin.initializeApp() as unknown as { firestore: () => any }
+      ).firestore();
       const repository = new GenericTokenRepository(
         firestore,
         collectionName,

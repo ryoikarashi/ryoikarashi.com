@@ -1,6 +1,11 @@
 'use client';
 
-import React, { Fragment, type PropsWithChildren, useRef } from 'react';
+import React, {
+  Fragment,
+  type PropsWithChildren,
+  useRef,
+  type JSX,
+} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useStore } from '@/stores';
 

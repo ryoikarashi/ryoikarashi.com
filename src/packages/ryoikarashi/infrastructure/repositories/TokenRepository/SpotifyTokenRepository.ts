@@ -1,5 +1,5 @@
 import { type AxiosStatic } from 'axios';
-import qs from 'query-string';
+import { type Firestore } from 'firebase-admin/firestore';
 import { Token } from '@/packages/ryoikarashi/domain/models/Token/Token';
 import {
   AccessToken,
@@ -12,11 +12,7 @@ import {
 } from './ITokenRepository';
 
 export class SpotifyTokenRepository extends ITokenRepository {
-  public constructor(
-    db: FirebaseFirestore.Firestore,
-    collectionName: string,
-    docPath: string
-  ) {
+  public constructor(db: Firestore, collectionName: string, docPath: string) {
     super(db, collectionName, docPath);
   }
 
@@ -38,7 +34,7 @@ export class SpotifyTokenRepository extends ITokenRepository {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post<HTTPTokenResponse>(
       'https://accounts.spotify.com/api/token',
-      qs.stringify(params),
+      new URLSearchParams(params).toString(),
       { headers }
     );
 
@@ -60,14 +56,14 @@ export class SpotifyTokenRepository extends ITokenRepository {
 
     const payload = {
       grant_type: 'refresh_token',
-      refresh_token: expiredToken.refreshToken.value(),
+      refresh_token: expiredToken.refreshToken.value() ?? '',
     };
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
     } = await http.post<HTTPTokenResponse>(
       'https://accounts.spotify.com/api/token',
-      qs.stringify(payload),
+      new URLSearchParams(payload).toString(),
       { headers }
     );
 

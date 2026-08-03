@@ -1,25 +1,14 @@
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 import withPlaiceholder from '@plaiceholder/next';
+
+const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  // ref: https://github.com/vercel/next.js/issues/40183#issuecomment-1572600785
-  transpilePackages: [
-    'query-string',
-    'decode-uri-component',
-    'filter-obj',
-    'split-on-first',
-  ],
-  experimental: {
-    esmExternals: true,
-  },
-  webpack(config, { isServer }) {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-    };
-    return config;
+  turbopack: {
+    root: projectRoot,
   },
   images: {
     remotePatterns: [
@@ -29,17 +18,6 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-    ],
-  },
-  eslint: {
-    dirs: [
-      'app',
-      'clientApis',
-      'components',
-      'hooks',
-      'packages',
-      'stores',
-      'libs',
     ],
   },
   // enable CORS [ref: https://vercel.com/guides/how-to-enable-cors]

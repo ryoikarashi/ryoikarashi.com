@@ -1,3 +1,4 @@
+import { type Firestore } from 'firebase-admin/firestore';
 import { type IWordRepository } from './IWordRepository';
 import {
   Word,
@@ -11,15 +12,11 @@ import {
 } from '@/packages/ryoikarashi/domain/models/Word/ValueObjects';
 
 export class WordRepository implements IWordRepository {
-  private readonly _db: FirebaseFirestore.Firestore;
+  private readonly _db: Firestore;
   private readonly _collectionName: string;
   private readonly _docPath: string;
 
-  constructor(
-    db: FirebaseFirestore.Firestore,
-    collectionName: string,
-    docPath: string
-  ) {
+  constructor(db: Firestore, collectionName: string, docPath: string) {
     this._db = db;
     this._collectionName = collectionName;
     this._docPath = docPath;
